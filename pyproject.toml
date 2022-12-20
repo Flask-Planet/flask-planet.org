@@ -8,8 +8,7 @@ version = "1.0.0"
 authors = [
     {name = "David Carmichael", email = "flask-planet@uilix.com"},
 ]
-description = "Python package developer's cheat sheet (using pyproject.toml)."
-readme = "README.md"
+description = "The flask-planet.org website."
 requires-python = ">=3.8"
 dependencies = [
      "flask"
