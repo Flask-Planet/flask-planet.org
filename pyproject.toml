@@ -1,2 +1,16 @@
 [build-system]
-requires = ["setuptools", "wheel", "flask"]
+requires = ["setuptools", "wheel"]
+
+
+[project]
+name = "flask-planet.org"
+version = "1.0.0"
+authors = [
+    {name = "David Carmichael", email = "flask-planet@uilix.com"},
+]
+description = "Python package developer's cheat sheet (using pyproject.toml)."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+     "flask"
+]
