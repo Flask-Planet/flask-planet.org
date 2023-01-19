@@ -1,4 +1,6 @@
-flask
+flask~=2.2.2
 gunicorn
 flask_sqlalchemy
 flask_bigapp
+pytz~=2022.7.1
+SQLAlchemy~=1.4.46

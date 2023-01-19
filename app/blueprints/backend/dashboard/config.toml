@@ -1,0 +1,13 @@
+enabled = "yes"
+
+[settings]
+url_prefix = "/dashboard"
+#subdomain = ""
+#url_defaults = {}
+#static_folder = "static"
+template_folder = "templates"
+#static_url_path = "/dashboard/static"
+
+#[session]
+#dashboard_session = "yes"
+#

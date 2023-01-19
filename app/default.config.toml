@@ -8,3 +8,12 @@ SESSION_TIME = 480
 ERROR_404_HELP = true
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXPLAIN_TEMPLATE_LOADING = false
+
+[database.main]
+enabled = true
+type = "sqlite"
+database_name = "database"
+location = "db"
+port = ""
+username = "user"
+password = "password"

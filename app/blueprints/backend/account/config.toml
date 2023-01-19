@@ -1,0 +1,13 @@
+enabled = "yes"
+
+[settings]
+url_prefix = "/account"
+#subdomain = ""
+#url_defaults = {}
+#static_folder = "static"
+template_folder = "templates"
+#static_url_path = "/account/static"
+#
+#[session]
+#account_session = "yes"
+#
