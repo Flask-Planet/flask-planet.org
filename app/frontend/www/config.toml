@@ -1,0 +1,13 @@
+enabled = "yes"
+
+[settings]
+url_prefix = "/"
+#subdomain = ""
+#url_defaults = {}
+static_folder = "static"
+template_folder = "templates"
+static_url_path = "/frontend/www/static"
+
+#[session]
+#www_session = "yes"
+#

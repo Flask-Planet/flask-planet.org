@@ -1,0 +1,189 @@
+[x-cloak] {
+    display: none !important;
+}
+
+body {
+    background-color: #171b22;
+}
+
+.container-main {
+    background-color: #0e1117;
+    margin-top: 20px;
+    padding: 20px;
+    word-wrap: break-word;
+    color: #a9a9a9;
+    width: 100%;
+    box-shadow: 2px 2px 10px #000000;
+    border: 1px solid #30343b;
+}
+
+.border {
+    border: 1px solid #30343b;
+}
+
+.container-info {
+    padding-top: 20px;
+    width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-main code, pre {
+    background-color: #151921;
+    color: #a9a9a9;
+    margin: 2px;
+}
+
+.container-main code {
+    display: inline-block;
+    white-space: normal;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.scroll-box {
+    overflow: auto;
+    max-height: 600px;
+    margin: 15px 0;
+}
+
+.dashboard-header {
+    font-weight: bold;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 15px;
+
+}
+
+.header-link {
+    font-size: 1.6rem;
+    font-weight: normal;
+}
+
+.alert {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(211, 52, 255, 0.1);
+    margin-bottom: 10px;
+}
+
+.app-status {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+}
+
+.red {
+    font-weight: bold;
+    color: red;
+}
+
+.green {
+    font-weight: bold;
+    color: green;
+}
+
+.logo {
+    width: 80px;
+}
+
+.header {
+    margin-top: 20px;
+    color: whitesmoke;
+}
+
+.u-bold {
+    font-weight: bold;
+}
+
+.u-center {
+    text-align: center;
+}
+
+.u-w100 {
+    width: 100%;
+}
+
+
+.u-underline {
+    text-decoration: underline;
+}
+
+
+.button-black {
+    background-color: black;
+    border-color: black;
+}
+
+.button-black.button-clear,
+.button-black.button-outline {
+    background-color: transparent;
+    color: black;
+}
+
+.button-black.button-clear {
+    border-color: transparent;
+}
+
+.button-small {
+    font-size: 1rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0 1.5rem;
+}
+
+.file {
+    display: inline-block;
+    background-color: #151921;
+    color: #a9a9a9;
+    padding: 5px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 5px #000000;
+}
+
+.field-prepend-group {
+    display: flex;
+}
+
+.field-prepend-group > label {
+    display: inline-flex;
+    border: 0.1rem solid #d1d1d1;
+    border-right: 0;
+    border-radius: 0.4rem 0 0 0.4rem;
+    height: 3.8rem;
+    line-height: 3.6rem;
+    padding: 0 1.5rem 0 1.5rem;
+    font-size: 1.3rem;
+}
+
+.field-prepend-group > button, input[type="submit"] {
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.field-prepend-group > input {
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.field-append-group {
+    display: flex;
+}
+
+.field-append-group > label {
+    display: inline-flex;
+    border: 0.1rem solid #d1d1d1;
+    border-left: 0;
+    border-radius: 0 0.4rem 0.4rem 0;
+    height: 3.8rem;
+    line-height: 3.6rem;
+    padding: 0 1.5rem 0 1.5rem;
+    font-size: 1.3rem;
+}
+
+.field-append-group > input {
+    border-radius: 0.4rem 0 0 0.4rem;
+}
