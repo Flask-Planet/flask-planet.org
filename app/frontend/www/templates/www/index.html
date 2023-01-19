@@ -8,11 +8,7 @@
             <h4 class="header">Upcoming Events</h4>
         </div>
         <div class="container-main">
-            <div class="row">
-                <div class="column">
-                    <img src="{{ url_for('theme.static', filename='img/ama-dominic-h.png') }}"
-                         alt="Flask-Planet logo" class="border"/>
-                </div>
+            <div class="row" style="display: flex; align-items: center;">
                 <div class="column">
                     <h3 class="header">Ask Me Anything with Dominic H</h3>
                     <p>The author and creator of <a href="https://amigoingonholiday.co.uk/">Am I Going On Holiday?</a>
@@ -21,6 +17,10 @@
                     <pre><code>TIME: 15:00 (GMT)</code></pre>
                     <pre><code>PLATFORM: Youtube</code></pre>
                     <pre><code>LINK: <a href="https://youtu.be/4eCHYvcbAhg">https://youtu.be/4eCHYvcbAhg</a></code></pre>
+                </div>
+                <div class="column">
+                    <img src="{{ url_for('theme.static', filename='img/ama-dominic-h.png') }}"
+                         alt="Flask-Planet logo" class="border"/>
                 </div>
             </div>
         </div>
