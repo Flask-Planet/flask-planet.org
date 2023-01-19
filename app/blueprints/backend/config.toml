@@ -5,7 +5,7 @@ url_prefix = "/admin"
 #subdomain = ""
 #url_defaults = {}
 #static_folder = "static"
-#template_folder = "templates"
+template_folder = "templates"
 #static_url_path = "/backend/static"
 
 [session]

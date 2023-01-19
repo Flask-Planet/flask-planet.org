@@ -7,7 +7,6 @@ url_prefix = "/account"
 #static_folder = "static"
 template_folder = "templates"
 #static_url_path = "/account/static"
-#
+
 #[session]
 #account_session = "yes"
-#
