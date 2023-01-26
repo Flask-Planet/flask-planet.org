@@ -1,0 +1,9 @@
+.file {
+    display: inline-block;
+    background-color: #151921;
+    color: #a9a9a9;
+    padding: 5px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 5px #000000;
+}

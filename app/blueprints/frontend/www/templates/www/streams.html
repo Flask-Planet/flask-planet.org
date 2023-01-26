@@ -1,0 +1,75 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block container %}
+    <section>
+
+        <h5>Upcoming Streams</h5>
+
+        <div class="box">
+            <div class="box-group box-group-grid-lg-2">
+                <div class="box-col">
+                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                </div>
+                <div class="box-col">
+                    <h6>Ask Me Anything with Dominic H</h6>
+                    <p>The author and creator of Am I Going On Holiday?
+                        will be talking about the site itself and be available to answer any questions.</p>
+                    <div class="box-inline">
+                        <div class="box-inline-label">DATE:</div>
+                        <div class="box-inline-text">Friday 20th January 2023</div>
+                    </div>
+                    <div class="box-inline">
+                        <div class="box-inline-label">TIME:</div>
+                        <div class="box-inline-text">TIME: 18:00 (GMT)</div>
+                    </div>
+                    <div class="box-inline">
+                        <div class="box-inline-label">PLATFORMS:</div>
+                        <div class="box-inline-text">Youtube</div>
+                    </div>
+                    <div class="box-inline">
+                        <div class="box-inline-label">LINK:</div>
+                        <div class="box-inline-text"><a
+                                href="https://youtu.be/4eCHYvcbAhg">https://youtu.be/4eCHYvcbAhg</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+
+        <h5>Past Streams</h5>
+
+        <div class="box-group box-group-grid-lg-2">
+            <div class="box">
+                <div class="box-col">
+                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                </div>
+                <div class="box-col">
+                    <p>test</p>
+                    <p>test</p>
+                </div>
+            </div>
+            <div class="box">
+                test
+            </div>
+            <div class="box">
+                test
+            </div>
+            <div class="box">
+                test
+            </div>
+            <div class="box">
+                test
+            </div>
+            <div class="box">
+                test
+            </div>
+            <div class="box">
+                test
+            </div>
+        </div>
+
+    </section>
+{% endblock %}

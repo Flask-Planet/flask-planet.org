@@ -1,0 +1,42 @@
+
+.field-prepend-group {
+    display: flex;
+}
+
+.field-prepend-group > label {
+    display: inline-flex;
+    border: 0.1rem solid #d1d1d1;
+    border-right: 0;
+    border-radius: 0.4rem 0 0 0.4rem;
+    height: 3.8rem;
+    line-height: 3.6rem;
+    padding: 0 1.5rem 0 1.5rem;
+    font-size: 1.3rem;
+}
+
+.field-prepend-group > button, input[type="submit"] {
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.field-prepend-group > input {
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.field-append-group {
+    display: flex;
+}
+
+.field-append-group > label {
+    display: inline-flex;
+    border: 0.1rem solid #d1d1d1;
+    border-left: 0;
+    border-radius: 0 0.4rem 0.4rem 0;
+    height: 3.8rem;
+    line-height: 3.6rem;
+    padding: 0 1.5rem 0 1.5rem;
+    font-size: 1.3rem;
+}
+
+.field-append-group > input {
+    border-radius: 0.4rem 0 0 0.4rem;
+}
