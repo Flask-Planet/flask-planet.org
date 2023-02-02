@@ -1,5 +1,4 @@
-from sqlalchemy import schema, types
-import json
+from app.models import *
 
 
 class User(db.Model):
@@ -13,10 +12,10 @@ class User(db.Model):
     private_key = schema.Column(types.String(256), nullable=False)
     display_name = schema.Column(types.String(64), nullable=False)
     disabled = schema.Column(db.Boolean, default=False)
-    permissions = schema.Column(types.JSON, nullable=True, default=json.dumps({}))
+    permissions = schema.Column(types.JSON, nullable=True, default={})
 
     # Tracking
-    created = schema.Column(types.DateTime, default=datetime_now())
+    created = schema.Column(types.DateTime, default=pytz_datetime())
 
     @classmethod
     def get_by_id(cls, user_id):

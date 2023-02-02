@@ -1,12 +1,12 @@
 enabled = "yes"
 
 [settings]
-url_prefix = "/dashboard"
+url_prefix = "/guides"
 #subdomain = ""
 #url_defaults = {}
 #static_folder = "static"
 template_folder = "templates"
-#static_url_path = "/dashboard/static"
+#static_url_path = "/pages/static"
 
 #[session]
-#dashboard_session = "yes"
+#pages_session = "yes"

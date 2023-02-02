@@ -1,0 +1,13 @@
+enabled = "yes"
+
+[settings]
+url_prefix = "/resources"
+subdomain = ""
+url_defaults = {}
+static_folder = "static"
+template_folder = "templates"
+static_url_path = "/resources/static"
+
+[session]
+resources_session = "yes"
+
