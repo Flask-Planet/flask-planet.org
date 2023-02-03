@@ -5,12 +5,31 @@ input[type='reset'],
 input[type='submit']
 {
     background-color: rgba(155, 77, 202, 0.25);
-    border: 0.1rem solid rgba(155, 77, 202, 0.75);
+    border: 0.1rem solid rgba(155, 77, 202, 0.5);
     color: #fff !important;
     padding: 0.6rem;
     text-transform: uppercase !important;
     box-shadow: 2px 2px 10px #000000;
     font-size: 0.8rem !important;
+    cursor: pointer;
+    border-radius: .2rem;
+}
+
+
+.button:active,
+button:active,
+input[type='button']:active,
+input[type='reset']:active,
+input[type='submit']:active
+{
+    background-color: rgba(155, 77, 202, 0.25);
+    border: 0.1rem solid rgba(155, 77, 202, 0.5);
+    color: #fff !important;
+    padding: 0.6rem;
+    text-transform: uppercase !important;
+    box-shadow: none;
+    font-size: 0.8rem !important;
+    cursor: pointer;
 }
 
 .button:focus,
@@ -24,8 +43,8 @@ input[type='reset']:hover,
 input[type='submit']:focus,
 input[type='submit']:hover
 {
-    background-color: #606c76;
-    border-color: #606c76;
+    background-color: rgba(155, 77, 202, 0.4);
+    border: 0.1rem solid rgba(155, 77, 202, 0.6);
     color: #fff;
     outline: 0
 }

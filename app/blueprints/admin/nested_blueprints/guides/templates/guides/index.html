@@ -2,4 +2,52 @@
 
 {% block title %}Dashboard{% endblock %}
 
-<p>guides index</p>
+{% block container %}
+    <section>
+        <div class="box">
+            <div class="box-row u-space-between">
+                <a class="button" href="{{ url_for('admin.guides.add') }}">Add Guide</a>
+                <form>
+                    <input class="u-slim" name="admin-guide-search" type="text">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Tags</th>
+                <th>Clicks</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in q_guides %}
+                <tr class="u-pointer">
+                    <td>
+                        {{ row.title }}
+                    </td>
+                    <td>
+                        {{ row.slug }}
+                    </td>
+                    <td>
+                        {% for tag in row.rel_guide_tag_membership %}
+                            {{ tag.rel_guide_tag.tag }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ row.clicks }}
+                    </td>
+                    <td>
+                        {{ row.created }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

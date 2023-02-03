@@ -1,0 +1,25 @@
+{% extends 'theme/extends/admin.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block alpine_resources %}
+    <script defer src="{{ url_for('admin.static', filename='alpine:global:store.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+    <section>
+        <form name="admin-guides-add">
+            <div class="box">
+                <label for="title">Title</label>
+                <input class="u-w100" id="title" name="title" type="text">
+                <label for="slug">Slug</label>
+                <input class="u-w100" id="slug" name="slug" type="text">
+                <label for="tags">Tags</label>
+                <div x-ref="tags">
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}

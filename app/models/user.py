@@ -1,7 +1,8 @@
 from app.models import *
+from app.models.__mixins__ import CRUDMixin
 
 
-class User(db.Model):
+class User(db.Model, CRUDMixin):
     # PriKey
     user_id = schema.Column(types.Integer, primary_key=True)
 
@@ -17,10 +18,13 @@ class User(db.Model):
     # Tracking
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
+    # Relationships
+    rel_guide = relationship("Guide", back_populates="rel_user")
+
     @classmethod
     def get_by_id(cls, user_id):
-        return cls.query.filter_by(user_id=user_id).first()
+        return cls.get_by_field('user_id', user_id)
 
     @classmethod
     def get_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+        return cls.get_by_field('username', username)

@@ -1,9 +1,13 @@
 <nav class="nav">
     <div class="nav-group">
-        <a class="nav-link" href="{{ url_for('admin.index') }}">Dashboard</a>
-        <a class="nav-link" href="{{ url_for('admin.streams.index') }}">Streams</a>
-        <a class="nav-link" href="{{ url_for('admin.guides.index') }}">Guides</a>
-        <a class="nav-link" href="{{ url_for('admin.resources.index') }}">Resources</a>
+        <a class="nav-link{% if "dashboard" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('admin.index') }}">Dashboard</a>
+        <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('admin.streams.index') }}">Streams</a>
+        <a class="nav-link{% if "guides" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('admin.guides.index') }}">Guides</a>
+        <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('admin.resources.index') }}">Resources</a>
     </div>
     <div class="nav-group">
         <a class="nav-link" href="{{ url_for('admin.account.index') }}">Account</a>

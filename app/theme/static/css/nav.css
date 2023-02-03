@@ -37,6 +37,11 @@
     padding: 10px 15px;
 }
 
+.nav-link-active {
+    background-color: rgba(48, 52, 59, 0.25);
+    color: #e1e1e1;
+}
+
 .nav-link:hover {
     background-color: rgba(48, 52, 59, 0.25);
     color: #e1e1e1;

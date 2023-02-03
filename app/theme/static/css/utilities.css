@@ -41,3 +41,11 @@
 .u-border {
     border: 1px solid #30343b;
 }
+
+.u-pointer {
+    cursor: pointer;
+}
+
+.u-space-between {
+    justify-content: space-between;
+}
