@@ -1,4 +1,13 @@
+import mistune
+from flask import request
+
 from .. import bp
+
+
+@bp.post("/api/convert-markdown")
+def api_convert_markdown():
+    response = request.json.get("markdown", "")
+    return mistune.html(response)
 
 
 @bp.post("/api/delete/guide/<guide_id>")

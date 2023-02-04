@@ -60,7 +60,9 @@ select[multiple] {
 }
 
 textarea {
-    min-height: 6.5rem
+    min-height: 6.5rem;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 label, legend {

@@ -17,8 +17,13 @@
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/table.css') }}">
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/typography.css') }}">
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/utilities.css') }}">
+
+    {% block head %}{% endblock %}
+
     <script src="{{ url_for('theme.static', filename='js/main.js') }}"></script>
+
     {% block alpine_resources %}{% endblock %}
+
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
