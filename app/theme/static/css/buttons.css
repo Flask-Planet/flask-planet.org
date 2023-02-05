@@ -9,6 +9,7 @@ input[type='submit']
     color: #fff !important;
     padding: 0.6rem;
     text-transform: uppercase !important;
+    text-align: center;
     box-shadow: 2px 2px 10px #000000;
     font-size: 0.8rem !important;
     cursor: pointer;

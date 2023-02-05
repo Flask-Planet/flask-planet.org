@@ -6,10 +6,12 @@
                     alt="Flask Planet logo"
             />
         </a>
-        <a class="nav-link" href="{{ url_for('frontend.www.streams') }}">Streams</a>
-        <a class="nav-link" href="{{ url_for('frontend.www.guides') }}">Guides</a>
-        <a class="nav-link" href="{{ url_for('frontend.www.resources') }}">Resources</a>
-{#        <a class="nav-link" href="{{ url_for('frontend.www.authors') }}">Authors</a>#}
+        <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.streams') }}">Streams</a>
+        <a class="nav-link{% if "guides" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.guides') }}">Guides</a>
+        <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.resources') }}">Resources</a>
     </div>
     <div class="nav-group">
         <a class="nav-link" href="#">

@@ -2,7 +2,7 @@
 APP_NAME = "app"
 VERSION = "0.0.1"
 SECRET_KEY = "<CONFIG_SECRET_KEY>"
-DEBUG = false
+DEBUG = true
 TESTING = false
 SESSION_TIME = 480
 ERROR_404_HELP = true

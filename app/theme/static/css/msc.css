@@ -1,9 +1,23 @@
-.file {
+.tag {
     display: inline-block;
     background-color: #151921;
     color: #a9a9a9;
-    padding: 5px 8px;
+    padding: 8px 8px;
     margin-top: 8px;
     margin-right: 5px;
     box-shadow: 2px 2px 5px #000000;
+}
+.tag-no-shadow {
+    display: inline-block;
+    background-color: #151921;
+    color: #a9a9a9;
+    padding: 8px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+}
+.del_tag {
+    padding: 2px 6px;
+    margin-left: 5px;
+    background-color: rgba(255, 0, 0, 0.1);
+    cursor: pointer;
 }

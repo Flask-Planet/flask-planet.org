@@ -25,6 +25,10 @@ select {
     margin-bottom: 1rem;
 }
 
+.hidden-file-input > input[type='file'] {
+    display: none;
+}
+
 input[type='color']:focus,
 input[type='date']:focus,
 input[type='datetime']:focus,
@@ -60,7 +64,6 @@ select[multiple] {
 }
 
 textarea {
-    min-height: 6.5rem;
     width: 100%;
     overflow-x: hidden;
 }

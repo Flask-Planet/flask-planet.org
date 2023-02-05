@@ -1,127 +1,30 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block container %}
-
-    {#    <section>#}
-    {#        <form class="box">#}
-    {#        </form>#}
-    {#    </section>#}
-
     <section class="mt-4">
-
-        <div class="box-group box-group-align-start box-group-grid-lg-3">
-            <article class="box box-flex">
-                <div class="box-col">
-                    <h6>JavaScript Fragmentation</h6>
-                    <p>In this guide we will be going over the JavaScript fragmentation technique.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Format:</h1>
-                            <p>Video</p>
-                        </li>
-                        <li>
-                            <h1>Tags:</h1>
-                            <p>Flask, JS</p>
-                        </li>
-                        <li>
-                            <h1>Author:</h1>
-                            <p>David C.</p>
-                        </li>
-                    </ul>
-                    <button>
-                        View Guide
-                    </button>
-                </div>
-            </article>
-
-            <article class="box box-flex">
-                <div class="box-col">
-                    <h6>Flask-SocketIO</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Format:</h1>
-                            <p>Video</p>
-                        </li>
-                        <li>
-                            <h1>Tags:</h1>
-                            <p>Flask, JS</p>
-                        </li>
-                        <li>
-                            <h1>Author:</h1>
-                            <p>David C.</p>
-                        </li>
-                    </ul>
-                    <button>
-                        View Guide
-                    </button>
-                </div>
-            </article>
-
-
-                        <article class="box box-flex">
-                <div class="box-col">
-                    <h6>Flask-SocketIO</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Format:</h1>
-                            <p>Video</p>
-                        </li>
-                        <li>
-                            <h1>Tags:</h1>
-                            <p>Flask, JS</p>
-                        </li>
-                        <li>
-                            <h1>Author:</h1>
-                            <p>David C.</p>
-                        </li>
-                    </ul>
-                    <button>
-                        View Guide
-                    </button>
-                </div>
-            </article>
-
-
-
-                        <article class="box box-flex">
-                <div class="box-col">
-                    <h6>Flask-SocketIO</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Format:</h1>
-                            <p>Video</p>
-                        </li>
-                        <li>
-                            <h1>Tags:</h1>
-                            <p>Flask, JS</p>
-                        </li>
-                        <li>
-                            <h1>Author:</h1>
-                            <p>David C.</p>
-                        </li>
-                    </ul>
-                    <button>
-                        View Guide
-                    </button>
-                </div>
-            </article>
-
+        <div class="box-group box-group-align-center box-group-grid-lg-3">
+            {% for guide in guides %}
+                <article class="box box-flex">
+                    <div class="box-col">
+                        <h6>{{ guide.title }}</h6>
+                        {% if guide.summary %}
+                            <p>{{ guide.summary }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-2 ms-2 me-2 mb-3">
+                        {% for tag in guide.rel_guide_tag_membership %}
+                            <span class="tag-no-shadow">
+                                {{ tag.rel_guide_tag.tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div class="box-col">
+                        <a class="button" href="{{ url_for('frontend.www.guide', slug=guide.slug) }}">
+                            View Guide
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
         </div>
-
     </section>
-
 {% endblock %}

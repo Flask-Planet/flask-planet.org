@@ -3,18 +3,18 @@ from time import sleep
 
 from flask import render_template
 
-from app import bigapp, db
+from app import bigapp, db, logger
 from app.globals import pytz_datetime
 from .. import bp
 
 
 @bp.route("/", methods=["GET"])
 def index():
+    logger.debug("Dropping and creating database")
     db.drop_all()
     db.create_all()
 
     m_user = bigapp.model("User")
-    m_guide = bigapp.model("Guide")
     m_guide_tag = bigapp.model("GuideTag")
     m_guide_tag_membership = bigapp.model("GuideTagMembership")
 
@@ -33,8 +33,10 @@ def index():
     ]
 
     for tag in list_of_tags:
+        logger.debug(f"Creating tag {tag}")
         m_guide_tag.create(tag=tag)
 
+    logger.debug(f"Creating admin user")
     user = m_user.create(
         return_instance=True,
         username="admin",
@@ -46,13 +48,16 @@ def index():
     )
 
     for i in range(1, 10):
-        guide = m_guide.create(
+        logger.debug(f"Creating guide {i}")
+        guide = bigapp.model("Guide").create(
             return_instance=True,
             fk_user_id=user.user_id,
             slug=f"test-guide-{i}",
             title=f"Test Guide {i}",
             summary=f"Test Summary {i}",
-            html=f"<p>Test HTML {i}</p>",
+            markup=f"<h1>Test HTML {i}</h1>",
+            markdown=f"# Test HTML {i}",
+            markdown_file=f"test-guide-{i}.md",
             created=pytz_datetime(),
         )
         pick_random_amount_from_list = random.sample(list_of_tags, random.randint(1, 3))
