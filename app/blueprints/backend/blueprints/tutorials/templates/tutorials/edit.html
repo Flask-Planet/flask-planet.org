@@ -1,7 +1,7 @@
 {% extends 'theme/extends/backend.html' %}
 
 {% block title %}
-    Add Guide
+    Add Tutorial
 {% endblock %}
 
 {% block head %}
@@ -9,46 +9,46 @@
 
 {% block alpine_resources %}
     <script defer src="{{ url_for('backend.static', filename='alpine:global:store.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/highlightjs.atom-one-dark.css') }}">
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='highlightjs/highlightjs.atom-one-dark.css') }}">
     <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
 {% endblock %}
 
 {% block container %}
     <div x-data="{
-        title: '{{ guide.title }}',
-        original_slug: '{{ guide.slug }}',
-        slug: '{{ guide.slug }}',
+        title: '{{ tutorial.title }}',
+        original_slug: '{{ tutorial.slug }}',
+        slug: '{{ tutorial.slug }}',
         slug_exists: false,
-        summary: '{{ guide.summary }}',
+        summary: '{{ tutorial.summary }}',
         summary_length: 0,
         markup: '-',
         markdown: '-',
         markdown_files: ['No files selected.'],
         all_tags: [],
-        guide_tags: [],
-        removed_from_guide_tags: [],
+        tutorial_tags: [],
+        removed_from_tutorial_tags: [],
         init() {
-            fetch('{{ url_for("backend.guides.api_get_all_guide_tags") }}', {
+            fetch('{{ url_for("backend.tutorials.api_get_all_tutorial_tags") }}', {
                 method: 'GET'
             })
             .then(response => response.json())
             .then(data => {
                 this.all_tags = data['tags']
             }).then(() => {
-                {% for tag in guide.rel_guide_tag_membership %}
-                this.guide_tags.push('{{ tag.rel_guide_tag.tag }}')
+                {% for tag in tutorial.rel_tutorial_tag_membership %}
+                this.tutorial_tags.push('{{ tag.rel_tutorial_tag.tag }}')
                 {% endfor %}
 
-                for (let i = 0; i < this.guide_tags.length; i++) {
-                    let tag = this.guide_tags[i]
+                for (let i = 0; i < this.tutorial_tags.length; i++) {
+                    let tag = this.tutorial_tags[i]
                     let all_tags_index = this.all_tags.indexOf(tag)
                     if (all_tags_index > -1) {
-                        this.removed_from_guide_tags.push(this.all_tags[i])
+                        this.removed_from_tutorial_tags.push(this.all_tags[i])
                         this.all_tags.splice(all_tags_index, 1)
                     }
                 }
             });
-            fetch('{{ url_for("backend.guides.api_get_markdown", slug=guide.slug) }}', {
+            fetch('{{ url_for("backend.tutorials.api_get_markdown", slug=tutorial.slug) }}', {
                 method: 'GET'
             })
             .then(response => response.json())
@@ -70,7 +70,7 @@
         },
         check_if_slug_exists() {
             if (this.slug !== this.original_slug) {
-                fetch(`{{ url_for("backend.guides.api_check_if_slug_exists") }}?slug=${this.slug}`, {
+                fetch(`{{ url_for("backend.tutorials.api_check_if_slug_exists") }}?slug=${this.slug}`, {
                     method: 'GET'
                 })
                 .then(response => response.json())
@@ -86,7 +86,7 @@
                 formData.append('markdown_file', file, file.name)
             }
 
-            fetch('{{ url_for("backend.guides.api_convert_markdown") }}', {
+            fetch('{{ url_for("backend.tutorials.api_convert_markdown") }}', {
                 method: 'POST',
                 body: formData
             })
@@ -105,27 +105,27 @@
                 let index = this.all_tags.indexOf(tag)
                 if (index > -1) {
                     this.all_tags.splice(index, 1)
-                    this.removed_from_guide_tags.push(tag)
+                    this.removed_from_tutorial_tags.push(tag)
                 }
-                this.guide_tags.push(tag)
+                this.tutorial_tags.push(tag)
                 this.$refs.add_tag.value = ''
             }
         },
         del_tag(tag) {
-            let index = this.guide_tags.indexOf(tag)
+            let index = this.tutorial_tags.indexOf(tag)
             if (index > -1) {
-                this.guide_tags.splice(index, 1)
+                this.tutorial_tags.splice(index, 1)
                 this.all_tags.push(tag)
-                this.removed_from_guide_tags.splice(this.removed_from_guide_tags.indexOf(tag), 1)
+                this.removed_from_tutorial_tags.splice(this.removed_from_tutorial_tags.indexOf(tag), 1)
             }
         }
     }">
 
-        <form name="edit_guide" x-ref="edit_guide" method="post" enctype="multipart/form-data">
+        <form name="edit_tutorial" x-ref="edit_tutorial" method="post" enctype="multipart/form-data">
             <input type="hidden" x-model="title" name="title" value="">
             <input type="hidden" x-model="slug" name="slug" value="">
             <input type="hidden" x-model="summary" name="summary" value="">
-            <input type="hidden" x-model="guide_tags" name="guide_tags" value="">
+            <input type="hidden" x-model="tutorial_tags" name="tutorial_tags" value="">
             <input type="hidden" x-model="markup" name="markup" value="">
             <input type="hidden" x-model="markdown" name="markdown" value="">
             <div class="hidden-file-input">
@@ -142,14 +142,14 @@
         <section>
             <div class="box">
                 <div class="box-row u-space-between">
-                    <a class="button" href="{{ url_for('backend.guides.index') }}">Cancel</a>
+                    <a class="button" href="{{ url_for('backend.tutorials.index') }}">Cancel</a>
                     <div>
-                        <button @click="">Delete Guide</button>
+                        <button @click="">Delete Tutorial</button>
                         <button
-                                @click="$refs.edit_guide.submit()"
+                                @click="$refs.edit_tutorial.submit()"
                                 x-bind:disabled="slug_exists || slug.length < 1"
                         >
-                            Update Guide
+                            Update Tutorial
                         </button>
                     </div>
                 </div>
@@ -202,11 +202,11 @@
 
                 <button type="button" @click="add_tag()">Add Tag</button>
 
-                <input type="hidden" x-model="removed_from_guide_tags">
+                <input type="hidden" x-model="removed_from_tutorial_tags">
 
                 <label for="add_tag">Tags</label>
-                <p x-show="guide_tags.length < 1">No tags added</p>
-                <template x-for="tag in guide_tags">
+                <p x-show="tutorial_tags.length < 1">No tags added</p>
+                <template x-for="tag in tutorial_tags">
                         <span class="tag">
                             <span x-text="tag"></span>
                             <span class="del_tag" @click="del_tag(tag)">X</span>

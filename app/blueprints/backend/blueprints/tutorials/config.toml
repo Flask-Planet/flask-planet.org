@@ -1,7 +1,7 @@
 enabled = "yes"
 
 [settings]
-url_prefix = "/guides"
+url_prefix = "/tutorials"
 #subdomain = ""
 #url_defaults = {}
 #static_folder = "static"

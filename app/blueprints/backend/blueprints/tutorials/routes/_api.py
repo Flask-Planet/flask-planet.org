@@ -32,34 +32,34 @@ def api_convert_markdown():
 @bp.get("/api/check-if-slug-exists/")
 def api_check_if_slug_exists():
     slug = request.args.get("slug", None)
-    guide_ = bigapp.model("Guide").get_by_slug(slug)
-    if guide_:
+    tutorial_ = bigapp.model("Tutorial").get_by_slug(slug)
+    if tutorial_:
         return {"exists": True}
     return {"exists": False}
 
 
 @bp.get("/api/get/markdown/<slug>")
 def api_get_markdown(slug):
-    guide_ = bigapp.model("Guide").get_by_slug(slug)
-    return {"markup": f"\n{guide_.markup}", "markdown": f"\n{guide_.markdown}", "files": guide_.markdown_file}
+    tutorial_ = bigapp.model("Tutorial").get_by_slug(slug)
+    return {"markup": f"\n{tutorial_.markup}", "markdown": f"\n{tutorial_.markdown}", "files": tutorial_.markdown_file}
 
 
-@bp.post("/api/delete/guide/<guide_id>")
-def api_delete_guide(guide_id):
+@bp.post("/api/delete/tutorial/<tutorial_id>")
+def api_delete_tutorial(tutorial_id):
     return "OK"
 
 
-@bp.get("/api/get/all-guide-tags")
-def api_get_all_guide_tags():
-    q_guide_tag = bigapp.model("GuideTag").get_all_tags()
-    return {"tags": q_guide_tag}
+@bp.get("/api/get/all-tutorial-tags")
+def api_get_all_tutorial_tags():
+    q_tutorial_tag = bigapp.model("TutorialTag").get_all_tags()
+    return {"tags": q_tutorial_tag}
 
 
-@bp.post("/api/add/guide-tag")
-def api_add_guide_tag():
+@bp.post("/api/add/tutorial-tag")
+def api_add_tutorial_tag():
     return "OK"
 
 
-@bp.post("/api/delete/guide-tag/<guide_tag_id>")
-def api_delete_guide_tag(guide_tag_id):
+@bp.post("/api/delete/tutorial-tag/<tutorial_tag_id>")
+def api_delete_tutorial_tag(tutorial_tag_id):
     return "OK"

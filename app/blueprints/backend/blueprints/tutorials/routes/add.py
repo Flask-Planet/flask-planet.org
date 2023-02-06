@@ -17,11 +17,11 @@ def add():
         title = request.form.get("title")
         slug = request.form.get("slug")
         summary = request.form.get("summary")
-        guide_tags = request.form.get("guide_tags")
+        tutorial_tags = request.form.get("tutorial_tags")
         markup = request.form.get("markup").lstrip("\n")
         markdown = request.form.get("markdown").lstrip("\n")
 
-        tags_list = guide_tags.split(",")
+        tags_list = tutorial_tags.split(",")
 
         files = request.files.getlist("markdown_file")
         files.sort(key=lambda x: x.filename)
@@ -45,7 +45,7 @@ def add():
 
         filename = new_file.name
 
-        bigapp.model("Guide").add_new_guide(
+        bigapp.model("Tutorial").add_new_tutorial(
             fk_user_id=session.get("user_id", 1),
             tags=tags_list,
             title=title,
@@ -57,6 +57,6 @@ def add():
             created=pytz_datetime()
         )
 
-        return redirect(url_for("backend.guides.index"))
+        return redirect(url_for("backend.tutorials.index"))
 
     return render_template(bp.tmpl("add.html"))

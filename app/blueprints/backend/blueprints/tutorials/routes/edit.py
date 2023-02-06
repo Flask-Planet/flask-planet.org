@@ -9,27 +9,27 @@ from .. import bp
 
 @bp.route("/edit/<slug>", methods=["GET", "POST"])
 def edit(slug):
-    guide_ = bigapp.model("Guide").get_by_slug(slug)
+    tutorial_ = bigapp.model("Tutorial").get_by_slug(slug)
 
-    if not guide_:
+    if not tutorial_:
         return abort(404)
 
     if request.method == "POST":
-        guide_tag_membership = bigapp.model("GuideTagMembership")
+        tutorial_tag_membership = bigapp.model("TutorialTagMembership")
 
         upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads")
         temp_location = pathlib.Path(pathlib.Path(current_app.root_path) / "temp")
 
-        old_file = upload_location / guide_.markdown_file
+        old_file = upload_location / tutorial_.markdown_file
         new_file = upload_location / f"{request.form.get('slug')}.md"
 
         edit_values = dict()
 
-        if request.form.get("title") != guide_.title:
+        if request.form.get("title") != tutorial_.title:
             logger.debug("Title changed")
             edit_values["title"] = request.form.get("title")
 
-        if request.form.get("slug") != guide_.slug:
+        if request.form.get("slug") != tutorial_.slug:
             logger.debug("Slug changed")
             edit_values["slug"] = request.form.get("slug")
             if old_file.exists():
@@ -38,7 +38,7 @@ def edit(slug):
                 logger.debug(f"{old_file.name} -> {new_file.name}")
                 edit_values["markdown_file"] = new_file.name
 
-        if request.form.get("summary") != guide_.summary:
+        if request.form.get("summary") != tutorial_.summary:
             logger.debug("Summary changed")
             edit_values["summary"] = request.form.get("summary")
 
@@ -47,6 +47,9 @@ def edit(slug):
 
         if files[0]:
             logger.debug("New file(s) selected, updating markdown")
+            edit_values["markup"] = request.form.get("markup").lstrip("\n")
+            edit_values["markdown"] = request.form.get("markdown").lstrip("\n")
+
             logger.debug("Getting selected files")
             files = request.files.getlist("markdown_file")
             logger.debug(files)
@@ -77,21 +80,21 @@ def edit(slug):
 
             edit_values["markdown_file"] = new_file.name
 
-        logger.debug(f"Updating guide {guide_.guide_id}")
-        guide_.update_by_id(
-            id_field="guide_id",
-            id_value=guide_.guide_id,
+        logger.debug(f"Updating tutorial {tutorial_.tutorial_id}")
+        tutorial_.update_by_id(
+            id_field="tutorial_id",
+            id_value=tutorial_.tutorial_id,
             **edit_values
         )
 
         logger.debug("Processing tags")
-        guide_tags = request.form.get("guide_tags")
-        tags_list = guide_tags.split(",")
+        tutorial_tags = request.form.get("tutorial_tags")
+        tags_list = tutorial_tags.split(",")
         tags_list.sort()
 
         def generate_tags():
-            for tag in guide_.rel_guide_tag_membership:
-                yield tag.rel_guide_tag.tag
+            for tag in tutorial_.rel_tutorial_tag_membership:
+                yield tag.rel_tutorial_tag.tag
 
         current_tags = [*generate_tags()]
         current_tags.sort()
@@ -99,11 +102,11 @@ def edit(slug):
         if tags_list != current_tags:
             logger.debug("Tags changed")
             logger.debug(f"{tags_list} != {current_tags}")
-            logger.debug(f"Deleting tags for guide {guide_.guide_id}")
-            guide_tag_membership.delete_by_guide_id(guide_.guide_id)
-            logger.debug(f"Adding tags for guide {guide_.guide_id}")
-            guide_tag_membership.process_tag_list(guide_.guide_id, tags_list)
+            logger.debug(f"Deleting tags for tutorial {tutorial_.tutorial_id}")
+            tutorial_tag_membership.delete_by_tutorial_id(tutorial_.tutorial_id)
+            logger.debug(f"Adding tags for tutorial {tutorial_.tutorial_id}")
+            tutorial_tag_membership.process_tag_list(tutorial_.tutorial_id, tags_list)
 
-        return redirect(url_for("backend.guides.index"))
+        return redirect(url_for("backend.tutorials.index"))
 
-    return render_template(bp.tmpl("edit.html"), guide=guide_)
+    return render_template(bp.tmpl("edit.html"), tutorial=tutorial_)

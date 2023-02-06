@@ -2,9 +2,9 @@ from app.models import *
 from app.models.__mixins__ import CRUDMixin
 
 
-class Guide(db.Model, CRUDMixin):
+class Tutorial(db.Model, CRUDMixin):
     # PriKey
-    guide_id = schema.Column(types.Integer, primary_key=True)
+    tutorial_id = schema.Column(types.Integer, primary_key=True)
 
     # ForKey
     fk_user_id = schema.Column(types.Integer, schema.ForeignKey("user.user_id"), nullable=False)
@@ -22,17 +22,17 @@ class Guide(db.Model, CRUDMixin):
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     # Relationships
-    rel_user = relationship("User", back_populates="rel_guide")
+    rel_user = relationship("User", back_populates="rel_tutorial")
 
-    rel_guide_tag_membership = relationship(
-        "GuideTagMembership",
-        primaryjoin="Guide.guide_id==GuideTagMembership.fk_guide_id",
+    rel_tutorial_tag_membership = relationship(
+        "TutorialTagMembership",
+        primaryjoin="Tutorial.tutorial_id==TutorialTagMembership.fk_tutorial_id",
         cascade="all, delete"
     )
 
     @classmethod
-    def get_by_id(cls, guide_id):
-        return cls.get_by_field('guide_id', guide_id)
+    def get_by_id(cls, tutorial_id):
+        return cls.get_by_field('tutorial_id', tutorial_id)
 
     @classmethod
     def get_by_slug(cls, slug):
@@ -40,7 +40,7 @@ class Guide(db.Model, CRUDMixin):
 
     @classmethod
     def all_newest_first(cls):
-        logger.debug("Getting all guides newest first...")
+        logger.debug("Getting all tutorials newest first...")
         return cls.query.order_by(desc(cls.created)).all()
 
     @classmethod
@@ -48,24 +48,24 @@ class Guide(db.Model, CRUDMixin):
         return cls.query.order_by(asc(cls.created)).all()
 
     @classmethod
-    def add_new_guide(cls, tags: list, **kwargs):
-        logger.debug("Adding new guide...")
+    def add_new_tutorial(cls, tags: list, **kwargs):
+        logger.debug("Adding new tutorial...")
         instance = cls.create(return_instance=True, **kwargs)
         logger.debug("Looping over tags...")
-        GuideTagMembership.process_tag_list(instance.guide_id, tags)
+        TutorialTagMembership.process_tag_list(instance.tutorial_id, tags)
 
 
-class GuideTag(db.Model, CRUDMixin):
+class TutorialTag(db.Model, CRUDMixin):
     # PriKey
-    guide_tag_id = schema.Column(types.Integer, primary_key=True)
+    tutorial_tag_id = schema.Column(types.Integer, primary_key=True)
 
     # Data
     tag = schema.Column(types.String(128), nullable=False)
 
     # Relationships
-    rel_guide_tag_membership = relationship(
-        "GuideTagMembership",
-        primaryjoin="GuideTag.guide_tag_id==GuideTagMembership.fk_guide_tag_id",
+    rel_tutorial_tag_membership = relationship(
+        "TutorialTagMembership",
+        primaryjoin="TutorialTag.tutorial_tag_id==TutorialTagMembership.fk_tutorial_tag_id",
         cascade="all, delete"
     )
 
@@ -90,51 +90,51 @@ class GuideTag(db.Model, CRUDMixin):
         return cls.create(return_instance=True, tag=tag)
 
 
-class GuideTagMembership(db.Model, CRUDMixin):
+class TutorialTagMembership(db.Model, CRUDMixin):
     # PriKey
-    guide_tag_membership_id = schema.Column(types.Integer, primary_key=True)
+    tutorial_tag_membership_id = schema.Column(types.Integer, primary_key=True)
 
     # ForKey
-    fk_guide_id = schema.Column(types.Integer, schema.ForeignKey("guide.guide_id"), nullable=False)
-    fk_guide_tag_id = schema.Column(types.Integer, schema.ForeignKey("guide_tag.guide_tag_id"), nullable=False)
+    fk_tutorial_id = schema.Column(types.Integer, schema.ForeignKey("tutorial.tutorial_id"), nullable=False)
+    fk_tutorial_tag_id = schema.Column(types.Integer, schema.ForeignKey("tutorial_tag.tutorial_tag_id"), nullable=False)
 
     # Relationships
-    rel_guide = relationship(
-        "Guide", back_populates="rel_guide_tag_membership"
+    rel_tutorial = relationship(
+        "Tutorial", back_populates="rel_tutorial_tag_membership"
     )
-    rel_guide_tag = relationship(
-        "GuideTag", back_populates="rel_guide_tag_membership"
+    rel_tutorial_tag = relationship(
+        "TutorialTag", back_populates="rel_tutorial_tag_membership"
     )
 
     @classmethod
-    def process_tag_list(cls, guide_id: int, tags: list):
+    def process_tag_list(cls, tutorial_id: int, tags: list):
         for tag in tags:
             if tag == "" or tag is None or tag == " ":
                 continue
 
             logger.debug(f"Tag: {tag}")
-            this_tag = GuideTag.get_by_tag(tag)
+            this_tag = TutorialTag.get_by_tag(tag)
 
             if not this_tag:
                 logger.debug("Tag not found, adding tag...")
-                this_tag = GuideTag.add_tag(tag)
+                this_tag = TutorialTag.add_tag(tag)
 
-            logger.debug(f"Adding tag membership... {this_tag.tag} - {this_tag.guide_tag_id} to {guide_id}")
+            logger.debug(f"Adding tag membership... {this_tag.tag} - {this_tag.tutorial_tag_id} to {tutorial_id}")
 
-            cls.add_guide_tag_membership(guide_id, this_tag.guide_tag_id)
+            cls.add_tutorial_tag_membership(tutorial_id, this_tag.tutorial_tag_id)
 
     @classmethod
-    def add_guide_tag_membership(cls, guide_id: int, guide_tag_id: int):
+    def add_tutorial_tag_membership(cls, tutorial_id: int, tutorial_tag_id: int):
         return cls.create(
             return_instance=True,
-            fk_guide_id=guide_id,
-            fk_guide_tag_id=guide_tag_id
+            fk_tutorial_id=tutorial_id,
+            fk_tutorial_tag_id=tutorial_tag_id
         )
 
     @classmethod
-    def delete_by_guide_id(cls, guide_id: int):
+    def delete_by_tutorial_id(cls, tutorial_id: int):
         db.session.execute(
-            delete(cls).where(cls.fk_guide_id == guide_id)
+            delete(cls).where(cls.fk_tutorial_id == tutorial_id)
         )
         db.session.commit()
         return

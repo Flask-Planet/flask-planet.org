@@ -4,8 +4,8 @@
            href="{{ url_for('backend.index') }}">Dashboard</a>
         <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
            href="{{ url_for('backend.streams.index') }}">Streams</a>
-        <a class="nav-link{% if "guides" in request.url %} nav-link-active{% endif %}"
-           href="{{ url_for('backend.guides.index') }}">Guides</a>
+        <a class="nav-link{% if "tutorials" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.tutorials.index') }}">Tutorials</a>
         <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
            href="{{ url_for('backend.resources.index') }}">Resources</a>
     </div>

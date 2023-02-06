@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.store('alpine:guides:add', {
+    Alpine.store('alpine:tutorials:add', {
         value: '# Write Some Markdown...',
         init() {
             let editor = new SimpleMDE({element: this.$refs.editor})

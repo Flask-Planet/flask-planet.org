@@ -1,17 +1,20 @@
 <nav class="nav">
     <div class="nav-group">
+
         <a class="nav-logo" href="{{ url_for('frontend.www.index') }}">
             <img
                     src="{{ url_for('theme.static', filename='img/flask-planet.gif') }}"
                     alt="Flask Planet logo"
             />
         </a>
+
         <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
            href="{{ url_for('frontend.www.streams') }}">Streams</a>
-        <a class="nav-link{% if "guides" in request.url %} nav-link-active{% endif %}"
-           href="{{ url_for('frontend.www.guides') }}">Guides</a>
+        <a class="nav-link{% if "tutorials" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.tutorials') }}">Tutorials</a>
         <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
            href="{{ url_for('frontend.www.resources') }}">Resources</a>
+
     </div>
     <div class="nav-group">
         <a class="nav-link" href="#">

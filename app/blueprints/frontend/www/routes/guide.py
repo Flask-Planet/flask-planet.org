@@ -4,10 +4,10 @@ from app import bigapp
 from .. import bp
 
 
-@bp.route("/guides/guide/<slug>", methods=["GET"])
-def guide(slug):
-    guide_ = bigapp.model("Guide").get_by_slug(slug)
-    if not guide_:
+@bp.route("/tutorials/tutorial/<slug>", methods=["GET"])
+def tutorial(slug):
+    tutorial_ = bigapp.model("Tutorial").get_by_slug(slug)
+    if not tutorial_:
         return abort(404)
 
-    return render_template(bp.tmpl("guide.html"), guide=guide_)
+    return render_template(bp.tmpl("tutorial.html"), tutorial=tutorial_)

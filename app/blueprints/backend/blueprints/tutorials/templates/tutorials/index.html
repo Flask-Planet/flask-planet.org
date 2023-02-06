@@ -1,7 +1,7 @@
 {% extends 'theme/extends/backend.html' %}
 
 {% block title %}
-    Guides
+    Tutorials
 {% endblock %}
 
 {% block head %}
@@ -13,9 +13,9 @@
             <div class="box-row u-space-between">
                 <form>
                     <button type="submit">Search</button>
-                    <input class="u-m-0" name="admin-guide-search" type="text">
+                    <input class="u-m-0" name="admin-tutorial-search" type="text">
                 </form>
-                <a class="button" href="{{ url_for('backend.guides.add') }}">Add Guide</a>
+                <a class="button" href="{{ url_for('backend.tutorials.add') }}">Add Tutorial</a>
             </div>
         </div>
     </section>
@@ -32,7 +32,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for row in q_guides %}
+            {% for row in q_tutorials %}
                 <tr>
                     <td>
                         {{ row.title }}
@@ -41,8 +41,8 @@
                         {{ row.slug }}
                     </td>
                     <td>
-                        {% for tag in row.rel_guide_tag_membership %}
-                            {{ tag.rel_guide_tag.tag }}{% if not loop.last %}, {% endif %}
+                        {% for tag in row.rel_tutorial_tag_membership %}
+                            {{ tag.rel_tutorial_tag.tag }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
                     <td>
@@ -52,7 +52,7 @@
                         {{ row.created }}
                     </td>
                     <td style="text-align: center">
-                        <a href="{{ url_for('backend.guides.edit', slug=row.slug) }}">Edit</a>
+                        <a href="{{ url_for('backend.tutorials.edit', slug=row.slug) }}">Edit</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -19,7 +19,7 @@ class User(db.Model, CRUDMixin):
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     # Relationships
-    rel_guide = relationship("Guide", back_populates="rel_user")
+    rel_tutorial = relationship("Tutorial", back_populates="rel_user")
 
     @classmethod
     def get_by_id(cls, user_id):
