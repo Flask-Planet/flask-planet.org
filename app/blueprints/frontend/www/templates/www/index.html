@@ -1,28 +1,9 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block global %}
-    <div class="container">
-        <div class="u-center">
-            <img src="{{ url_for('theme.static', filename='img/flask-planet-website-logo.png') }}"
-                 alt="Flask-Planet logo"/>
-            <h4 class="header">Past Events</h4>
+    <section>
+        <div class="hero">
+            <img src="{{ url_for('theme.static', filename='img/flask-planet-logo.gif') }}" alt="Flask Planet logo"/>
         </div>
-        <div class="container-main">
-            <div class="row" style="display: flex; align-items: center;">
-                <div class="column">
-                    <h3 class="header">Ask Me Anything with Dominic H</h3>
-                    <p>The author and creator of <a href="https://amigoingonholiday.co.uk/">Am I Going On Holiday?</a>
-                        will be talking about the site itself and be available to answer any questions.</p>
-                    <pre><code>DATE: Friday 20th January 2023</code></pre>
-                    <pre><code>TIME: 18:00 (GMT)</code></pre>
-                    <pre><code>PLATFORM: Youtube</code></pre>
-                    <pre><code>LINK: <a href="https://youtu.be/4eCHYvcbAhg">https://youtu.be/4eCHYvcbAhg</a></code></pre>
-                </div>
-                <div class="column">
-                    <img src="{{ url_for('theme.static', filename='img/ama-dominic-h.png') }}"
-                         alt="Flask-Planet logo" class="border"/>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 {% endblock %}

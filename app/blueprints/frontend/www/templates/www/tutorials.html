@@ -1,0 +1,30 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block container %}
+    <section class="mt-4">
+        <div class="box-group box-group-align-center box-group-grid-lg-3">
+            {% for tutorial in tutorials %}
+                <article class="box box-flex">
+                    <div class="box-col">
+                        <h6>{{ tutorial.title }}</h6>
+                        {% if tutorial.summary %}
+                            <p>{{ tutorial.summary }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-2 ms-2 me-2 mb-3">
+                        {% for tag in tutorial.rel_tutorial_tag_membership %}
+                            <span class="tag-no-shadow">
+                                {{ tag.rel_tutorial_tag.tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div class="box-col">
+                        <a class="button" href="{{ url_for('frontend.www.tutorial', slug=tutorial.slug) }}">
+                            View Tutorial
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

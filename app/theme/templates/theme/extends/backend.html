@@ -4,18 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %} {% endblock %} | Flask-Planet</title>
+    <title>{% block title %} {% endblock %} | Admin | Flask-Planet</title>
     <link rel="shortcut icon" href="{{ url_for('theme.static', filename='ico/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/milligram.min.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='normalize/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/main.css') }}">
-    <script src="{{ url_for('theme.static', filename='js/main.js') }}"></script>
+
+    {% block head %}{% endblock %}
+    {% block alpine_resources %}{% endblock %}
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
-{% block global %}
+{% include 'theme/includes/admin-menu.html' %}
 
+{% block global %}
+    {% block container %}
+    {% endblock %}
 {% endblock %}
 </body>
 

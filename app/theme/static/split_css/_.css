@@ -1,0 +1,16 @@
+[x-cloak] {
+    display: none !important;
+}
+
+body {
+    background-color: #171b22;
+}
+
+a {
+    color: #9b4dca;
+    text-decoration: none
+}
+
+a:focus, a:hover {
+    color: #606c76
+}

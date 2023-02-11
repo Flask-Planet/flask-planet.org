@@ -1,0 +1,55 @@
+.u-bold {
+    font-weight: bold;
+}
+
+.u-center {
+    text-align: center;
+}
+
+.u-w100 {
+    width: 100%;
+}
+
+.u-underline {
+    text-decoration: underline;
+}
+
+.u-red {
+    font-weight: bold;
+    color: red;
+}
+
+.u-green {
+    font-weight: bold;
+    color: green;
+}
+
+.u-clearfix:after {
+    clear: both;
+    content: ' ';
+    display: table
+}
+
+.u-float-left {
+    float: left
+}
+
+.u-float-right {
+    float: right
+}
+
+.u-border {
+    border: 1px solid #30343b;
+}
+
+.u-pointer {
+    cursor: pointer;
+}
+
+.u-space-between {
+    justify-content: space-between;
+}
+
+.u-m-0 {
+    margin: 0 !important;
+}

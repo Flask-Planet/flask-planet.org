@@ -1,0 +1,15 @@
+<nav class="nav">
+    <div class="nav-group">
+        <a class="nav-link{% if "dashboard" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.index') }}">Dashboard</a>
+        <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.streams.index') }}">Streams</a>
+        <a class="nav-link{% if "tutorials" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.tutorials.index') }}">Tutorials</a>
+        <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.resources.index') }}">Resources</a>
+    </div>
+    <div class="nav-group">
+        <a class="nav-link" href="{{ url_for('backend.account.index') }}">Account</a>
+    </div>
+</nav>

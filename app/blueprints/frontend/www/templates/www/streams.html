@@ -1,0 +1,100 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block container %}
+    <section>
+
+        <h5 class="u-center">Upcoming Streams</h5>
+
+        <article class="box">
+            <div class="box-group box-group-grid-lg-2">
+                <div class="box-col">
+                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                </div>
+                <div class="box-col">
+                    <h6>Ask Me Anything with Dominic H</h6>
+                    <p>The author and creator of Am I Going On Holiday?
+                        will be talking about the site itself and be available to answer any questions.</p>
+                    <ul class="box-list">
+                        <li>
+                            <h1>Date:</h1>
+                            <p>Friday 20th January 2023</p>
+                        </li>
+                        <li>
+                            <h1>Time:</h1>
+                            <p>18:00 (GMT)</p>
+                        </li>
+                        <li>
+                            <h1>Link:</h1>
+                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <section>
+
+        <h5 class="u-center">Past Streams</h5>
+
+        <div class="box-group box-group-grid-lg-3">
+
+            <article class="box">
+                <div class="box-col">
+                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                </div>
+                <div class="box-col">
+                    <h6>Ask Me Anything with Dominic H</h6>
+                    <p>The author and creator of Am I Going On Holiday?
+                        will be talking about the site itself and be available to answer any questions.</p>
+                </div>
+                <div class="box-col">
+                    <ul class="box-list">
+                        <li>
+                            <h1>Date:</h1>
+                            <p>Friday 20th January 2023</p>
+                        </li>
+                        <li>
+                            <h1>Time:</h1>
+                            <p>18:00 (GMT)</p>
+                        </li>
+                        <li>
+                            <h1>Link:</h1>
+                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="box">
+                <div class="box-col">
+                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                </div>
+                <div class="box-col">
+                    <h6>Ask Me Anything with Dominic H</h6>
+                    <p>The author and creator of Am I Going On Holiday?
+                        will be talking about the site itself and be available to answer any questions.</p>
+                </div>
+                <div class="box-col">
+                    <ul class="box-list">
+                        <li>
+                            <h1>Date:</h1>
+                            <p>Friday 20th January 2023</p>
+                        </li>
+                        <li>
+                            <h1>Time:</h1>
+                            <p>18:00 (GMT)</p>
+                        </li>
+                        <li>
+                            <h1>Link:</h1>
+                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+        </div>
+
+    </section>
+{% endblock %}

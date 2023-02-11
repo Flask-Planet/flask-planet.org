@@ -1,0 +1,56 @@
+<nav class="nav">
+    <div class="nav-group">
+
+        <a class="nav-logo" href="{{ url_for('frontend.www.index') }}">
+            <img
+                    src="{{ url_for('theme.static', filename='img/flask-planet.gif') }}"
+                    alt="Flask Planet logo"
+            />
+        </a>
+
+        <a class="nav-link{% if "streams" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.streams') }}">Streams</a>
+        <a class="nav-link{% if "tutorials" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.tutorials') }}">Tutorials</a>
+        <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.resources') }}">Resources</a>
+
+    </div>
+    <div class="nav-group">
+        <a class="nav-link" href="#">
+            <svg
+                    width="22px"
+                    height="22px"
+                    viewBox="0.96 0.908 22 22"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="margin-bottom: -6px;"
+            >
+                <path d="M 9.063 18.877 C 4.055 20.269 4.055 16.554 2.052 16.089 M 16.076 21.663 L 16.076 18.068 C 16.152 17.171 15.808 16.289 15.134 15.644 C 18.279 15.319 21.585 14.213 21.585 9.14 C 21.585 7.844 21.047 6.596 20.083 5.658 C 20.539 4.522 20.507 3.268 19.992 2.155 C 19.992 2.155 18.81 1.83 16.076 3.53 C 13.78 2.953 11.359 2.953 9.063 3.53 C 6.329 1.83 5.147 2.155 5.147 2.155 C 4.632 3.268 4.6 4.522 5.057 5.658 C 4.085 6.604 3.547 7.862 3.554 9.169 C 3.554 14.203 6.86 15.309 10.006 15.671 C 9.34 16.31 8.997 17.181 9.063 18.068 L 9.063 21.663"></path>
+            </svg>
+        </a>
+        <a class="nav-link" href="#">
+            <?xml version="1.0" encoding="utf-8"?>
+            <svg
+                    width="22px"
+                    height="22px"
+                    viewBox="0 0 22 22"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-youtube"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="margin-bottom: -6px;"
+            >
+                <path d="M 20.546 6.196 C 20.326 5.319 19.655 4.627 18.785 4.381 C 17.225 4 10.982 4 10.982 4 C 10.982 4 4.739 4 3.178 4.417 C 2.308 4.663 1.637 5.356 1.417 6.232 C 1.132 7.816 0.992 9.423 1 11.032 C 0.99 12.654 1.129 14.273 1.417 15.869 C 1.659 16.718 2.327 17.378 3.178 17.611 C 4.739 18.029 10.982 18.029 10.982 18.029 C 10.982 18.029 17.225 18.029 18.785 17.611 C 19.655 17.365 20.326 16.673 20.546 15.796 C 20.829 14.224 20.969 12.63 20.963 11.032 C 20.973 9.411 20.834 7.792 20.546 6.196 L 20.546 6.196 Z"></path>
+                <polygon points="8.94 14 14.158 11.032 8.94 8.065 8.94 14" style=""></polygon>
+            </svg>
+        </a>
+    </div>
+</nav>

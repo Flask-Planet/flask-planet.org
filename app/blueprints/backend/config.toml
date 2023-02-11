@@ -4,9 +4,9 @@ enabled = "yes"
 url_prefix = "/admin"
 #subdomain = ""
 #url_defaults = {}
-#static_folder = "static"
+static_folder = "static"
 template_folder = "templates"
-#static_url_path = "/backend/static"
+static_url_path = "/backend/static"
 
 [session]
 logged_in = false

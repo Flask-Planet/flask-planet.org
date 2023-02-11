@@ -1,0 +1,62 @@
+{% extends 'theme/extends/backend.html' %}
+
+{% block title %}
+    Tutorials
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="box">
+            <div class="box-row u-space-between">
+                <form>
+                    <button type="submit">Search</button>
+                    <input class="u-m-0" name="admin-tutorial-search" type="text">
+                </form>
+                <a class="button" href="{{ url_for('backend.tutorials.add') }}">Add Tutorial</a>
+            </div>
+        </div>
+    </section>
+    <section>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Tags</th>
+                <th>Clicks</th>
+                <th>Created</th>
+                <th style="text-align: center">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in q_tutorials %}
+                <tr>
+                    <td>
+                        {{ row.title }}
+                    </td>
+                    <td>
+                        {{ row.slug }}
+                    </td>
+                    <td>
+                        {% for tag in row.rel_tutorial_tag_membership %}
+                            {{ tag.rel_tutorial_tag.tag }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{ row.clicks }}
+                    </td>
+                    <td>
+                        {{ row.created }}
+                    </td>
+                    <td style="text-align: center">
+                        <a href="{{ url_for('backend.tutorials.edit', slug=row.slug) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    background-color: #0e1117;
+    color: #a9a9a9;
+    box-shadow: 2px 2px 10px #000000;
+    border: 1px solid #30343b;
+}
+
+tbody > tr {
+    width: 100%;
+    border-bottom: 1px solid #171c25;
+}
+
+tbody > tr:hover {
+    background-color: #212733;
+}
+
+tbody * td {
+    padding: 0.8rem;
+}
+
+thead * th {
+    padding: 1rem;
+    font-weight: bold;
+    border-bottom: 1px solid #171c25;
+    text-align: start;
+}
