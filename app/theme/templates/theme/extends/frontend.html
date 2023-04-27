@@ -11,19 +11,20 @@
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/main.css') }}">
 
     {% block head %}{% endblock %}
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {% block alpine_resources %}{% endblock %}
+    <script defer src="{{ url_for('theme.static', filename='js/alpinejs.collapse.min.js') }}"></script>
+    <script defer src="{{ url_for('theme.static', filename='js/alpinejs.min.js') }}"></script>
 </head>
 
 <body>
 {% include 'theme/includes/frontend-menu.html' %}
 
 {% block global %}
-
     {% block container %}
-
     {% endblock %}
-
 {% endblock %}
 </body>
+
+{% block endpage_js %}{% endblock %}
 
 </html>

@@ -1,8 +1,12 @@
+from flask_bigapp import Auth
+
 from app.models import *
-from app.models.__mixins__ import CRUDMixin
 
 
-class User(db.Model, CRUDMixin):
+class User(db.Model, CrudMixin):
+    __id_field__ = 'user_id'
+    __session__ = db.session
+
     # PriKey
     user_id = schema.Column(types.Integer, primary_key=True)
 
@@ -19,7 +23,7 @@ class User(db.Model, CRUDMixin):
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     # Relationships
-    rel_tutorial = relationship("Tutorial", back_populates="rel_user")
+    rel_resource = relationship("Resource", back_populates="rel_user")
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -28,3 +32,16 @@ class User(db.Model, CRUDMixin):
     @classmethod
     def get_by_username(cls, username):
         return cls.get_by_field('username', username)
+
+    @classmethod
+    def add_new_user(cls, username, password, display_name):
+        salt = Auth.generate_salt()
+        password = Auth.sha_password(password, salt)
+        return cls.create(values={
+            'username': username,
+            'password': password,
+            'salt': salt,
+            'private_key': Auth.generate_private_key(salt),
+            'display_name': display_name,
+            'created': pytz_datetime()
+        })

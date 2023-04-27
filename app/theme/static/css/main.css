@@ -1,4 +1,3 @@
-
 /* _.css */
 
 [x-cloak] {
@@ -25,8 +24,7 @@ a:focus, a:hover {
 button,
 input[type='button'],
 input[type='reset'],
-input[type='submit']
-{
+input[type='submit'] {
     background-color: rgba(155, 77, 202, 0.25);
     border: 0.1rem solid rgba(155, 77, 202, 0.5);
     color: #fff !important;
@@ -44,8 +42,7 @@ input[type='submit']
 button:active,
 input[type='button']:active,
 input[type='reset']:active,
-input[type='submit']:active
-{
+input[type='submit']:active {
     background-color: rgba(155, 77, 202, 0.25);
     border: 0.1rem solid rgba(155, 77, 202, 0.5);
     color: #fff !important;
@@ -65,8 +62,7 @@ input[type='button']:hover,
 input[type='reset']:focus,
 input[type='reset']:hover,
 input[type='submit']:focus,
-input[type='submit']:hover
-{
+input[type='submit']:hover {
     background-color: rgba(155, 77, 202, 0.4);
     border: 0.1rem solid rgba(155, 77, 202, 0.6);
     color: #fff;
@@ -77,8 +73,7 @@ input[type='submit']:hover
 button[disabled],
 input[type='button'][disabled],
 input[type='reset'][disabled],
-input[type='submit'][disabled]
-{
+input[type='submit'][disabled] {
     cursor: default;
     opacity: .5
 }
@@ -92,8 +87,7 @@ input[type='button'][disabled]:hover,
 input[type='reset'][disabled]:focus,
 input[type='reset'][disabled]:hover,
 input[type='submit'][disabled]:focus,
-input[type='submit'][disabled]:hover
-{
+input[type='submit'][disabled]:hover {
     background-color: #9b4dca;
     border-color: #9b4dca
 }
@@ -102,8 +96,7 @@ input[type='submit'][disabled]:hover
 button.button-outline,
 input[type='button'].button-outline,
 input[type='reset'].button-outline,
-input[type='submit'].button-outline
-{
+input[type='submit'].button-outline {
     background-color: transparent;
     color: #9b4dca
 }
@@ -117,8 +110,7 @@ input[type='button'].button-outline:hover,
 input[type='reset'].button-outline:focus,
 input[type='reset'].button-outline:hover,
 input[type='submit'].button-outline:focus,
-input[type='submit'].button-outline:hover
-{
+input[type='submit'].button-outline:hover {
     background-color: transparent;
     border-color: #606c76;
     color: #606c76
@@ -133,8 +125,7 @@ input[type='button'].button-outline[disabled]:hover,
 input[type='reset'].button-outline[disabled]:focus,
 input[type='reset'].button-outline[disabled]:hover,
 input[type='submit'].button-outline[disabled]:focus,
-input[type='submit'].button-outline[disabled]:hover
-{
+input[type='submit'].button-outline[disabled]:hover {
     border-color: inherit;
     color: #9b4dca
 }
@@ -143,8 +134,7 @@ input[type='submit'].button-outline[disabled]:hover
 button.button-clear,
 input[type='button'].button-clear,
 input[type='reset'].button-clear,
-input[type='submit'].button-clear
-{
+input[type='submit'].button-clear {
     background-color: transparent;
     border-color: transparent;
     color: #9b4dca
@@ -159,8 +149,7 @@ input[type='button'].button-clear:hover,
 input[type='reset'].button-clear:focus,
 input[type='reset'].button-clear:hover,
 input[type='submit'].button-clear:focus,
-input[type='submit'].button-clear:hover
-{
+input[type='submit'].button-clear:hover {
     background-color: transparent;
     border-color: transparent;
     color: #606c76
@@ -175,31 +164,50 @@ input[type='button'].button-clear[disabled]:hover,
 input[type='reset'].button-clear[disabled]:focus,
 input[type='reset'].button-clear[disabled]:hover,
 input[type='submit'].button-clear[disabled]:focus,
-input[type='submit'].button-clear[disabled]:hover
-{
+input[type='submit'].button-clear[disabled]:hover {
     color: #9b4dca
 }
 
-.button-black
-{
+
+.button-active {
+    background-color: rgba(155, 77, 202, 0.4);
+    border: 0.1rem solid rgba(155, 77, 202, 0.6);
+    color: #fff;
+    outline: 0
+}
+
+.button-black {
     background-color: black;
     border-color: black;
 }
 
 .button-black.button-clear,
-.button-black.button-outline
-{
+.button-black.button-outline {
     background-color: transparent;
     color: black;
 }
 
-.button-black.button-clear
-{
+.button-red {
+    background-color: #690000;
+    border-color: #8d0000;
+}
+
+.button-red:hover {
+    background-color: #8d0000;
+    border-color: #8d0000;
+}
+
+.button-red.button-clear,
+.button-red.button-outline {
+    background-color: transparent;
+    color: #690000;
+}
+
+.button-black.button-clear {
     border-color: transparent;
 }
 
-.button-small
-{
+.button-small {
     font-size: 1rem;
     height: 2.8rem;
     line-height: 2.8rem;
@@ -379,7 +387,7 @@ input[type='checkbox'], input[type='radio'] {
 
 .markup_display > table {
     width: 100%;
-    margin-bottom: 2rem!important;
+    margin-bottom: 2rem !important;
 }
 
 /* msc.css */
@@ -393,6 +401,7 @@ input[type='checkbox'], input[type='radio'] {
     margin-right: 5px;
     box-shadow: 2px 2px 5px #000000;
 }
+
 .tag-no-shadow {
     display: inline-block;
     background-color: #151921;
@@ -401,11 +410,59 @@ input[type='checkbox'], input[type='radio'] {
     margin-top: 8px;
     margin-right: 5px;
 }
+
 .del_tag {
     padding: 2px 6px;
     margin-left: 5px;
     background-color: rgba(255, 0, 0, 0.1);
     cursor: pointer;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+}
+
+.search-result {
+    display: inline-block;
+    background-color: #151921;
+    color: #a9a9a9;
+    padding: 8px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 5px #000000;
+}
+
+.resource-pages {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 10px;
+}
+
+.resource-page {
+    background-color: #151921;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #a9a9a9;
+    padding: 8px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    box-shadow: 2px 2px 5px #000000;
+}
+
+.resource-page strong {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.resource-page button {
+    box-shadow: none;
 }
 
 /* nav.css */
@@ -470,18 +527,23 @@ input[type='checkbox'], input[type='radio'] {
 .mt-0 {
     margin-top: 0;
 }
+
 .mt-1 {
     margin-top: 0.25rem;
 }
+
 .mt-2 {
     margin-top: 0.5rem;
 }
+
 .mt-3 {
     margin-top: 1rem;
 }
+
 .mt-4 {
     margin-top: 1.5rem;
 }
+
 .mt-5 {
     margin-top: 3rem;
 }
@@ -489,18 +551,23 @@ input[type='checkbox'], input[type='radio'] {
 .mb-0 {
     margin-bottom: 0;
 }
+
 .mb-1 {
     margin-bottom: 0.25rem;
 }
+
 .mb-2 {
     margin-bottom: 0.5rem;
 }
+
 .mb-3 {
     margin-bottom: 1rem;
 }
+
 .mb-4 {
     margin-bottom: 1.5rem;
 }
+
 .mb-5 {
     margin-bottom: 3rem;
 }
@@ -508,18 +575,23 @@ input[type='checkbox'], input[type='radio'] {
 .me-0 {
     margin-right: 0;
 }
+
 .me-1 {
     margin-right: 0.25rem;
 }
+
 .me-2 {
     margin-right: 0.5rem;
 }
+
 .me-3 {
     margin-right: 1rem;
 }
+
 .me-4 {
     margin-right: 1.5rem;
 }
+
 .me-5 {
     margin-right: 3rem;
 }
@@ -527,18 +599,23 @@ input[type='checkbox'], input[type='radio'] {
 .ms-0 {
     margin-left: 0;
 }
+
 .ms-1 {
     margin-left: 0.25rem;
 }
+
 .ms-2 {
     margin-left: 0.5rem;
 }
+
 .ms-3 {
     margin-left: 1rem;
 }
+
 .ms-4 {
     margin-left: 1.5rem;
 }
+
 .ms-5 {
     margin-left: 3rem;
 }
@@ -564,6 +641,21 @@ section > :is(h1, h2, h3, h4, h5, h6) {
     border: 1px solid #30343b;
     padding: 0.8rem;
     margin: 0.8rem;
+}
+
+.box-hover {
+    box-shadow: 2px 2px 5px #000000;
+}
+
+.box-hover:hover {
+    background-color: #13171f;
+    box-shadow: 2px 2px 15px #000000;
+}
+
+.box-light {
+    box-shadow: none;
+    border: 1px solid #30343b;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .box-flex {
@@ -732,7 +824,8 @@ pre > code {
     }
 
     .box-group-grid-lg-3 {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, 31%);
+        justify-content: center;
     }
 
     .box-group-grid-lg-4 {
@@ -782,8 +875,8 @@ thead * th {
 }
 
 .author {
-    font-style: italic!important;
-    color: rgba(225, 225, 225, 0.6)!important;
+    font-style: italic !important;
+    color: rgba(225, 225, 225, 0.6) !important;
 }
 
 code, pre {
@@ -850,6 +943,51 @@ h6 {
 
 /* utilities.css */
 
+@keyframes flashing {
+    0% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.flash-animation {
+    animation: flashing 1s forwards;
+}
+
+.u-flex {
+    display: flex;
+}
+
+.u-align-center {
+    display: flex;
+    align-items: center;
+}
+
+.u-justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.u-justify-items-center {
+    display: flex;
+    justify-items: center;
+}
+
+.u-gap-10 {
+    gap: 10px;
+}
+
 .u-bold {
     font-weight: bold;
 }
@@ -900,6 +1038,10 @@ h6 {
 
 .u-space-between {
     justify-content: space-between;
+}
+
+.u-push-end {
+    justify-content: end;
 }
 
 .u-m-0 {

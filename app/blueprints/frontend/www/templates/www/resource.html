@@ -1,0 +1,58 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='highlightjs/highlightjs.atom-one-dark.css') }}">
+    <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
+{% endblock %}
+
+{% block endpage_js %}
+    {%- include 'www/includes/js:resource.html' %}
+{% endblock %}
+
+{% set summery_button_class = 'class="button me-1 ms-1 button-active"' if not page else 'class="button me-1 ms-1"' %}
+
+{% block global %}
+    <section class="mt-4">
+        <div class="box box-flex">
+            <div class="box-col">
+                <article>
+                    <h1 class="title">{{ resource.title }}</h1>
+                    <p class="author">Written by: {{ resource.rel_user.display_name }}</p>
+                    <div class="mb-3" style="padding-bottom: 20px;">
+                        {% for tag in resource.rel_resource_tag_membership %}
+                            <span class="tag-no-shadow">
+                                {{ tag.rel_resource_tag.tag }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        <a {{ summery_button_class|safe }}
+                                href="{{ url_for('frontend.www.resource', slug=resource.slug) }}">
+                            Summary
+                        </a>
+                        {% if resource.rel_resource_pages %}
+                            {% for this_page in resource.rel_resource_pages %}
+                                {% set this_class = 'class="button me-1 ms-1 button-active"' if filename == this_page.markdown_og_filename else 'class="button me-1 ms-1"' %}
+                                <a {{ this_class|safe }}
+                                        href="{{ url_for('frontend.www.resource_page', slug=resource.slug, filename=this_page.markdown_og_filename) }}">
+                                    {{ this_page.markdown_og_filename }}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </article>
+            </div>
+            <div class="box-col mt-4">
+                {% if page %}
+                    <article class="markup_display">
+                        {{ page.markup | safe }}
+                    </article>
+                {% else %}
+                    <article class="markup_display">
+                        <p>{{ resource.summary }}</p>
+                    </article>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

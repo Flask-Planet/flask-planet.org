@@ -2,12 +2,11 @@ enabled = "yes"
 
 [settings]
 url_prefix = "/resources"
-subdomain = ""
-url_defaults = {}
-static_folder = "static"
+#subdomain = ""
+#url_defaults = {}
+#static_folder = "static"
 template_folder = "templates"
-static_url_path = "/resources/static"
+#static_url_path = "/pages/static"
 
-[session]
-resources_session = "yes"
-
+#[session]
+#pages_session = "yes"

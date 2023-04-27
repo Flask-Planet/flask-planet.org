@@ -1,24 +1,23 @@
 from app.models import *
 
 
-class Stream(db.Model, CrudMixin):
-    __id_field__ = 'stream_id'
+class News(db.Model, CrudMixin):
+    __id_field__ = 'news_id'
     __session__ = db.session
 
     # PriKey
-    stream_id = schema.Column(types.Integer, primary_key=True)
+    news_id = schema.Column(types.Integer, primary_key=True)
 
     # ForKey
     fk_user_id = schema.Column(types.Integer, schema.ForeignKey("user.user_id"), nullable=False)
 
     # Data
     title = schema.Column(types.String(128), nullable=False)
-    summary = schema.Column(types.String(500), nullable=True)
+    summary = schema.Column(types.NVARCHAR, nullable=True)
     image = schema.Column(types.NVARCHAR, nullable=True)
-    date = schema.Column(types.Date, nullable=False)
-    time = schema.Column(types.Time, nullable=False)
-    link = schema.Column(types.String(500), default=True)
-    display_link = schema.Column(types.String(500), default=True)
+    author = schema.Column(types.String(128), nullable=True)
+    author_link = schema.Column(types.String(500), nullable=True)
+    article = schema.Column(types.NVARCHAR, nullable=True)
 
     # Viewable
     viewable = schema.Column(types.Boolean, default=False)
@@ -26,16 +25,15 @@ class Stream(db.Model, CrudMixin):
     go_viewable_on = schema.Column(types.DateTime, nullable=True)
 
     # Tracking
-    clicks = schema.Column(types.Integer, default=0)
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     @classmethod
-    def get_by_id(cls, resource_id):
-        return cls.read(id_=resource_id)
+    def get_by_id(cls, news_id):
+        return cls.read(id_=news_id)
 
     @classmethod
     def all_newest_first(cls):
-        logger.debug("Getting all resources newest first...")
+        logger.debug("Getting all news newest first...")
         return cls.read(all_rows=True, order_by="created", order_desc=True)
 
     @classmethod

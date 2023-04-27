@@ -1,3 +1,19 @@
+.drop-tag {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #a9a9a9;
+    width: 20px;
+    height: 80px;
+}
+.drop-tag-over {
+    display: inline-block;
+    background-color: rgba(21, 25, 33, 0.2);
+    color: #a9a9a9;
+    padding: 8px 8px;
+    margin-top: 8px;
+    margin-right: 5px;
+    width: 50px;
+}
 .tag {
     display: inline-block;
     background-color: #151921;

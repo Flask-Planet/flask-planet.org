@@ -13,15 +13,27 @@ load_dotenv()
 
 
 def create_app():
-    app = Flask(__name__)
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+    app = Flask(
+        __name__,
+        static_folder="static",
+        static_url_path="/static",
+        template_folder="templates",
+    )
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
+    )
+
     bigapp.init_app(app)
     logger.init_app(app)
+
+    bigapp.import_builtins()
 
     if os.environ.get("FLASK_PLANET_DEV", None) is not None:
         bigapp.import_models(from_folder="models")
         db.init_app(app)
         bigapp.import_blueprints("blueprints")
+        with app.app_context():
+            db.create_all()
     else:
         bigapp.import_blueprint("coming_soon")
 

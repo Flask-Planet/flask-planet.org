@@ -1,0 +1,66 @@
+<script defer type="application/javascript">
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('resources_index', () => ({
+            page: 1,
+            pages: 1,
+            title_search: '',
+            resources: [],
+            search_active: false,
+            search_error: false,
+            init() {
+                this.get_resources(this.page)
+                this.$watch('page', () => {
+                    this.display_switch()
+                })
+            },
+            display_switch() {
+                if (this.title_search !== '') {
+                    this.search_for_resources()
+                } else {
+                    this.get_resources()
+                }
+            },
+            get_resources() {
+                fetch(`{{ url_for("backend.resources.api_get_all_resources") }}?page=${this.page}`, {
+                    method: 'GET',
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.resources = data['resources']
+                        this.pages = data['pages']
+                        this.page = data['page']
+                    })
+            },
+            search_for_resources() {
+                this.search_active = false
+
+                if (this.title_search === '') {
+                    this.get_resources(this.page)
+                    return
+                } else if (this.title_search.length < 1) {
+                    return
+                }
+                let form_data = new FormData()
+                form_data.append('search', this.title_search)
+                fetch(`{{ url_for("backend.resources.api_search_resource") }}?page=${this.page}`, {
+                    method: 'POST',
+                    body: form_data
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data['status'] === 'success') {
+                            this.resources = data['resources']
+                            this.pages = data['pages']
+                            this.page = data['page']
+                        } else {
+                            this.resources = []
+                            this.pages = 1
+                            this.page = 1
+                        }
+
+                    })
+            },
+
+        }))
+    })
+</script>

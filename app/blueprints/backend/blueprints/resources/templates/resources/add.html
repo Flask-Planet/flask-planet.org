@@ -1,0 +1,75 @@
+{% extends 'theme/extends/backend.html' %}
+
+{% block title %}
+    Add Resource
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block alpine_resources %}
+    <script defer src="{{ url_for('backend.static', filename='alpine:global:store.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='highlightjs/highlightjs.atom-one-dark.css') }}">
+    <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
+{% endblock %}
+
+{% block endpage_js %}
+    {%- include 'resources/includes/alpine:data:resources_add.html' %}
+{% endblock %}
+
+
+{% block container %}
+    <div x-data="resources_add">
+        <form name="add_resource" x-ref="add_resource" method="post" enctype="multipart/form-data">
+            <input type="hidden" x-model="title" name="title" value="">
+            <input type="hidden" x-model="slug" name="slug" value="">
+            <input type="hidden" x-model="summary" name="summary" value="">
+        </form>
+        <section>
+            <div class="box">
+                <div class="box-row u-space-between">
+                    <a class="button" href="{{ url_for('backend.resources.index') }}">Cancel</a>
+                    <button
+                            @click="$refs.add_resource.submit()"
+                            x-bind:disabled="slug_exists || slug.length < 1"
+                    >
+                        Add Resource
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="box">
+                <label for="title">Title</label>
+                <input
+                        class="u-w100"
+                        id="title"
+                        name="title"
+                        type="text"
+                        @input.debounce.200ms="slugger(); check_if_slug_exists()"
+                        x-model="title">
+                <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
+                <label for="slug">Slug</label>
+                <input
+                        class="u-w100"
+                        id="slug"
+                        name="slug"
+                        type="text"
+                        x-model="slug"
+                        readonly
+                >
+                <label for="summary">Summary</label>
+                <textarea
+                        name="summary"
+                        id="summary"
+                        rows="5"
+                        maxlength="500"
+                        x-ref="summary"
+                        x-model="summary"
+                        @input.debounce.500ms="summary_length = $el.value.length"
+                ></textarea>
+                <p><span x-text="summary_length"></span> / 500</p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

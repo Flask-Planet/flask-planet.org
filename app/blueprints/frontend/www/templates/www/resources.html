@@ -1,7 +1,87 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block container %}
-    <div class="info">
 
-    </div>
+    <section class="mb-4">
+        <div class="box ms-1 me-1" style="color: whitesmoke">
+            <form method="get">
+                <input
+                        class="u-m-0"
+                        name="search"
+                        type="text"
+                        placeholder="Search Title..."
+                        value="{{ request.args.get('search', '') }}"
+                >
+                <button type="submit">
+                    Search
+                </button>
+                <a
+                        class="button button-outline"
+                        href="{{ url_for("frontend.www.resources") }}">
+                    Clear
+                </a>
+            </form>
+
+            <p class="mt-3 mb-0"><small>Tags</small></p>
+            {% for tag in tags %}
+                {% set url = '' %}
+                {% if request.args.get('search') and request.args.get('page') %}
+                    {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=request.args.get('page'), tag=tag) %}
+                {% elif request.args.get('search') %}
+                    {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=tag) %}
+                {% elif request.args.get('page') %}
+                    {% set url = url_for("frontend.www.resources", page=request.args.get('page'), tag=tag) %}
+                {% else %}
+                    {% set url = url_for("frontend.www.resources", tag=tag) %}
+                {% endif %}
+                <a href="{{ url }}">
+                <span class="tag-no-shadow">
+                {{ tag }}
+                </span>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <div class="box-group box-group-align-center box-group-grid-lg-3">
+            {% for resource in resources %}
+                <a href="{{ url_for("frontend.www.resource", slug=resource.slug) }}">
+                    <div class="box box-hover box-flex u-pointer">
+                        <div class="box-col">
+                            <h6>{{ resource.title }}</h6>
+                        </div>
+                        <div class="ms-2 me-2 mb-3">
+                            {% for tag in resource.rel_resource_tag_membership %}
+                                <span class="tag-no-shadow">
+                                {{ tag.rel_resource_tag.tag }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="box-col">
+                            <small style="opacity: 0.2">click to view</small>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="mt-5 mb-4 u-justify-center u-gap-10">
+        {% for this_page in range(pages) %}
+            {% set url = '' %}
+            {% if request.args.get('search') and request.args.get('tag') %}
+                {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=this_page + 1) %}
+            {% elif request.args.get('search') %}
+                {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=this_page + 1) %}
+            {% elif request.args.get('tag') %}
+                {% set url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=this_page + 1) %}
+            {% else %}
+                {% set url = url_for("frontend.www.resources", page=this_page + 1) %}
+            {% endif %}
+            <a href="{{ url }}"
+               class="button {% if page == this_page + 1 %}button-active{% endif %}"
+               style="padding-left: 18px; padding-right: 18px;">{{ this_page + 1 }}</a>
+        {% endfor %}
+    </section>
 {% endblock %}

@@ -17,3 +17,7 @@ location = "db"
 port = ""
 username = "user"
 password = "password"
+
+
+[SESSION]
+tags = []

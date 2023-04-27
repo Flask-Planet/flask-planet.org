@@ -13,7 +13,7 @@
             <div class="box-row u-space-between">
                 <form>
                     <button type="submit">Search</button>
-                    <input class="u-m-0" name="admin-tutorial-search" type="text">
+                    <input class="u-m-0" name="admin-resource-search" type="text">
                 </form>
                 <a class="button" href="{{ url_for('backend.streams.add') }}">Add Stream</a>
             </div>
@@ -41,8 +41,8 @@
                         {{ row.slug }}
                     </td>
                     <td>
-                        {% for tag in row.rel_tutorial_tag_membership %}
-                            {{ tag.rel_tutorial_tag.tag }}{% if not loop.last %}, {% endif %}
+                        {% for tag in row.rel_resource_tag_membership %}
+                            {{ tag.rel_resource_tag.tag }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
                     <td>
@@ -52,7 +52,7 @@
                         {{ row.created }}
                     </td>
                     <td style="text-align: center">
-                        <a href="{{ url_for('backend.tutorials.edit', slug=row.slug) }}">Edit</a>
+                        <a href="{{ url_for('backend.resources.edit', slug=row.slug) }}">Edit</a>
                     </td>
                 </tr>
             {% endfor %}

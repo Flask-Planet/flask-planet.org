@@ -1,0 +1,242 @@
+{% extends 'theme/extends/backend.html' %}
+
+{% block title %}
+    Add Resource
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block alpine_resources %}
+    <script defer src="{{ url_for('backend.static', filename='alpine:global:store.js') }}"></script>
+    {% include 'resources/includes/alpine:data:resources_edit.html' %}
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='highlightjs/highlightjs.atom-one-dark.css') }}">
+    <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
+{% endblock %}
+
+{% block container %}
+    <div x-data="resources_edit">
+        <form name="edit_resource" x-ref="edit_resource" method="post" enctype="multipart/form-data">
+            <input type="hidden" x-model="title" name="title" value="">
+            <input type="hidden" x-model="slug" name="slug" value="">
+            <input type="hidden" x-model="summary" name="summary" value="">
+            <input type="hidden" x-model="resource_tags" name="resource_tags" value="">
+        </form>
+        <section>
+            <div class="box">
+                <div class="box-row u-space-between">
+                    <a class="button u-align-center" href="{{ url_for('backend.resources.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-arrow-left">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </a>
+                    <div>
+                        <button @click="show_delete = true">Delete</button>
+                        <button
+                                @click="$refs.edit_resource.submit()"
+                                x-bind:disabled="slug_exists || slug.length < 1"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-light" x-cloak x-show="show_delete">
+                <div class="box-row u-push-end">
+                    <button class="button-red" @click="show_delete = true">Confirm Delete</button>
+                    <button @click="show_delete = false">Cancel</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="box">
+                <label for="title">Title</label>
+                <input class="u-w100"
+                       id="title"
+                       name="title"
+                       type="text"
+                       @input.debounce.200ms="slugger(); check_if_slug_exists()"
+                       x-model="title">
+                <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
+                <label for="slug">Slug</label>
+                <input
+                        class="u-w100"
+                        id="slug"
+                        name="slug"
+                        type="text"
+                        x-model="slug"
+                        readonly
+                >
+                <label for="summary">Summary</label>
+                <textarea
+                        name="summary"
+                        id="summary"
+                        rows="5"
+                        maxlength="500"
+                        x-ref="summary"
+                        x-model="summary"
+                        @input.debounce.500ms="summary_length = $el.value.length"
+                ></textarea>
+                <p><span x-text="summary_length"></span> / 500</p>
+
+                <label for="add_tag">Add Tags</label>
+
+                <input id="add_tag" name="add_tag" list="all_tags" x-ref="add_tag"
+                       x-model="current_tag"
+                       @keydown.enter="add_tag()">
+
+                <datalist id="all_tags">
+                    <template x-for="tag in available_tags">
+                        <option x-text="tag"></option>
+                    </template>
+                </datalist>
+
+                <button type="button" @click="add_tag()">Add Tag</button>
+
+                <input type="hidden" x-model="removed_from_resource_tags">
+
+                <label for="add_tag">Tags</label>
+                <p x-show="resource_tags.length < 1">No tags added</p>
+                <template x-for="tag in resource_tags">
+                        <span class="tag">
+                            <span x-text="tag"></span>
+                            <span class="del_tag" @click="del_tag(tag)">X</span>
+                        </span>
+                </template>
+
+            </div>
+        </section>
+        <section>
+            <div class="box">
+                <form name="upload_markdown_pages" class="mb-4">
+                    <label for="markdown_file">Upload Pages</label>
+
+                    <button type="button" @click="$refs.markdown_file.click()" class="me-1">
+                        Select File
+                    </button>
+
+                    <template x-for="file in selected_files">
+                        <span class="tag">
+                            <span x-text="file"></span>
+                        </span>
+                    </template>
+
+                    <button
+                            type="button"
+                            @click="$refs.markdown_file.value = ''; selected_files = ['No files selected...']"
+                    >Clear
+                    </button>
+
+                    <button
+                            type="button"
+                            @click="upload_pages()"
+                            :disabled="selected_files[0] === 'No files selected...'"
+                    >Add Page(s)
+                    </button>
+
+                    <div class="hidden-file-input">
+                        <input
+                                x-ref="markdown_file"
+                                multiple
+                                name="markdown_file"
+                                type="file"
+                                accept=".md, text/markdown"
+                                @change.debounce.500ms="set_selected_files()"
+                        >
+                    </div>
+                </form>
+
+                <label>Pages</label>
+                <form name="page_order" x-ref="page_order">
+                    <div class="resource-pages" style="padding-bottom: 20px;">
+                        <template x-for="(page, index) in pages">
+                            <div class="resource-page"
+                                 :class="moved_page === page.resource_page_id ? 'flash-animation' : ''">
+                                <input type="hidden" :name="page.resource_page_id" x-model="index">
+
+                                <strong x-text="page.markdown_og_filename"></strong>
+                                <div>
+
+                                    {# ORDER BUTTONS #}
+                                    <button type="button"
+                                            @click="switch_page_order(page, 'up', $refs.page_order);"
+                                            :disabled="pages.indexOf(page) === 0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-arrow-up">
+                                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                                            <polyline points="5 12 12 5 19 12"></polyline>
+                                        </svg>
+                                    </button>
+                                    <button type="button"
+                                            @click="switch_page_order(page, 'down', $refs.page_order);"
+                                            :disabled="pages.indexOf(page) === pages.length - 1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-arrow-down">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <polyline points="19 12 12 19 5 12"></polyline>
+                                        </svg>
+                                    </button>
+                                    {# ORDER BUTTONS #}
+
+                                    <button type="button"
+                                            class="button"
+                                            :class="selected_page === page.resource_page_id ? '' : 'button-outline'"
+                                            @click="$refs.markup.innerHTML = page.markup; selected_page = page.resource_page_id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-eye">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    </button>
+
+                                    <span x-data="{delete_file: false}">
+                                    <button type="button"
+                                            @click="delete_file = true"
+                                            x-show="!delete_file">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-trash-2">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                        </svg>
+                                    </button>
+                                    <button type="button"
+                                            @click="
+                                    delete_file = false;
+                                    delete_page(page.resource_page_id, $refs.markup)"
+                                            x-show="delete_file" class="button-red">
+                                        Confirm
+                                    </button>
+                                    <button type="button"
+                                            @click="delete_file = false"
+                                            x-show="delete_file">
+                                        Cancel
+                                    </button>
+                                </span>
+
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </form>
+                <label>Page View</label>
+                <div x-ref="markup" class="markup_display mt-4">-</div>
+
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+
