@@ -1,12 +1,15 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 
 from app.models.resource import Resource
 from app.models.resource_tag import ResourceTag
 from .. import bp
 
 
-@bp.route("/resources", methods=["GET"])
+@bp.route("/resources", methods=["GET", "POST"])
 def resources():
+    if request.form.get('search'):
+        return redirect(url_for('frontend.www.resources', search=request.form.get('search'), **request.args))
+
     if request.args.get('search'):
         resources_pages = Resource.search_by_title_pages(
             title=request.args.get('search'),

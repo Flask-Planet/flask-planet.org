@@ -5,13 +5,12 @@
 {% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/highlightjs.atom-one-dark.css') }}">
+    <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
 {% endblock %}
 
-{% block alpine_resources %}
-    <script defer src="{{ url_for('backend.static', filename='alpine:global:store.js') }}"></script>
+{% block endpage_js %}
     {% include 'resources/includes/alpine:data:resources_edit.html' %}
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='highlightjs/highlightjs.atom-one-dark.css') }}">
-    <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
 {% endblock %}
 
 {% block container %}

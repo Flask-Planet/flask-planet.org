@@ -2,9 +2,20 @@
 
 {% block container %}
 
-    <section class="mb-4">
+    <section class="mb-4" x-data="{show_tags: false}">
         <div class="box ms-1 me-1" style="color: whitesmoke">
-            <form method="get">
+            {% set search_url = '' %}
+            {% if request.args.get('tag') and request.args.get('page') %}
+                {% set search_url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=request.args.get('page')) %}
+            {% elif request.args.get('tag') %}
+                {% set search_url = url_for("frontend.www.resources", tag=request.args.get('tag')) %}
+            {% elif request.args.get('page') %}
+                {% set search_url = url_for("frontend.www.resources", page=request.args.get('page')) %}
+            {% else %}
+                {% set search_url = url_for("frontend.www.resources") %}
+            {% endif %}
+            <form method="POST" action="{{ search_url }}">
+                <small>Title:</small>
                 <input
                         class="u-m-0"
                         name="search"
@@ -15,31 +26,59 @@
                 <button type="submit">
                     Search
                 </button>
+                <small class="ms-2">Tag:</small>
+                <span class="tag-no-shadow">
+                {{ request.args.get('tag', '-') }}
+                </span>
+                <button type="button" @click="show_tags = !show_tags">
+                    <span x-text="show_tags ? 'Hide Tags' : 'Show Tags'"></span>
+                </button>
                 <a
                         class="button button-outline"
                         href="{{ url_for("frontend.www.resources") }}">
-                    Clear
+                    Clear Filters
                 </a>
             </form>
-
-            <p class="mt-3 mb-0"><small>Tags</small></p>
-            {% for tag in tags %}
-                {% set url = '' %}
-                {% if request.args.get('search') and request.args.get('page') %}
-                    {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=request.args.get('page'), tag=tag) %}
-                {% elif request.args.get('search') %}
-                    {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=tag) %}
-                {% elif request.args.get('page') %}
-                    {% set url = url_for("frontend.www.resources", page=request.args.get('page'), tag=tag) %}
-                {% else %}
-                    {% set url = url_for("frontend.www.resources", tag=tag) %}
-                {% endif %}
-                <a href="{{ url }}">
+            <div x-cloak x-show="show_tags">
+                <p class="mt-3 mb-0"><small>Tags</small></p>
+                {% for tag in tags %}
+                    {% set url = '' %}
+                    {% if request.args.get('search') and request.args.get('page') %}
+                        {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=request.args.get('page'), tag=tag) %}
+                    {% elif request.args.get('search') %}
+                        {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=tag) %}
+                    {% elif request.args.get('page') %}
+                        {% set url = url_for("frontend.www.resources", page=request.args.get('page'), tag=tag) %}
+                    {% else %}
+                        {% set url = url_for("frontend.www.resources", tag=tag) %}
+                    {% endif %}
+                    <a href="{{ url }}">
                 <span class="tag-no-shadow">
                 {{ tag }}
                 </span>
-                </a>
-            {% endfor %}
+                    </a>
+                {% endfor %}
+            </div>
+            {% if pages > 1 %}
+                <p class="mt-3 mb-3"><small>Pages</small></p>
+                <section class="mb-3">
+                    {% for this_page in range(pages) %}
+                        {% set url = '' %}
+                        {% if request.args.get('search') and request.args.get('tag') %}
+                            {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=this_page + 1) %}
+                        {% elif request.args.get('search') %}
+                            {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=this_page + 1) %}
+                        {% elif request.args.get('tag') %}
+                            {% set url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=this_page + 1) %}
+                        {% else %}
+                            {% set url = url_for("frontend.www.resources", page=this_page + 1) %}
+                        {% endif %}
+                        <a href="{{ url }}"
+                           class="button {% if page == this_page + 1 %}button-active{% endif %}"
+                           style="padding-left: 18px; padding-right: 18px;">{{ this_page + 1 }}</a>
+                    {% endfor %}
+                </section>
+            {% endif %}
         </div>
     </section>
 
@@ -65,23 +104,5 @@
                 </a>
             {% endfor %}
         </div>
-    </section>
-
-    <section class="mt-5 mb-4 u-justify-center u-gap-10">
-        {% for this_page in range(pages) %}
-            {% set url = '' %}
-            {% if request.args.get('search') and request.args.get('tag') %}
-                {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=this_page + 1) %}
-            {% elif request.args.get('search') %}
-                {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=this_page + 1) %}
-            {% elif request.args.get('tag') %}
-                {% set url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=this_page + 1) %}
-            {% else %}
-                {% set url = url_for("frontend.www.resources", page=this_page + 1) %}
-            {% endif %}
-            <a href="{{ url }}"
-               class="button {% if page == this_page + 1 %}button-active{% endif %}"
-               style="padding-left: 18px; padding-right: 18px;">{{ this_page + 1 }}</a>
-        {% endfor %}
     </section>
 {% endblock %}
