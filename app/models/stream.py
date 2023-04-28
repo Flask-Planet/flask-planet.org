@@ -35,7 +35,7 @@ class Stream(db.Model, CrudMixin):
 
     @classmethod
     def all_newest_first(cls):
-        logger.debug("Getting all resources newest first...")
+        logger.debug("Getting all streams newest first...")
         return cls.read(all_rows=True, order_by="created", order_desc=True)
 
     @classmethod

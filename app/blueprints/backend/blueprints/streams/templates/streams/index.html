@@ -7,56 +7,102 @@
 {% block head %}
 {% endblock %}
 
+{% block endpage_js %}
+    {%- include 'streams/includes/alpine:data:streams_index.html' %}
+{% endblock %}
+
 {% block container %}
-    <section>
-        <div class="box">
-            <div class="box-row u-space-between">
-                <form>
-                    <button type="submit">Search</button>
-                    <input class="u-m-0" name="admin-resource-search" type="text">
-                </form>
-                <a class="button" href="{{ url_for('backend.streams.add') }}">Add Stream</a>
+    <div x-data="streams_index">
+
+        <section>
+            <div class="box">
+                <div class="box-row u-space-between">
+                    <form>
+                        <input
+                                class="u-m-0"
+                                name="resource-search"
+                                type="text"
+                                x-model="title_search"
+                                @keydown="search_active = true"
+                                @input.debounce.1000ms="search_for_streams()"
+                                placeholder="Search...">
+
+                        <span x-cloak x-show="search_active">
+                        <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+                        <svg class="ms-1" height="10" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg"
+                             fill="#fff">
+                            <circle cx="15" cy="15" r="15">
+                                <animate attributeName="r" from="15" to="15"
+                                         begin="0s" dur="0.8s"
+                                         values="15;9;15" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                                <animate attributeName="fill-opacity" from="1" to="1"
+                                         begin="0s" dur="0.8s"
+                                         values="1;.5;1" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+                                <animate attributeName="r" from="9" to="9"
+                                         begin="0s" dur="0.8s"
+                                         values="9;15;9" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                                <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                                         begin="0s" dur="0.8s"
+                                         values=".5;1;.5" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="105" cy="15" r="15">
+                                <animate attributeName="r" from="15" to="15"
+                                         begin="0s" dur="0.8s"
+                                         values="15;9;15" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                                <animate attributeName="fill-opacity" from="1" to="1"
+                                         begin="0s" dur="0.8s"
+                                         values="1;.5;1" calcMode="linear"
+                                         repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        </span>
+
+                    </form>
+                    <a class="button" href="{{ url_for('backend.streams.add') }}">Add Stream</a>
+                </div>
             </div>
-        </div>
-    </section>
-    <section>
-        <table>
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Clicks</th>
-                <th>link</th>
-                <th style="text-align: center">Options</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for row in q_streams %}
+        </section>
+
+
+        <section>
+            <table>
+                <thead>
                 <tr>
-                    <td>
-                        {{ row.title }}
-                    </td>
-                    <td>
-                        {{ row.slug }}
-                    </td>
-                    <td>
-                        {% for tag in row.rel_resource_tag_membership %}
-                            {{ tag.rel_resource_tag.tag }}{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {{ row.clicks }}
-                    </td>
-                    <td>
-                        {{ row.created }}
-                    </td>
-                    <td style="text-align: center">
-                        <a href="{{ url_for('backend.resources.edit', slug=row.slug) }}">Edit</a>
-                    </td>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>link</th>
+                    <th style="text-align: center">&nbsp;</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </section>
+                </thead>
+                <tbody>
+                <template x-for="stream in streams">
+                    <tr>
+                        <td><img :src="stream.img" alt=""></td>
+                        <td x-text="stream.title"></td>
+                        <td x-text="stream.date"></td>
+                        <td x-text="stream.time"></td>
+                        <td><a :href="stream.url" x-text="stream.url"></a></td>
+                        <td style="text-align: center"><a :href="resource.edit_url">Edit</a></td>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <template x-for="i in pages">
+                <button @click="page = i" class="me-1 ms-1">
+                    <span x-text="i"></span>
+                </button>
+            </template>
+        </section>
+    </div>
 {% endblock %}

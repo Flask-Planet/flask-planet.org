@@ -7,8 +7,13 @@ from .. import bp
 
 @bp.route("/resources", methods=["GET", "POST"])
 def resources():
-    if request.form.get('search'):
-        return redirect(url_for('frontend.www.resources', search=request.form.get('search'), **request.args))
+    if request.form.get('search') or request.form.get('tag'):
+        kwargs = {}
+        if request.form.get('search'):
+            kwargs['search'] = request.form.get('search')
+        if request.form.get('tag'):
+            kwargs['tag'] = request.form.get('tag')
+        return redirect(url_for('frontend.www.resources', **kwargs, **request.args))
 
     if request.args.get('search'):
         resources_pages = Resource.search_by_title_pages(
