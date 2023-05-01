@@ -1,100 +1,123 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block container %}
+    {% if upcoming_streams %}
+        <section>
+            <h1 class="floating-header">Schedule</h1>
+            {% for stream in upcoming_streams %}
+                <article class="box">
+                    <div class="box-group box-group-grid-lg-2">
+                        <div class="box-col">
+                            {% if stream.thumbnail != None and stream.thumbnail != '' %}
+                                <img src="{{ url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail) }}"
+                                     alt="{{ stream.title }} Thumbnail">
+                            {% else %}
+                                <img src="{{ url_for("theme.static", filename="img/no-thumbnail.png") }}"
+                                     alt="{{ stream.title }} Thumbnail">
+                            {% endif %}
+                        </div>
+                        <div class="box-col">
+                            <h6>{{ stream.title }}</h6>
+                            <ul class="box-list">
+                                <li>
+                                    <h1>Date:</h1>
+                                    <p>{{ stream.schedule|stream_date }}</p>
+                                </li>
+                                <li>
+                                    <h1>Time:</h1>
+                                    <p>{{ stream.schedule|stream_time }} (GMT)</p>
+                                </li>
+                                <li>
+                                    <h1>Link:</h1>
+                                    <p>
+                                        <a href="{{ stream.url_link }}">
+                                            {{ stream.display_url_link or stream.url_link }}
+                                        </a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box-col mt-4">
+                        {{ stream.summary|safe }}
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+
     <section>
 
-        <h5 class="u-center">Upcoming Streams</h5>
-
-        <article class="box">
-            <div class="box-group box-group-grid-lg-2">
-                <div class="box-col">
-                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
-                </div>
-                <div class="box-col">
-                    <h6>Ask Me Anything with Dominic H</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                    <ul class="box-list">
-                        <li>
-                            <h1>Date:</h1>
-                            <p>Friday 20th January 2023</p>
-                        </li>
-                        <li>
-                            <h1>Time:</h1>
-                            <p>18:00 (GMT)</p>
-                        </li>
-                        <li>
-                            <h1>Link:</h1>
-                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </article>
-
-    </section>
-
-    <section>
-
-        <h5 class="u-center">Past Streams</h5>
-
-        <div class="box-group box-group-grid-lg-3">
+        {% if most_recent_stream %}
+            <h1 class="floating-header">Recent Stream</h1>
 
             <article class="box">
-                <div class="box-col">
-                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
+                <div class="box-group box-group-grid-lg-2">
+                    <div class="box-col">
+                        {% if most_recent_stream.thumbnail != None and most_recent_stream.thumbnail != '' %}
+                            <img src="{{ url_for("stream_cdn", stream_id=most_recent_stream.stream_id, filename=most_recent_stream.thumbnail) }}"
+                                 alt="{{ most_recent_stream.title }} Thumbnail">
+                        {% else %}
+                            <img src="{{ url_for("theme.static", filename="img/no-thumbnail.png") }}"
+                                 alt="{{ most_recent_stream.title }} Thumbnail">
+                        {% endif %}
+                    </div>
+                    <div class="box-col">
+                        <h6>{{ most_recent_stream.title }}</h6>
+
+                        <ul class="box-list">
+                            <li>
+                                <h1>Date:</h1>
+                                <p>{{ most_recent_stream.schedule|stream_date }}</p>
+                            </li>
+                            <li>
+                                <h1>Time:</h1>
+                                <p>{{ most_recent_stream.schedule|stream_time }} (GMT)</p>
+                            </li>
+                            <li>
+                                <h1>Link:</h1>
+                                <p>
+                                    <a href="{{ most_recent_stream.url_link }}">
+                                        {{ most_recent_stream.display_url_link or most_recent_stream.url_link }}
+                                    </a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="box-col">
-                    <h6>Ask Me Anything with Dominic H</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Date:</h1>
-                            <p>Friday 20th January 2023</p>
-                        </li>
-                        <li>
-                            <h1>Time:</h1>
-                            <p>18:00 (GMT)</p>
-                        </li>
-                        <li>
-                            <h1>Link:</h1>
-                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
-                        </li>
-                    </ul>
+                <div class="box-col mt-4">
+                    {{ most_recent_stream.summary|safe }}
                 </div>
             </article>
 
-            <article class="box">
-                <div class="box-col">
-                    <img src="{{ url_for('theme.static', filename='uploads/ama-dominic-h.png') }}" alt="Placeholder">
-                </div>
-                <div class="box-col">
-                    <h6>Ask Me Anything with Dominic H</h6>
-                    <p>The author and creator of Am I Going On Holiday?
-                        will be talking about the site itself and be available to answer any questions.</p>
-                </div>
-                <div class="box-col">
-                    <ul class="box-list">
-                        <li>
-                            <h1>Date:</h1>
-                            <p>Friday 20th January 2023</p>
-                        </li>
-                        <li>
-                            <h1>Time:</h1>
-                            <p>18:00 (GMT)</p>
-                        </li>
-                        <li>
-                            <h1>Link:</h1>
-                            <p><a href="https://youtu.be/4eCHYvcbAhg">YouTube</a></p>
-                        </li>
-                    </ul>
-                </div>
-            </article>
+        {% endif %}
 
-        </div>
+        {% if rest_of_past_streams %}
+            <h1 class="floating-header">Past Streams</h1>
 
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stream in rest_of_past_streams %}
+                    <tr>
+                        <td>{{ stream.title }}</td>
+                        <td>{{ stream.schedule|stream_date }}</td>
+                        <td>{{ stream.schedule|stream_time }} (GMT)</td>
+                        <td>
+                            <a href="{{ stream.url_link }}">
+                                {{ stream.display_url_link or stream.url_link }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </section>
 {% endblock %}

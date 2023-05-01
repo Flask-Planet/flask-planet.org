@@ -197,10 +197,47 @@ input[type='submit'].button-clear[disabled]:hover {
     border-color: #8d0000;
 }
 
+.button-red:active {
+    background-color: #690000;
+    border-color: #8d0000;
+}
+
+.button-red:focus {
+    background-color: #690000;
+    border-color: #8d0000;
+}
+
+
 .button-red.button-clear,
 .button-red.button-outline {
     background-color: transparent;
     color: #690000;
+}
+
+.button-green {
+    background-color: #136900;
+    border-color: #1f8d00;
+}
+
+.button-green:hover {
+    background-color: #1f8d00;
+    border-color: #1f8d00;
+}
+
+.button-green:active {
+    background-color: #136900;
+    border-color: #1f8d00;
+}
+
+.button-green:focus {
+    background-color: #136900;
+    border-color: #1f8d00;
+}
+
+.button-green.button-clear,
+.button-green.button-outline {
+    background-color: transparent;
+    color: #136900;
 }
 
 .button-black.button-clear {
@@ -392,6 +429,14 @@ input[type='checkbox'], input[type='radio'] {
 
 /* msc.css */
 
+.floating-header {
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+    font-size: 1.8rem;
+    margin-bottom: 1.8rem;
+}
+
 .tag {
     display: inline-block;
     background-color: #151921;
@@ -569,7 +614,7 @@ input[type='checkbox'], input[type='radio'] {
 }
 
 .mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0!important;
 }
 
 .mb-1 {

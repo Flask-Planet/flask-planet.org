@@ -22,6 +22,15 @@ class ResourcePage(db.Model, CrudMixin):
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     @classmethod
+    def delete_by_og_filename(cls, og_filename: str, fk_resource_id: int):
+        cls.delete(
+            fields={
+                'fk_resource_id': fk_resource_id,
+                'markdown_og_filename': og_filename
+            }
+        )
+
+    @classmethod
     def update_order(cls, resource_page_id, order):
         cls.update(
             values={
@@ -44,3 +53,8 @@ class ResourcePage(db.Model, CrudMixin):
             fields={'markdown_og_filename': og_filename},
             _auto_output=False
         ).first()
+
+    @classmethod
+    def count_by_resource_id(cls, fk_resource_id: int):
+        query = select(func.count()).where(cls.fk_resource_id == fk_resource_id)
+        return cls.__session__.execute(query).scalar() or 0

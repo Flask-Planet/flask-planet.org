@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template, abort, request, redirect, url_for
 
 from app import logger
@@ -9,18 +11,28 @@ from .. import bp
 @bp.route("/edit/<resource_id>", methods=["GET", "POST"])
 def edit(resource_id):
     resource_ = Resource.get_by_id(resource_id)
-
     if not resource_:
         return abort(404)
 
     if request.method == "POST":
         logger.debug(f"Updating resource {resource_.resource_id}")
 
+        if request.form.get("go_viewable_on") != "":
+            try:
+                go_viewable_on = datetime.strptime(request.form.get("go_viewable_on", ''), "%Y-%m-%d")
+            except ValueError:
+                go_viewable_on = None
+        else:
+            go_viewable_on = None
+
         Resource.update(
             values={
                 "slug": request.form.get("slug"),
                 "title": request.form.get("title"),
                 "summary": request.form.get("summary"),
+                "viewable": True if request.form.get("viewable") == 'true' else False,
+                "auto_viewable": True if request.form.get("auto_viewable") == 'true' else False,
+                "go_viewable_on": go_viewable_on
             },
             id_=resource_id,
         )

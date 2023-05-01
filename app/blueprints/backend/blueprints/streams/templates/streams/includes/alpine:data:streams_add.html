@@ -1,31 +1,18 @@
 <script defer type="application/javascript">
     document.addEventListener('alpine:init', () => {
-        Alpine.data('resources_add', () => ({
+        Alpine.data('streams_add', () => ({
             title: '',
-            slug: '',
-            slug_exists: false,
             summary: '',
-            summary_length: 0,
+
             init() {
-                this.get_all_tags()
-            },
-            slugger() {
-                let slug = this.title
-                slug = slug.toLowerCase()
-                slug = slug.replace(/[^a-z0-9\s-]/g, '')
-                slug = slug.replace(/[\s-]+/g, '-')
-                slug = slug.replace(/^-+|-+$/g, '')
-                this.slug = slug
-            },
-            check_if_slug_exists() {
-                fetch(`{{ url_for("backend.resources.api_check_if_slug_exists") }}?slug=${this.slug}`, {
-                    method: 'GET'
+                const quill = new Quill(this.$refs.quill, {theme: 'snow'})
+
+                quill.root.innerHTML = this.summary
+
+                quill.on('text-change', () => {
+                    this.summary = quill.root.innerHTML
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        this.slug_exists = data['exists']
-                    })
-            },
+            }
         }))
     })
 </script>

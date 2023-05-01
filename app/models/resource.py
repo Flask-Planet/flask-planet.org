@@ -18,7 +18,7 @@ class Resource(db.Model, CrudMixin):
     # Data
     slug = schema.Column(types.String(128), nullable=False, unique=True)
     title = schema.Column(types.String(128), nullable=False)
-    summary = schema.Column(types.String(500), nullable=True)
+    summary = schema.Column(types.NVARCHAR, nullable=True)
 
     # Viewable
     viewable = schema.Column(types.Boolean, default=False)

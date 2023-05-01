@@ -21,3 +21,22 @@ def pytz_datetime(ltz: str = "Europe/London", mask: str = "%Y-%m-%d %H:%M:%S.%f"
         apply_delta = (datetime.now(local_tz) + timedelta(days=days_delta)).strftime(mask)
         return datetime.strptime(apply_delta, mask)
     return datetime.strptime(datetime.now(local_tz).strftime(mask), mask)
+
+
+def pytz_datetime_str(ltz: str = "Europe/London", mask: str = "%Y-%m-%d %H:%M:%S.%f", days_delta: int = 0) -> str:
+    """
+    Returns the current date and time YYYY-MM-DD HH:MM:SS.MS for the defined local time zone,
+    can also adjust the date by using a delta(days)
+    :param days_delta:
+    :param ltz:
+    :param mask:
+    :return:
+    """
+    local_tz = timezone(ltz)
+    if days_delta < 0:
+        apply_delta = (datetime.now(local_tz) - timedelta(days=abs(days_delta))).strftime(mask)
+        return datetime.strptime(apply_delta, mask).strftime(mask)
+    if days_delta > 0:
+        apply_delta = (datetime.now(local_tz) + timedelta(days=days_delta)).strftime(mask)
+        return datetime.strptime(apply_delta, mask).strftime(mask)
+    return datetime.strptime(datetime.now(local_tz).strftime(mask), mask).strftime(mask)

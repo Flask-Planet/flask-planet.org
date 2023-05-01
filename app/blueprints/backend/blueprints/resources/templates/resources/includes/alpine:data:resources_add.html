@@ -5,9 +5,14 @@
             slug: '',
             slug_exists: false,
             summary: '',
-            summary_length: 0,
             init() {
-                this.get_all_tags()
+                let quill = new Quill(this.$refs.quill, {theme: 'snow'})
+
+                quill.root.innerHTML = this.summary
+
+                quill.on('text-change', () => {
+                    this.summary = quill.root.innerHTML
+                })
             },
             slugger() {
                 let slug = this.title

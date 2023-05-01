@@ -1,194 +1,77 @@
 <script defer type="application/javascript">
     document.addEventListener('alpine:init', () => {
-        Alpine.data('resources_edit', () => ({
+        Alpine.data('streams_edit', () => ({
                 show_delete: false,
 
-                resource_id: '{{ resource.resource_id }}',
-                title: '{{ resource.title }}',
-                original_slug: '{{ resource.slug }}',
-                slug: '{{ resource.slug }}',
-                slug_exists: false,
-                summary: '{{ resource.summary }}',
-                summary_length: 0,
-                markup: '-',
-                markdown: '-',
+                stream_id: '{{ stream.stream_id }}',
+                title: '{{ stream.title }}',
+                summary: '{{ stream.summary|safe }}',
+
+                schedule: '{{ stream.schedule|datetime_local }}',
+                url_link: '{{ stream.url_link or '' }}',
+                display_url_link: '{{ stream.display_url_link or '' }}',
+
+                no_thumbnail_url: '{{ url_for("theme.static", filename="img/no-thumbnail.png") }}',
+                thumbnail: '{{ thumbnail }}',
+
+                viewable: {{ stream.viewable|lower }},
+                auto_viewable: {{ stream.auto_viewable|lower }},
+                go_viewable_on: '{{ stream.go_viewable_on|datetime }}',
+
                 selected_files: ['No files selected...'],
 
-                current_tag: '',
-                all_tags: [],
-                available_tags: [],
-                resource_tags: [],
-                removed_from_resource_tags: [],
-
-                pages: [],
-                selected_page: 0,
-                total_pages: 0,
-                moved_page: 0,
-
                 init() {
-                    this.total_pages = this.pages.length
-                    this.get_resource_tags()
-                    this.get_all_tags()
-                    this.get_pages()
-                },
-                switch_page_order(page, direction, page_order_form) {
-                    this.moved_page = 0
-                    let index = this.pages.indexOf(page)
-                    if (index > -1) {
-                        if (direction === 'up') {
-                            if (index > 0) {
-                                let temp = this.pages[index - 1]
-                                this.pages[index - 1] = this.pages[index]
-                                this.pages[index] = temp
-                            }
-                        } else if (direction === 'down') {
-                            if (index < this.pages.length - 1) {
-                                let temp = this.pages[index + 1]
-                                this.pages[index + 1] = this.pages[index]
-                                this.pages[index] = temp
-                            }
-                        }
-                    }
-                    setTimeout(() => {
-                        this.moved_page = page.resource_page_id
-                        this.update_page_order(page_order_form)
-                    }, 100)
-                    this.moved_page = 0
-                },
-                slugger() {
-                    let slug = this.title
-                    slug = slug.toLowerCase()
-                    slug = slug.replace(/[^a-z0-9\s-]/g, '')
-                    slug = slug.replace(/[\s-]+/g, '-')
-                    slug = slug.replace(/^-+|-+$/g, '')
-                    this.slug = slug
-                },
-                check_if_slug_exists() {
-                    if (this.slug !== this.original_slug) {
-                        fetch(`{{ url_for("backend.resources.api_check_if_slug_exists") }}?slug=${this.slug}`, {
-                            method: 'GET'
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                this.slug_exists = data['exists']
-                            })
-                    }
-                },
-                set_selected_files() {
-                    this.selected_files = []
-                    for (const file of this.$refs.markdown_file.files) {
-                        this.selected_files.push(file.name)
-                    }
-                    s
-                },
-                update_page_order(page_order_form) {
-                    let temp_dict = {}
-                    for (let element of page_order_form) {
-                        if (
-                            element.type === 'hidden'
-                        ) {
-                            temp_dict[element.name] = element.value
-                        }
-                    }
-                    fetch(`{{ url_for("backend.resources.api_update_page_order") }}?id=${this.resource_id}`, {
-                        method: 'POST',
-                        body: JSON.stringify(temp_dict),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }).catch(error => {
-                        console.log(error);
+                    let quill = new Quill(this.$refs.quill, {theme: 'snow'})
+
+                    quill.root.innerHTML = this.summary
+
+                    quill.on('text-change', () => {
+                        this.summary = quill.root.innerHTML
                     })
                 },
-                get_pages() {
-                    fetch(`{{ url_for("backend.resources.api_get_all_pages") }}?id=${this.resource_id}`, {
-                        method: 'GET'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            this.pages = data['pages']
-                            console.log(this.pages)
-                        })
-                },
-                delete_page(resource_page_id, view_ref) {
-                    if (this.selected_page === resource_page_id) {
-                        this.selected_page = 0
-                        view_ref.innerHTML = ''
-                    }
-                    fetch(`{{ url_for("backend.resources.api_get_delete_page") }}?id=${resource_page_id}`, {
-                        method: 'GET'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            let status = data['status']
-                            if (status === 'success') {
-                                this.get_pages()
-                            }
-                        })
-                },
-                upload_pages() {
+
+                upload_thumbnail() {
                     let formData = new FormData()
 
-                    for (const file of this.$refs.markdown_file.files) {
-                        formData.append('markdown_file', file, file.name)
+                    for (const file of this.$refs.thumbnail_file.files) {
+                        formData.append('thumbnail_file', file, file.name)
                     }
 
-                    fetch(`{{ url_for("backend.resources.api_add_pages_to", resource_id=resource.resource_id) }}`, {
+                    fetch(`{{ url_for("backend.streams.api_upload_thumbnail", stream_id=stream.stream_id) }}`, {
                         method: 'POST',
                         body: formData
                     })
                         .then(response => response.json())
                         .then(data => {
-                            this.selected_files = data['files']
+                            if (data['status'] === 'success') {
+                                this.thumbnail = data['thumbnail']
+                                this.selected_files = ['No files selected...']
+                            } else {
+                                this.thumbnail = ''
+                                this.selected_files = ['No files selected...']
+                            }
                         }).then(() => {
-                        hljs.highlightAll()
-                        this.selected_files = ['No files selected...']
-                        this.get_pages()
                     });
                 },
-                get_all_tags() {
-                    fetch('{{ url_for("backend.resources.api_get_all_tags") }}', {
-                        method: 'GET'
+
+                remove_thumbnail() {
+                    fetch(`{{ url_for("backend.streams.api_remove_thumbnail", stream_id=stream.stream_id) }}`, {
+                        method: 'POST'
                     })
                         .then(response => response.json())
                         .then(data => {
-                            this.all_tags = data['tags']
-                            this.compare_tags()
-                        })
+                            if (data['status'] === 'success') {
+                                this.thumbnail = this.no_thumbnail_url
+                            }
+                        });
                 },
-                get_resource_tags() {
-                    fetch(`{{ url_for("backend.resources.api_get_resource_tags") }}?id=${this.resource_id}`, {
-                        method: 'GET'
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            this.resource_tags = data['tags']
-                        })
-                },
-                compare_tags() {
-                    this.available_tags = this.all_tags.filter(tag => !this.resource_tags.includes(tag))
-                },
-                add_tag() {
-                    let index = this.available_tags.indexOf(this.current_tag)
-                    if (index > -1) {
-                        this.available_tags.splice(index, 1)
-                    }
-                    if (this.current_tag.length > 0) {
-                        this.resource_tags.push(this.current_tag)
-                        this.current_tag = ''
+
+                set_selected_files() {
+                    this.selected_files = []
+                    for (const file of this.$refs.thumbnail_file.files) {
+                        this.selected_files.push(file.name)
                     }
                 },
-                del_tag(tag) {
-                    let index = this.resource_tags.indexOf(tag)
-                    if (index > -1) {
-                        if (this.resource_tags === 1) {
-                            this.resource_tags = null
-                        } else {
-                            this.resource_tags.splice(index, 1)
-                        }
-                        this.available_tags.push(tag)
-                    }
-                }
 
             })
         )

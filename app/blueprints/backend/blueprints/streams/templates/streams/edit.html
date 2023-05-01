@@ -1,7 +1,158 @@
 {% extends 'theme/extends/backend.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}
+    Edit Stream
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
+    <script src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
+{% endblock %}
+
+{% block endpage_js %}
+    {% include 'streams/includes/alpine:data:streams_edit.html' %}
+{% endblock %}
 
 {% block container %}
-    <p>edit</p>
+    <div x-data="streams_edit">
+        <form name="edit_stream" x-ref="edit_stream" method="post">
+            <input type="hidden" x-model="title" name="title" value="">
+            <input type="hidden" x-model="summary" name="summary" value="">
+            <input type="hidden" x-model="schedule" name="schedule" value="">
+            <input type="hidden" x-model="viewable" name="viewable" value="">
+            <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
+            <input type="hidden" x-model="go_viewable_on" name="go_viewable_on" value="">
+            <input type="hidden" x-model="url_link" name="url_link" value="">
+            <input type="hidden" x-model="display_url_link" name="display_url_link" value="">
+        </form>
+        <section>
+            <div class="box">
+                <div class="box-row u-space-between">
+                    <a class="button u-align-center" href="{{ url_for('backend.streams.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-arrow-left">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                    </a>
+                    <div>
+                        <button @click="show_delete = true">Delete</button>
+                        <button @click="$refs.edit_stream.submit()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-light" x-cloak x-show="show_delete">
+                <div class="box-row u-push-end">
+                    <button class="button-red" @click="show_delete = true">Confirm Delete</button>
+                    <button @click="show_delete = false">Cancel</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="box">
+                <label for="title">Title</label>
+                <input class="u-w100"
+                       id="title"
+                       name="title"
+                       type="text"
+                       x-model="title">
+
+                <label for="summary">Summary</label>
+                <div x-ref="quill" style="height: 200px; margin-bottom: 20px;"></div>
+
+                <label for="schedule">Schedule</label>
+                <input class="u-w100"
+                       id="schedule"
+                       name="schedule"
+                       type="datetime-local"
+                       x-model="schedule">
+
+                <label for="display_url_link">URL Label</label>
+                <input class="u-w100"
+                       id="display_url_link"
+                       name="display_url_link"
+                       type="text"
+                       x-model="display_url_link">
+
+                <label for="url_link">URL</label>
+                <input class="u-w100"
+                       id="url_link"
+                       name="url_link"
+                       type="text"
+                       x-model="url_link">
+
+                <div class="tag-no-shadow mb-4 mt-0">
+                    <small>URL: </small><a :href="url_link" x-text="display_url_link ? display_url_link : url_link"></a>
+                </div>
+
+                <label for="viewable">Viewable</label>
+                <div class="u-flex u-align-center mb-3">
+                    <div class="tag mt-0"
+                         x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                    </div>
+                    <button class="button-red"
+                            @click="viewable = !viewable"
+                            x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
+                            :class="viewable ? 'button-red' : 'button-green'">
+                    </button>
+                </div>
+                <div class="u-flex u-align-center mb-3">
+                    <label class="mb-0">Go viewable after:
+                        <input type="date" class="mb-0" x-model="go_viewable_on">
+                    </label>
+                    <button class="button-red ms-2"
+                            :disabled="!go_viewable_on"
+                            @click="auto_viewable = !auto_viewable"
+                            x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
+                            :class="auto_viewable ? 'button-red' : 'button-green'">
+                    </button>
+                </div>
+
+            </div>
+        </section>
+        <section>
+            <div class="box">
+                <label>Thumbnail</label>
+                <form name="thumbnail_form" x-ref="thumbnail_form">
+                    <div class="u-flex">
+                        <button type="button" @click="$refs.thumbnail_file.click()" class="me-1">
+                            Select File
+                        </button>
+                        <template x-for="file in selected_files">
+                        <span class="tag">
+                            <span x-text="file"></span>
+                        </span>
+                        </template>
+                        <div class="hidden-file-input">
+                            <input
+                                    x-ref="thumbnail_file"
+                                    name="thumbnail_file"
+                                    type="file"
+                                    accept="image/png, image/jpeg"
+                                    @change.debounce.500ms="set_selected_files()"
+                            >
+                        </div>
+                        <button type="button" @click="upload_thumbnail()">
+                            Upload
+                        </button>
+                        <button
+                                type="button"
+                                class="ms-2"
+                                :disabled="!thumbnail"
+                                @click="remove_thumbnail()">
+                            Remove Thumbnail
+                        </button>
+                    </div>
+                </form>
+                <img class="u-w100 mt-3"
+                     :src="thumbnail ? thumbnail : no_thumbnail_url"
+                     :alt="title">
+            </div>
+        </section>
+    </div>
 {% endblock %}
+
+

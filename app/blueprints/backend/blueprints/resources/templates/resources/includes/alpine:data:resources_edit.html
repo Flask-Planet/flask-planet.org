@@ -8,8 +8,12 @@
                 original_slug: '{{ resource.slug }}',
                 slug: '{{ resource.slug }}',
                 slug_exists: false,
-                summary: '{{ resource.summary }}',
-                summary_length: 0,
+                summary: '{{ resource.summary|safe }}',
+
+                viewable: {{ resource.viewable|lower }},
+                auto_viewable: {{ resource.auto_viewable|lower }},
+                go_viewable_on: '{{ resource.go_viewable_on }}',
+
                 markup: '-',
                 markdown: '-',
                 selected_files: ['No files selected...'],
@@ -30,6 +34,14 @@
                     this.get_resource_tags()
                     this.get_all_tags()
                     this.get_pages()
+
+                    let quill = new Quill(this.$refs.quill, {theme: 'snow'})
+
+                    quill.root.innerHTML = this.summary
+
+                    quill.on('text-change', () => {
+                        this.summary = quill.root.innerHTML
+                    })
                 },
                 switch_page_order(page, direction, page_order_form) {
                     this.moved_page = 0
@@ -79,7 +91,6 @@
                     for (const file of this.$refs.markdown_file.files) {
                         this.selected_files.push(file.name)
                     }
-                    s
                 },
                 update_page_order(page_order_form) {
                     let temp_dict = {}

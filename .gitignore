@@ -3,6 +3,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.idea/
+
+app/uploads/
+app/stream_thumbnails/
+app/resource_markdown/
+app/db/
+
 # C extensions
 *.so
 

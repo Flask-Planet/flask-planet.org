@@ -49,7 +49,7 @@
                     </article>
                 {% else %}
                     <article class="markup_display">
-                        <p>{{ resource.summary }}</p>
+                        {{ resource.summary|safe }}
                     </article>
                 {% endif %}
             </div>

@@ -6,6 +6,8 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/highlightjs.atom-one-dark.css') }}">
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
+    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
     <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
 {% endblock %}
 
@@ -20,6 +22,9 @@
             <input type="hidden" x-model="slug" name="slug" value="">
             <input type="hidden" x-model="summary" name="summary" value="">
             <input type="hidden" x-model="resource_tags" name="resource_tags" value="">
+            <input type="hidden" x-model="viewable" name="viewable" value="">
+            <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
+            <input type="hidden" x-model="go_viewable_on" name="go_viewable_on" value="">
         </form>
         <section>
             <div class="box">
@@ -70,16 +75,31 @@
                         readonly
                 >
                 <label for="summary">Summary</label>
-                <textarea
-                        name="summary"
-                        id="summary"
-                        rows="5"
-                        maxlength="500"
-                        x-ref="summary"
-                        x-model="summary"
-                        @input.debounce.500ms="summary_length = $el.value.length"
-                ></textarea>
-                <p><span x-text="summary_length"></span> / 500</p>
+                <div x-ref="quill" style="height: 200px; margin-bottom: 20px;"></div>
+
+
+                <label for="viewable">Viewable</label>
+                <div class="u-flex u-align-center mb-3">
+                    <div class="tag mt-0"
+                         x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                    </div>
+                    <button class="button-red"
+                            @click="viewable = !viewable"
+                            x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
+                            :class="viewable ? 'button-red' : 'button-green'">
+                    </button>
+                </div>
+                <div class="u-flex u-align-center mb-3">
+                    <label class="mb-0">Go viewable after:
+                        <input type="date" class="mb-0" x-model="go_viewable_on">
+                    </label>
+                    <button class="button-red ms-2"
+                            :disabled="!go_viewable_on"
+                            @click="auto_viewable = !auto_viewable"
+                            x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
+                            :class="auto_viewable ? 'button-red' : 'button-green'">
+                    </button>
+                </div>
 
                 <label for="add_tag">Add Tags</label>
 

@@ -76,6 +76,7 @@
                     <th>Slug</th>
                     <th>Tags</th>
                     <th style="text-align: center">Clicks</th>
+                    <th class="u-center">Visible</th>
                     <th>Created</th>
                     <th style="text-align: center">&nbsp;</th>
                 </tr>
@@ -87,6 +88,7 @@
                         <td x-text="resource.slug"></td>
                         <td x-text="resource.tags"></td>
                         <td style="text-align: center" x-text="resource.clicks"></td>
+                        <td class="u-center" :class="resource.viewable ? 'u-green' : 'u-red'">&bull;</td>
                         <td x-text="resource.created"></td>
                         <td style="text-align: center"><a :href="resource.edit_url">Edit</a></td>
                     </tr>
@@ -94,7 +96,7 @@
                 </tbody>
             </table>
         </section>
-        <section>
+        <section x-cloak x-show="pages > 1">
             <template x-for="i in pages">
                 <button @click="page = i" class="me-1 ms-1">
                     <span x-text="i"></span>

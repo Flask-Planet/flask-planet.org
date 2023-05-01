@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
+    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
 {% endblock %}
 
 {% block endpage_js %}
@@ -53,16 +55,8 @@
                         readonly
                 >
                 <label for="summary">Summary</label>
-                <textarea
-                        name="summary"
-                        id="summary"
-                        rows="5"
-                        maxlength="500"
-                        x-ref="summary"
-                        x-model="summary"
-                        @input.debounce.500ms="summary_length = $el.value.length"
-                ></textarea>
-                <p><span x-text="summary_length"></span> / 500</p>
+                <div x-ref="quill" style="height: 200px; margin-bottom: 20px;"></div>
+
             </div>
         </section>
     </div>
