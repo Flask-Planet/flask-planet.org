@@ -1,6 +1,9 @@
+from flask import session, redirect, url_for
+
 from .. import bp
 
 
 @bp.route("/logout", methods=["GET"])
 def logout():
-    pass
+    session.clear()
+    return redirect(url_for("backend.login"))

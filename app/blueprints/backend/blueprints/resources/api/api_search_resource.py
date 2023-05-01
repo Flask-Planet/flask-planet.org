@@ -1,4 +1,5 @@
 from flask import request, url_for
+from flask_bigapp.security import login_check
 
 from app import logger
 from app.models.resource import Resource
@@ -6,6 +7,7 @@ from .. import bp
 
 
 @bp.post("/api/search/resource")
+@login_check("logged_in", "backend.api_unauth")
 def api_search_resource():
     search = request.form.get("search", None)
     logger.debug(f"Searching for title: <{search}>")

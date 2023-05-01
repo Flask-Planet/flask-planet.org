@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import render_template, abort, request, url_for
+from flask_bigapp.security import login_check
 
 from app.extensions import logger
 from app.models.stream import Stream
@@ -8,6 +9,7 @@ from .. import bp
 
 
 @bp.route("/edit/<stream_id>", methods=["GET", "POST"])
+@login_check("logged_in", "backend.login")
 def edit(stream_id):
     stream_ = Stream.get_by_id(stream_id)
     if not stream_:

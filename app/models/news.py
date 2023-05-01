@@ -13,16 +13,18 @@ class News(db.Model, CrudMixin):
 
     # Data
     title = schema.Column(types.String(128), nullable=False)
-    summary = schema.Column(types.NVARCHAR, nullable=True)
     image = schema.Column(types.NVARCHAR, nullable=True)
+    markup = schema.Column(types.NVARCHAR, nullable=False)
+    markdown = schema.Column(types.NVARCHAR, nullable=False)
+    markdown_og_filename = schema.Column(types.String(512), default=True)
+    markdown_safe_filename = schema.Column(types.String(512), default=True)
+
+    # Author
     author = schema.Column(types.String(128), nullable=True)
-    author_link = schema.Column(types.String(500), nullable=True)
-    article = schema.Column(types.NVARCHAR, nullable=True)
+    author_link = schema.Column(types.String(1024), nullable=True)
 
     # Viewable
-    viewable = schema.Column(types.Boolean, default=False)
-    auto_viewable = schema.Column(types.Boolean, default=False)
-    go_viewable_on = schema.Column(types.DateTime, nullable=True)
+    viewable_on = schema.Column(types.DateTime, nullable=True)
 
     # Tracking
     created = schema.Column(types.DateTime, default=pytz_datetime())

@@ -1,0 +1,24 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block container %}
+    <section>
+        <h1 class="floating-header">Login</h1>
+        <div class="box">
+            <form name="account" method="post">
+                <div class="box-col">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="{{ username }}">
+                </div>
+                <div class="box-col">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="box-col">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

@@ -204,26 +204,3 @@
         </div>
     </section>
 {% endblock %}
-
-
-
-{#            {% if pages > 1 %}#}
-{#                <p class="mt-3 mb-3"><small>Pages</small></p>#}
-{#                <section class="mb-3">#}
-{#                    {% for this_page in range(pages) %}#}
-{#                        {% set url = '' %}#}
-{#                        {% if request.args.get('search') and request.args.get('tag') %}#}
-{#                            {% set url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=this_page + 1) %}#}
-{#                        {% elif request.args.get('search') %}#}
-{#                            {% set url = url_for("frontend.www.resources", search=request.args.get('search'), page=this_page + 1) %}#}
-{#                        {% elif request.args.get('tag') %}#}
-{#                            {% set url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=this_page + 1) %}#}
-{#                        {% else %}#}
-{#                            {% set url = url_for("frontend.www.resources", page=this_page + 1) %}#}
-{#                        {% endif %}#}
-{#                        <a href="{{ url }}"#}
-{#                           class="button {% if page == this_page + 1 %}button-active{% endif %}"#}
-{#                           style="padding-left: 18px; padding-right: 18px;">{{ this_page + 1 }}</a>#}
-{#                    {% endfor %}#}
-{#                </section>#}
-{#            {% endif %}#}

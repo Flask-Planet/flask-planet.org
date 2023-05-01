@@ -20,4 +20,6 @@ password = "password"
 
 
 [SESSION]
-tags = []
+logged_in = false
+user_id = 0
+username = ""

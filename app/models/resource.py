@@ -20,6 +20,10 @@ class Resource(db.Model, CrudMixin):
     title = schema.Column(types.String(128), nullable=False)
     summary = schema.Column(types.NVARCHAR, nullable=True)
 
+    # Author
+    author = schema.Column(types.String(128), nullable=True)
+    author_link = schema.Column(types.String(1024), nullable=True)
+
     # Viewable
     viewable = schema.Column(types.Boolean, default=False)
     auto_viewable = schema.Column(types.Boolean, default=False)

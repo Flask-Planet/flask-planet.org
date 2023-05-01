@@ -1,6 +1,49 @@
 {% extends 'theme/extends/backend.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}
+    Account
+{% endblock %}
 
+{% block head %}
+{% endblock %}
 
-<p>account index</p>
+{% block endpage_js %}
+    {%- include 'resources/includes/alpine:data:resources_index.html' %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="box">
+            <form name="account" method="post">
+                <div class="box-col">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" value="{{ user.username }}">
+                </div>
+                <div class="box-col">
+                    <label for="author">Author Name</label>
+                    <input type="text" name="author" id="author" value="{{ user.author }}">
+                </div>
+                <div class="box-col">
+                    <label for="author_link">Author Link</label>
+                    <input type="text" name="author_link" id="author_link" value="{{ user.author_link }}">
+                </div>
+                <div class="box-col">
+                    <div class="alert">
+                        Leave password fields blank to keep your current password.
+                    </div>
+                </div>
+                <div class="box-col">
+                    <label for="new_password">New password</label>
+                    <input type="password" id="new_password" name="new_password">
+                </div>
+                <div class="box-col">
+                    <label for="confirm_new_password">Confirm new password</label>
+                    <input type="password" id="confirm_new_password" name="confirm_new_password">
+                </div>
+                <div class="box-col">
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

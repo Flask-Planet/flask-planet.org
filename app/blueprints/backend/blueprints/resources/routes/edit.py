@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import render_template, abort, request, redirect, url_for
+from flask_bigapp.security import login_check
 
 from app import logger
 from app.models.resource import Resource
@@ -9,6 +10,7 @@ from .. import bp
 
 
 @bp.route("/edit/<resource_id>", methods=["GET", "POST"])
+@login_check("logged_in", "backend.login")
 def edit(resource_id):
     resource_ = Resource.get_by_id(resource_id)
     if not resource_:

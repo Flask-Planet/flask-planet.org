@@ -1,10 +1,12 @@
 from flask import request, url_for
+from flask_bigapp.security import login_check
 
 from app.models.stream import Stream
 from .. import bp
 
 
 @bp.get("/api/get/all/streams")
+@login_check("logged_in", "backend.api_unauth")
 def api_get_all_streams():
     page = request.args.get("page", 1)
     streams = Stream.all_newest_first_pages(

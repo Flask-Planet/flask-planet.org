@@ -8,6 +8,8 @@
            href="{{ url_for('backend.resources.index') }}">Resources</a>
     </div>
     <div class="nav-group">
-        <a class="nav-link" href="{{ url_for('backend.account.index') }}">Account</a>
+        <a class="nav-link{% if "account" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('backend.account.index') }}">Account</a>
+        <a class="nav-link" href="{{ url_for('backend.logout') }}">Logout</a>
     </div>
 </nav>

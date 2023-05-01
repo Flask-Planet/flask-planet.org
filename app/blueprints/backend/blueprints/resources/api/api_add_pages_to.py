@@ -2,6 +2,7 @@ import pathlib
 
 import mistune
 from flask import request, current_app, abort
+from flask_bigapp.security import login_check
 from werkzeug.utils import secure_filename
 
 from app import logger
@@ -12,6 +13,7 @@ from .. import bp
 
 
 @bp.post("/api/add/pages/to/<resource_id>")
+@login_check("logged_in", "backend.api_unauth")
 def api_add_pages_to(resource_id):
     upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "resource_markdown" / resource_id)
     upload_location.mkdir(parents=True, exist_ok=True)

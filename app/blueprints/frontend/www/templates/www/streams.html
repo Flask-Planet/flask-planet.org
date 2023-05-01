@@ -30,7 +30,7 @@
                                 <li>
                                     <h1>Link:</h1>
                                     <p>
-                                        <a href="{{ stream.url_link }}">
+                                        <a href="{{ stream.url_link }}" rel="noopener noreferrer">
                                             {{ stream.display_url_link or stream.url_link }}
                                         </a>
                                     </p>
@@ -77,7 +77,7 @@
                             <li>
                                 <h1>Link:</h1>
                                 <p>
-                                    <a href="{{ most_recent_stream.url_link }}">
+                                    <a href="{{ most_recent_stream.url_link }}" rel="noopener noreferrer">
                                         {{ most_recent_stream.display_url_link or most_recent_stream.url_link }}
                                     </a>
                                 </p>
@@ -111,7 +111,7 @@
                         <td>{{ stream.schedule|stream_date }}</td>
                         <td>{{ stream.schedule|stream_time }} (GMT)</td>
                         <td>
-                            <a href="{{ stream.url_link }}">
+                            <a href="{{ stream.url_link }}" rel="noopener noreferrer">
                                 {{ stream.display_url_link or stream.url_link }}
                             </a>
                         </td>

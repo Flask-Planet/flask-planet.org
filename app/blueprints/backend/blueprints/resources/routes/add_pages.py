@@ -2,6 +2,7 @@ import pathlib
 
 import mistune
 from flask import abort, request, current_app, redirect, url_for
+from flask_bigapp.security import login_check
 from werkzeug.utils import secure_filename
 
 from app import logger
@@ -10,6 +11,7 @@ from .. import bp
 
 
 @bp.post("/add-pages/<resource_id>")
+@login_check("logged_in", "backend.login")
 def add_pages(resource_id):
     resource_ = Resource.read(id_=resource_id)
     if not resource_:

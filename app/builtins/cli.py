@@ -1,5 +1,4 @@
 import random
-from time import sleep
 
 from flask import Flask
 
@@ -44,22 +43,27 @@ def loader(app: Flask):
         logger.debug(f"Creating admin user")
 
         user = m_user.add_new_user(
-            "admin", "password", "Admin"
+            "admin",
+            "password",
+            "Admin",
+            "admin.link",
         )
-
-        for i in range(1, 25):
-            logger.debug(f"Creating resource {i}")
-            resource = bigapp.model("Resource").add_new_resource(
-                fk_user_id=user.user_id,
-                slug=f"test-resource-{i}",
-                title=f"Test resource {i}",
-                summary=f"Test Summary {i}",
-                created=pytz_datetime(),
-            )
-            pick_random_amount_from_list = random.sample(list_of_tags, random.randint(1, 3))
-            for value in pick_random_amount_from_list:
-                resource_tag = m_resource_tag.get_by_tag(value)
-                m_resource_tag_membership.add_resource_tag_membership(
-                    resource.resource_id, resource_tag.resource_tag_id,
-                )
-            sleep(1)
+        #
+        # for i in range(1, 25):
+        #     logger.debug(f"Creating resource {i}")
+        #     resource = bigapp.model("Resource").add_new_resource(
+        #         fk_user_id=user.user_id,
+        #         slug=f"test-resource-{i}",
+        #         title=f"Test resource {i}",
+        #         summary=f"<p>Test Summary {i}</p>",
+        #         author=user.author,
+        #         author_link=user.author_link,
+        #         viewable=True,
+        #         created=pytz_datetime(),
+        #     )
+        #     pick_random_amount_from_list = random.sample(list_of_tags, random.randint(1, 3))
+        #     for value in pick_random_amount_from_list:
+        #         resource_tag = m_resource_tag.get_by_tag(value)
+        #         m_resource_tag_membership.add_resource_tag_membership(
+        #             resource.resource_id, resource_tag.resource_tag_id,
+        #         )
