@@ -15,10 +15,10 @@ def api_get_all_news():
     )
     clean_articles = []
     for article in news:
-        edit_url = url_for('backend.news.edit', stream_id=article.news_id)
+        edit_url = url_for('backend.news.edit', news_id=article.news_id)
 
         if article.thumbnail:
-            thumbnail = url_for("news_cdn", news_id=article.stream_id, filename=article.thumbnail)
+            thumbnail = url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail)
         else:
             thumbnail = url_for("theme.static", filename="img/no-thumbnail.png")
 
@@ -28,7 +28,7 @@ def api_get_all_news():
             "thumbnail": thumbnail,
             "author": article.author,
             "viewable": article.viewable,
-            "viewable_after": article.viewable_after.strftime("%Y-%m-%d %H:%M") if article.viewable_after else '',
+            "release_date": article.release_date.strftime("%Y-%m-%d %H:%M") if article.release_date else '',
             "edit_url": edit_url
         })
     return {

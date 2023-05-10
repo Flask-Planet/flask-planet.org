@@ -2,12 +2,10 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('streams_edit', () => ({
                 show_delete: false,
+                show_markup: false,
 
                 stream_id: '{{ stream.stream_id }}',
-                title: '{{ stream.title }}',
-                summary: '{{ stream.summary|safe }}',
 
-                schedule: '{{ stream.schedule|datetime_local }}',
                 url_link: '{{ stream.url_link or '' }}',
                 display_url_link: '{{ stream.display_url_link or '' }}',
 
@@ -19,16 +17,6 @@
                 go_viewable_on: '{{ stream.go_viewable_on|datetime }}',
 
                 selected_files: ['No files selected...'],
-
-                init() {
-                    let quill = new Quill(this.$refs.quill, {theme: 'snow'})
-
-                    quill.root.innerHTML = this.summary
-
-                    quill.on('text-change', () => {
-                        this.summary = quill.root.innerHTML
-                    })
-                },
 
                 upload_thumbnail() {
                     let formData = new FormData()

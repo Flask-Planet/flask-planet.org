@@ -1,12 +1,12 @@
-{% extends 'theme/extends/backend.html' %}
+s{% extends 'theme/extends/backend.html' %}
 
 {% block title %}
     Edit Stream
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
-    <script src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
+    {#    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">#}
+    {#    <script src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>#}
 {% endblock %}
 
 {% block endpage_js %}
@@ -15,16 +15,6 @@
 
 {% block container %}
     <div x-data="streams_edit">
-        <form name="edit_stream" x-ref="edit_stream" method="post">
-            <input type="hidden" x-model="title" name="title" value="">
-            <input type="hidden" x-model="summary" name="summary" value="">
-            <input type="hidden" x-model="schedule" name="schedule" value="">
-            <input type="hidden" x-model="viewable" name="viewable" value="">
-            <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
-            <input type="hidden" x-model="go_viewable_on" name="go_viewable_on" value="">
-            <input type="hidden" x-model="url_link" name="url_link" value="">
-            <input type="hidden" x-model="display_url_link" name="display_url_link" value="">
-        </form>
         <section>
             <div class="box">
                 <div class="box-row u-space-between">
@@ -52,66 +42,96 @@
             </div>
         </section>
         <section>
-            <div class="box">
-                <label for="title">Title</label>
-                <input class="u-w100"
-                       id="title"
-                       name="title"
-                       type="text"
-                       x-model="title">
+            <form name="edit_stream" x-ref="edit_stream" method="post">
+                <div class="box">
+                    <label for="title">Title</label>
+                    <input class="u-w100"
+                           id="title"
+                           name="title"
+                           type="text"
+                           value="{{ stream.title }}">
 
-                <label for="summary">Summary</label>
-                <div x-ref="quill" style="height: 200px; margin-bottom: 20px;"></div>
+                    <label for="markdown">Summary (Markdown)</label>
+                    <textarea
+                            name="markdown"
+                            id="markdown"
+                            placeholder="Paste your markdown here..."
+                            cols="30"
+                            rows="10"
+                            required
+                    >{{ stream.markdown }}</textarea>
 
-                <label for="schedule">Schedule</label>
-                <input class="u-w100"
-                       id="schedule"
-                       name="schedule"
-                       type="datetime-local"
-                       x-model="schedule">
+                    <button class="mb-3"
+                            type="button"
+                            @click="show_markup = !show_markup"
+                            x-text="show_markup ? 'Hide Markup' : 'Show Markup'"
+                            :class="show_markup ? 'button-red' : 'button-green'">
+                    </button>
 
-                <label for="display_url_link">URL Label</label>
-                <input class="u-w100"
-                       id="display_url_link"
-                       name="display_url_link"
-                       type="text"
-                       x-model="display_url_link">
-
-                <label for="url_link">URL</label>
-                <input class="u-w100"
-                       id="url_link"
-                       name="url_link"
-                       type="text"
-                       x-model="url_link">
-
-                <div class="tag-no-shadow mb-4 mt-0">
-                    <small>URL: </small><a :href="url_link" x-text="display_url_link ? display_url_link : url_link"></a>
-                </div>
-
-                <label for="viewable">Viewable</label>
-                <div class="u-flex u-align-center mb-3">
-                    <div class="tag mt-0"
-                         x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                    <div class="scroll-box u-border mb-3"
+                         x-show="show_markup"
+                         x-cloak
+                         style="border-radius: 5px; padding: 5px;">
+                        {{ stream.markup|safe }}
                     </div>
-                    <button class="button-red"
-                            @click="viewable = !viewable"
-                            x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
-                            :class="viewable ? 'button-red' : 'button-green'">
-                    </button>
-                </div>
-                <div class="u-flex u-align-center mb-3">
-                    <label class="mb-0">Go viewable after:
-                        <input type="date" class="mb-0" x-model="go_viewable_on">
-                    </label>
-                    <button class="button-red ms-2"
-                            :disabled="!go_viewable_on"
-                            @click="auto_viewable = !auto_viewable"
-                            x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
-                            :class="auto_viewable ? 'button-red' : 'button-green'">
-                    </button>
+
+                    <label for="schedule">Schedule</label>
+                    <input class="u-w100"
+                           id="schedule"
+                           name="schedule"
+                           type="datetime-local"
+                           value="{{ stream.schedule|datetime_local }}">
+
+                    <label for="display_url_link">URL Label</label>
+                    <input class="u-w100"
+                           id="display_url_link"
+                           name="display_url_link"
+                           type="text"
+                           value="{{ stream.display_url_link or '' }}">
+
+                    <label for="url_link">URL</label>
+                    <input class="u-w100"
+                           id="url_link"
+                           name="url_link"
+                           type="text"
+                           x-model="url_link">
+
+                    <div class="tag-no-shadow mb-4 mt-0">
+                        <small>URL: </small>
+                        <a :href="url_link" x-text="display_url_link ? display_url_link : url_link"></a>
+                    </div>
+
+                    <label for="viewable">Viewable</label>
+                    <div class="u-flex u-align-center mb-3">
+                        <div class="tag mt-0"
+                             x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                        </div>
+                        <button class="button-red"
+                                @click="viewable = !viewable"
+                                x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
+                                :class="viewable ? 'button-red' : 'button-green'">
+                        </button>
+                    </div>
+                    <div class="u-flex u-align-center mb-3">
+                        <label class="mb-0">Go viewable after:
+                            <input name="go_viewable_on"
+                                   type="date"
+                                   class="mb-0"
+                                   value="{{ stream.go_viewable_on|datetime }}">
+                        </label>
+                        <button class="button-red ms-2"
+                                :disabled="!go_viewable_on"
+                                @click="auto_viewable = !auto_viewable"
+                                x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
+                                :class="auto_viewable ? 'button-red' : 'button-green'">
+                        </button>
+                    </div>
+
                 </div>
 
-            </div>
+                <input type="hidden" x-model="viewable" name="viewable" value="">
+                <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
+            </form>
         </section>
         <section>
             <div class="box">

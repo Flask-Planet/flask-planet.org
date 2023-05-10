@@ -1,3 +1,4 @@
+import mistune
 from flask import render_template, request, session, url_for, redirect
 from flask_bigapp.security import login_check
 
@@ -11,12 +12,15 @@ from .. import bp
 def add():
     if request.method == "POST":
         title = request.form.get("title")
-        summary = request.form.get("summary")
+        markdown = request.form.get("markdown")
+
+        markup = mistune.html(markdown).strip()
 
         stream = Stream.add_new_stream(
             fk_user_id=session.get("user_id", 1),
             title=title,
-            summary=summary,
+            markdown=markdown,
+            markup=markup,
             created=pytz_datetime()
         )
 

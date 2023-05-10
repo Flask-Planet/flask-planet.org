@@ -5,21 +5,16 @@
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
-    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
+    {#    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">#}
+    {#    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>#}
 {% endblock %}
 
 {% block endpage_js %}
-    {%- include 'streams/includes/alpine:data:streams_add.html' %}
+    {#    {%- include 'streams/includes/alpine:data:streams_add.html' %}#}
 {% endblock %}
 
-
 {% block container %}
-    <div x-data="streams_add">
-        <form name="add_stream" x-ref="add_stream" method="post">
-            <input type="hidden" x-model="title" name="title" value="">
-            <input type="hidden" x-model="summary" name="summary" value="">
-        </form>
+    <div x-data>
         <section>
             <div class="box">
                 <div class="box-row u-space-between">
@@ -31,17 +26,26 @@
             </div>
         </section>
         <section>
-            <div class="box">
-                <label for="title">Title</label>
-                <input
-                        class="u-w100"
-                        id="title"
-                        name="title"
-                        type="text"
-                        x-model="title">
-                <label for="summary">Summary</label>
-                <div x-ref="quill" style="height: 200px"></div>
-            </div>
+            <form name="add_stream" x-ref="add_stream" method="post">
+                <div class="box">
+                    <label for="title">Title</label>
+                    <input
+                            class="u-w100"
+                            id="title"
+                            name="title"
+                            type="text">
+
+                    <label for="markdown">Summary (Markdown)</label>
+                    <textarea
+                            name="markdown"
+                            id="markdown"
+                            placeholder="Paste your markdown here..."
+                            cols="30"
+                            rows="10"
+                            required
+                    ></textarea>
+                </div>
+            </form>
         </section>
     </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'theme/extends/backend.html' %}
 
 {% block title %}
-    Add Stream
+    Add News
 {% endblock %}
 
 {% block head %}
@@ -10,38 +10,80 @@
 {% endblock %}
 
 {% block endpage_js %}
-    {%- include 'streams/includes/alpine:data:streams_add.html' %}
+    {%- include 'news/includes/alpine:data:news_add.html' %}
 {% endblock %}
 
 
 {% block container %}
-    <div x-data="streams_add">
-        <form name="add_stream" x-ref="add_stream" method="post">
-            <input type="hidden" x-model="title" name="title" value="">
-            <input type="hidden" x-model="summary" name="summary" value="">
-        </form>
-        <section>
-            <div class="box">
-                <div class="box-row u-space-between">
-                    <a class="button" href="{{ url_for('backend.streams.index') }}">Cancel</a>
-                    <button @click="$refs.add_stream.submit()">
-                        Add Stream
-                    </button>
+    <div x-data="news_add">
+        <form name="add_news" x-ref="add_news" method="post" enctype="multipart/form-data">
+            <section>
+                <div class="box">
+                    <div class="box-row u-space-between">
+                        <a class="button" href="{{ url_for('backend.news.index') }}">Cancel</a>
+                        <button type="submit">
+                            Add News
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <section>
-            <div class="box">
-                <label for="title">Title</label>
-                <input
-                        class="u-w100"
-                        id="title"
-                        name="title"
-                        type="text"
-                        x-model="title">
-                <label for="summary">Summary</label>
-                <div x-ref="quill" style="height: 200px"></div>
-            </div>
-        </section>
+            </section>
+            <section>
+                <div class="box">
+                    <label for="title">Title</label>
+                    <input
+                            id="title"
+                            name="title"
+                            type="text"
+                            required
+                    >
+
+                    <label for="thumbnail">Thumbnail</label>
+                    <input type="file" accept="image/png, image/jpeg" name="thumbnail">
+
+                    <label for="markdown">Markdown</label>
+                    <textarea
+                            name="markdown"
+                            id="markdown"
+                            placeholder="Paste your markdown here..."
+                            cols="30"
+                            rows="10"
+                            required
+                    ></textarea>
+
+                    <label for="viewable">Viewable</label>
+                    <input
+                            type="checkbox"
+                            id="viewable"
+                            @click="viewable = !viewable"
+                            :checked="viewable"
+                    >
+                    <input type="hidden" name="viewable" x-model="viewable">
+
+                    <label for="release_date">Release Date</label>
+                    <input
+                            type="datetime-local"
+                            id="release_date"
+                            name="release_date"
+                            required
+                    >
+
+                    <label for="author">Author</label>
+                    <input
+                            id="author"
+                            name="author"
+                            type="text"
+                            required
+                    >
+
+                    <label for="author_link">Author URL</label>
+                    <input
+                            id="author_link"
+                            name="author_link"
+                            type="text"
+                    >
+
+                </div>
+            </section>
+        </form>
     </div>
 {% endblock %}

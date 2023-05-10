@@ -12,7 +12,7 @@ from .. import bp
 @bp.post("/api/upload/thumbnail/<stream_id>")
 @login_check("logged_in", "backend.api_unauth")
 def api_upload_thumbnail(stream_id):
-    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "stream_thumbnails" / stream_id)
+    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "streams" / stream_id)
     upload_location.mkdir(parents=True, exist_ok=True)
 
     stream = Stream.get_by_id(stream_id)

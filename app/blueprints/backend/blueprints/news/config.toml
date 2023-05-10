@@ -1,7 +1,7 @@
 enabled = "yes"
 
 [settings]
-url_prefix = "/streams"
+url_prefix = "/news"
 subdomain = ""
 url_defaults = {}
 static_folder = "static"

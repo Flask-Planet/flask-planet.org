@@ -835,9 +835,8 @@ section > :is(h1, h2, h3, h4, h5, h6) {
 }
 
 .scroll-box {
-    overflow: auto;
-    max-height: 600px;
-    margin: 15px 0;
+    overflow-y: auto;
+    height: 200px;
 }
 
 .dashboard-header {
@@ -845,7 +844,6 @@ section > :is(h1, h2, h3, h4, h5, h6) {
     margin: 0;
     padding-top: 5px;
     padding-bottom: 15px;
-
 }
 
 .alert {

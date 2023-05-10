@@ -18,7 +18,8 @@ class Stream(db.Model, CrudMixin):
 
     # Data
     title = schema.Column(types.String(128), nullable=False)
-    summary = schema.Column(types.NVARCHAR, nullable=True)
+    markup = schema.Column(types.NVARCHAR, nullable=False)
+    markdown = schema.Column(types.NVARCHAR, nullable=False)
     schedule = schema.Column(types.DateTime, nullable=True)
     url_link = schema.Column(types.String(), nullable=True)
     display_url_link = schema.Column(types.String(), nullable=True)

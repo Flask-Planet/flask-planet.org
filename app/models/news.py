@@ -18,8 +18,6 @@ class News(db.Model, CrudMixin):
     thumbnail = schema.Column(types.NVARCHAR, nullable=True)
     markup = schema.Column(types.NVARCHAR, nullable=False)
     markdown = schema.Column(types.NVARCHAR, nullable=False)
-    markdown_og_filename = schema.Column(types.String(512), default=True)
-    markdown_safe_filename = schema.Column(types.String(512), default=True)
 
     # Author
     author = schema.Column(types.String(128), nullable=True)
@@ -27,10 +25,13 @@ class News(db.Model, CrudMixin):
 
     # Viewable
     viewable = schema.Column(types.Boolean, default=False)
-    viewable_after = schema.Column(types.DateTime, nullable=True)
+    release_date = schema.Column(types.DateTime, nullable=True)
 
     # Tracking
     created = schema.Column(types.DateTime, default=pytz_datetime())
+
+    def save(self):
+        self.__session__.commit()
 
     @classmethod
     def get_by_id(cls, news_id):
@@ -47,11 +48,11 @@ class News(db.Model, CrudMixin):
 
     @classmethod
     def search_by_title_pages(cls, title, page: int = 1, per_page: int = 20) -> Pagination:
-        query = select(cls).order_by(desc(cls.viewable_on)).where(cls.title.ilike(f"%{title}%"))  # type: ignore
+        query = select(cls).order_by(desc(cls.release_date)).where(cls.title.ilike(f"%{title}%"))  # type: ignore
         return db.paginate(query, page=page, per_page=per_page)
 
     @classmethod
     def all_newest_first_pages(cls, page: int = 1, per_page: int = 20) -> Pagination:
-        query = select(cls).order_by(desc(cls.viewable_on))  # type: ignore
+        query = select(cls).order_by(desc(cls.release_date))  # type: ignore
         logger.debug("Getting all news viewable_on first...")
         return db.paginate(query, page=page, per_page=per_page)

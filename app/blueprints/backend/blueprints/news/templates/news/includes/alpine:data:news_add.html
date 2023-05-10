@@ -1,18 +1,7 @@
 <script defer type="application/javascript">
     document.addEventListener('alpine:init', () => {
-        Alpine.data('streams_add', () => ({
-            title: '',
-            summary: '',
-
-            init() {
-                const quill = new Quill(this.$refs.quill, {theme: 'snow'})
-
-                quill.root.innerHTML = this.summary
-
-                quill.on('text-change', () => {
-                    this.summary = quill.root.innerHTML
-                })
-            }
+        Alpine.data('news_add', () => ({
+            viewable: true,
         }))
     })
 </script>

@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from flask import render_template, abort, request, url_for
+import mistune
+from flask import render_template, abort, request, url_for, redirect
 from flask_bigapp.security import login_check
 
 from app.extensions import logger
@@ -34,10 +35,13 @@ def edit(stream_id):
         else:
             schedule = None
 
+        markup = mistune.html(request.form.get("markdown") or '').strip()
+
         Stream.update(
             values={
                 "title": request.form.get("title"),
-                "summary": request.form.get("summary"),
+                "markdown": request.form.get("markdown"),
+                "markup": markup,
                 "schedule": schedule,
                 "url_link": request.form.get("url_link"),
                 "display_url_link": request.form.get("display_url_link"),
@@ -47,6 +51,8 @@ def edit(stream_id):
             },
             id_=stream_id,
         )
+
+        return redirect(url_for("backend.streams.edit", stream_id=stream_id))
 
     if stream_.thumbnail:
         thumbnail = url_for("stream_cdn", stream_id=stream_.stream_id, filename=stream_.thumbnail)

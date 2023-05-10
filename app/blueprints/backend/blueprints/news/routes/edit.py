@@ -1,56 +1,75 @@
+import pathlib
 from datetime import datetime
 
-from flask import render_template, abort, request, url_for
+import mistune
+from flask import render_template, abort, request, url_for, current_app, redirect
 from flask_bigapp.security import login_check
+from werkzeug.utils import secure_filename
 
 from app.extensions import logger
-from app.models.stream import Stream
+from app.models.news import News
 from .. import bp
 
 
-@bp.route("/edit/<stream_id>", methods=["GET", "POST"])
+@bp.route("/edit/<news_id>", methods=["GET", "POST"])
 @login_check("logged_in", "backend.login")
-def edit(stream_id):
-    stream_ = Stream.get_by_id(stream_id)
-    if not stream_:
+def edit(news_id):
+    news_ = News.get_by_id(news_id)
+    if not news_:
         return abort(404)
 
     if request.method == "POST":
-        logger.debug(f"Updating stream {stream_.stream_id}")
+        logger.debug(f"Updating news {news_.news_id}")
 
-        if request.form.get("go_viewable_on") != "":
+        title = request.form.get("title")
+        thumbnail = request.files.get("thumbnail")
+        markdown = request.form.get("markdown")
+        markup = mistune.html(markdown).strip()
+        viewable = True if request.form.get("viewable") == 'true' else False
+
+        if request.form.get("release_date") != "":
             try:
-                go_viewable_on = datetime.strptime(request.form.get("go_viewable_on", ''), "%Y-%m-%d")
+                release_date = datetime.strptime(request.form.get("release_date", ''), "%Y-%m-%dT%H:%M")
             except ValueError:
-                go_viewable_on = None
+                release_date = None
         else:
-            go_viewable_on = None
+            release_date = None
 
-        if request.form.get("schedule") != "":
-            try:
-                schedule = datetime.strptime(request.form.get("schedule", ''), "%Y-%m-%dT%H:%M")
-            except ValueError:
-                schedule = None
-        else:
-            schedule = None
+        author = request.form.get("author")
+        author_link = request.form.get("author_link")
 
-        Stream.update(
+        News.update(
             values={
-                "title": request.form.get("title"),
-                "summary": request.form.get("summary"),
-                "schedule": schedule,
-                "url_link": request.form.get("url_link"),
-                "display_url_link": request.form.get("display_url_link"),
-                "viewable": True if request.form.get("viewable") == 'true' else False,
-                "auto_viewable": True if request.form.get("auto_viewable") == 'true' else False,
-                "go_viewable_on": go_viewable_on
+                "title": title,
+                "markdown": markdown,
+                "markup": markup,
+                "viewable": viewable,
+                "release_date": release_date,
+                "author": author,
+                "author_link": author_link
             },
-            id_=stream_id,
+            id_=news_id,
         )
 
-    if stream_.thumbnail:
-        thumbnail = url_for("stream_cdn", stream_id=stream_.stream_id, filename=stream_.thumbnail)
+        if thumbnail:
+            upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "news" / news_.news_id)
+            upload_location.mkdir(parents=True, exist_ok=True)
+
+            old_file = upload_location / news_.thumbnail
+            if old_file.exists():
+                old_file.unlink()
+
+            safe_filename = secure_filename(thumbnail.filename)
+            save_location = upload_location / safe_filename
+            thumbnail.save(save_location)
+            news_.thumbnail = safe_filename
+            news_.save()
+
+        return redirect(url_for("backend.news.edit", news_id=news_.news_id))
+
+    if news_.thumbnail:
+        thumbnail = url_for("news_cdn", news_id=news_.news_id, filename=news_.thumbnail)
     else:
         thumbnail = url_for("theme.static", filename="img/no-thumbnail.png")
 
-    return render_template(bp.tmpl("edit.html"), stream=stream_, thumbnail=thumbnail)
+    return render_template(bp.tmpl("edit.html"), news=news_, thumbnail=thumbnail)

@@ -8,19 +8,19 @@
             search_active: false,
             search_error: false,
             init() {
-                this.get_streams(this.page)
+                this.get_news(this.page)
                 this.$watch('page', () => {
                     this.display_switch()
                 })
             },
             display_switch() {
                 if (this.title_search !== '') {
-                    this.search_for_streams()
+                    this.search_for_news()
                 } else {
-                    this.get_streams()
+                    this.get_news()
                 }
             },
-            get_streams() {
+            get_news() {
                 fetch(`{{ url_for("backend.news.api_get_all_news") }}?page=${this.page}`, {
                     method: 'GET',
                 })
@@ -31,11 +31,11 @@
                         this.page = data['page']
                     })
             },
-            search_for_streams() {
+            search_for_news() {
                 this.search_active = false
 
                 if (this.title_search === '') {
-                    this.get_streams(this.page)
+                    this.get_news(this.page)
                     return
                 } else if (this.title_search.length < 1) {
                     return

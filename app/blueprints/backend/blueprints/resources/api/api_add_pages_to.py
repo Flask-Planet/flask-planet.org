@@ -15,7 +15,7 @@ from .. import bp
 @bp.post("/api/add/pages/to/<resource_id>")
 @login_check("logged_in", "backend.api_unauth")
 def api_add_pages_to(resource_id):
-    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "resource_markdown" / resource_id)
+    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "resources" / resource_id)
     upload_location.mkdir(parents=True, exist_ok=True)
 
     resource_ = Resource.get_by_id(resource_id)
