@@ -75,10 +75,10 @@
                     <th>Title</th>
                     <th>Slug</th>
                     <th>Tags</th>
-                    <th style="text-align: center">Clicks</th>
+                    <th class="u-center">Clicks</th>
                     <th class="u-center">Visible</th>
                     <th>Created</th>
-                    <th style="text-align: center">&nbsp;</th>
+                    <th class="u-center">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,10 +87,10 @@
                         <td x-text="resource.title"></td>
                         <td x-text="resource.slug"></td>
                         <td x-text="resource.tags"></td>
-                        <td style="text-align: center" x-text="resource.clicks"></td>
+                        <td class="u-center" x-text="resource.clicks"></td>
                         <td class="u-center" :class="resource.viewable ? 'u-green' : 'u-red'">&bull;</td>
                         <td x-text="resource.created"></td>
-                        <td style="text-align: center"><a :href="resource.edit_url">Edit</a></td>
+                        <td class="u-center"><a :href="resource.edit_url">Edit</a></td>
                     </tr>
                 </template>
                 </tbody>
