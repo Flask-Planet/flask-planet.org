@@ -18,7 +18,8 @@ class Resource(db.Model, CrudMixin):
     # Data
     slug = schema.Column(types.String(128), nullable=False, unique=True)
     title = schema.Column(types.String(128), nullable=False)
-    summary = schema.Column(types.NVARCHAR, nullable=True)
+    markup = schema.Column(types.NVARCHAR, nullable=False)
+    markdown = schema.Column(types.NVARCHAR, nullable=False)
 
     # Author
     author = schema.Column(types.String(128), nullable=True)

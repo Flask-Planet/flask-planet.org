@@ -30,6 +30,15 @@ class News(db.Model, CrudMixin):
     # Tracking
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
+    # Relationships
+    rel_user = relationship("User", back_populates="rel_news")
+
+    rel_news_clicks = relationship(
+        "NewsClick",
+        primaryjoin="News.news_id==NewsClick.fk_news_id",
+        cascade="all, delete"
+    )
+
     def save(self):
         self.__session__.commit()
 
@@ -56,3 +65,8 @@ class News(db.Model, CrudMixin):
         query = select(cls).order_by(desc(cls.release_date))  # type: ignore
         logger.debug("Getting all news viewable_on first...")
         return db.paginate(query, page=page, per_page=per_page)
+
+    @classmethod
+    def add_new_article(cls, **kwargs):
+        logger.debug("Adding new news article...")
+        return cls.create(values=kwargs, wash_attributes=True)

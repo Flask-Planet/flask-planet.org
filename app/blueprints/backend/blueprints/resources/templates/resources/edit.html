@@ -6,8 +6,6 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/highlightjs.atom-one-dark.css') }}">
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
-    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
     <script src="{{ url_for('theme.static', filename='js/highlight.min.js') }}"></script>
 {% endblock %}
 
@@ -18,116 +16,155 @@
 {% block container %}
     <div x-data="resources_edit">
         <form name="edit_resource" x-ref="edit_resource" method="post" enctype="multipart/form-data">
-            <input type="hidden" x-model="title" name="title" value="">
-            <input type="hidden" x-model="slug" name="slug" value="">
-            <input type="hidden" x-model="summary" name="summary" value="">
-            <input type="hidden" x-model="resource_tags" name="resource_tags" value="">
-            <input type="hidden" x-model="viewable" name="viewable" value="">
-            <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
-            <input type="hidden" x-model="go_viewable_on" name="go_viewable_on" value="">
-        </form>
-        <section>
-            <div class="box">
-                <div class="box-row u-space-between">
-                    <a class="button u-align-center" href="{{ url_for('backend.resources.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-arrow-left">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                    </a>
-                    <div>
-                        <button @click="show_delete = true">Delete</button>
-                        <button
-                                @click="$refs.edit_resource.submit()"
-                                x-bind:disabled="slug_exists || slug.length < 1"
-                        >
-                            Save
+            <section>
+                <div class="box">
+                    <div class="box-row u-space-between">
+                        <a class="button u-align-center" href="{{ url_for('backend.resources.index') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-arrow-left">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                        <div>
+                            <button
+                                    @click="$refs.edit_resource.submit()"
+                                    x-bind:disabled="slug_exists || slug.length < 1"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="box">
+                    <label for="title">Title</label>
+                    <input class="u-w100"
+                           id="title"
+                           name="title"
+                           type="text"
+                           @input.debounce.200ms="slugger(); check_if_slug_exists()"
+                           x-model="title">
+
+                    <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
+
+                    <label for="slug">Slug</label>
+                    <input
+                            class="u-w100"
+                            id="slug"
+                            name="slug"
+                            type="text"
+                            x-model="slug"
+                            readonly
+                    >
+
+                    <label for="markdown">Summary (Markdown)</label>
+                    <textarea
+                            name="markdown"
+                            id="markdown"
+                            placeholder="Paste your markdown here..."
+                            cols="30"
+                            rows="10"
+                            required
+                    >{{ resource.markdown }}</textarea>
+
+                    <button class="mb-3"
+                            type="button"
+                            @click="show_summary_markup = !show_summary_markup"
+                            x-text="show_summary_markup ? 'Hide Markup' : 'Show Markup'"
+                            :class="show_summary_markup ? 'button-red' : 'button-green'">
+                    </button>
+
+                    <div class="scroll-box u-border mb-3"
+                         x-show="show_summary_markup"
+                         x-cloak
+                         style="border-radius: 5px; padding: 5px;">
+                        {{ resource.markup|safe }}
+                    </div>
+
+                    <label for="viewable">Viewable</label>
+                    <div class="u-flex u-align-center mb-3">
+
+                        <div class="tag mt-0"
+                             x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                        </div>
+
+                        <button class="button-red"
+                                @click="viewable = !viewable"
+                                x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
+                                :class="viewable ? 'button-red' : 'button-green'">
                         </button>
+                        <input type="hidden" x-model="viewable" name="viewable" value="">
+
                     </div>
-                </div>
-            </div>
-            <div class="box box-light" x-cloak x-show="show_delete">
-                <div class="box-row u-push-end">
-                    <button class="button-red" @click="show_delete = true">Confirm Delete</button>
-                    <button @click="show_delete = false">Cancel</button>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="box">
-                <label for="title">Title</label>
-                <input class="u-w100"
-                       id="title"
-                       name="title"
-                       type="text"
-                       @input.debounce.200ms="slugger(); check_if_slug_exists()"
-                       x-model="title">
-                <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
-                <label for="slug">Slug</label>
-                <input
-                        class="u-w100"
-                        id="slug"
-                        name="slug"
-                        type="text"
-                        x-model="slug"
-                        readonly
-                >
-                <label for="summary">Summary</label>
-                <div x-ref="quill" style="height: 200px; margin-bottom: 20px;"></div>
+                    <div class="u-flex u-align-center mb-3">
 
+                        <label class="mb-0">Go viewable after:
+                            <input type="date" class="mb-0" value="{{ resource.go_viewable_on }}">
+                        </label>
 
-                <label for="viewable">Viewable</label>
-                <div class="u-flex u-align-center mb-3">
-                    <div class="tag mt-0"
-                         x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                        <button class="button-red ms-2"
+                                :disabled="!go_viewable_on"
+                                @click="auto_viewable = !auto_viewable"
+                                x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
+                                :class="auto_viewable ? 'button-red' : 'button-green'">
+                        </button>
+                        <input type="hidden" x-model="auto_viewable" name="auto_viewable" value="">
+
                     </div>
-                    <button class="button-red"
-                            @click="viewable = !viewable"
-                            x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
-                            :class="viewable ? 'button-red' : 'button-green'">
-                    </button>
-                </div>
-                <div class="u-flex u-align-center mb-3">
-                    <label class="mb-0">Go viewable after:
-                        <input type="date" class="mb-0" x-model="go_viewable_on">
-                    </label>
-                    <button class="button-red ms-2"
-                            :disabled="!go_viewable_on"
-                            @click="auto_viewable = !auto_viewable"
-                            x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
-                            :class="auto_viewable ? 'button-red' : 'button-green'">
-                    </button>
-                </div>
 
-                <label for="add_tag">Add Tags</label>
+                    <label for="add_tag">Add Tags</label>
 
-                <input id="add_tag" name="add_tag" list="all_tags" x-ref="add_tag"
-                       x-model="current_tag"
-                       @keydown.enter="add_tag()">
+                    <input id="add_tag" name="add_tag" list="all_tags" x-ref="add_tag"
+                           x-model="current_tag"
+                           @keydown.enter="add_tag()">
 
-                <datalist id="all_tags">
-                    <template x-for="tag in available_tags">
-                        <option x-text="tag"></option>
-                    </template>
-                </datalist>
+                    <datalist id="all_tags">
+                        <template x-for="tag in available_tags">
+                            <option x-text="tag"></option>
+                        </template>
+                    </datalist>
 
-                <button type="button" @click="add_tag()">Add Tag</button>
+                    <button type="button" @click="add_tag()">Add Tag</button>
 
-                <input type="hidden" x-model="removed_from_resource_tags">
+                    <input type="hidden" x-model="removed_from_resource_tags">
+                    <input type="hidden" x-model="resource_tags" name="resource_tags" value="">
 
-                <label for="add_tag">Tags</label>
-                <p x-show="resource_tags.length < 1">No tags added</p>
-                <template x-for="tag in resource_tags">
+                    <label for="add_tag">Tags</label>
+                    <p x-show="resource_tags.length < 1">No tags added</p>
+                    <template x-for="tag in resource_tags">
                         <span class="tag">
                             <span x-text="tag"></span>
                             <span class="del_tag" @click="del_tag(tag)">X</span>
                         </span>
-                </template>
+                    </template>
+
+                </div>
+            </section>
+        </form>
+
+        <section>
+            <div class="box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label style="margin: 0;">Danger-zone!</label>
+                    <button @click="show_delete = true">Delete</button>
+                </div>
+
+                <form action="{{ url_for('backend.resources.delete', resource_id=resource.resource_id) }}">
+                    <div class="box box-light" x-cloak x-show="show_delete" style="margin-top: 10px;">
+                        <div class="box-row u-push-end">
+                            <button class="button-red" type="submit">Confirm Delete</button>
+                            <button type="button" @click="show_delete = false">Cancel</button>
+                        </div>
+                    </div>
+                </form>
 
             </div>
         </section>
+
         <section>
             <div class="box">
                 <form name="upload_markdown_pages" class="mb-4">
@@ -171,7 +208,7 @@
                 <label>Pages</label>
                 <form name="page_order" x-ref="page_order">
                     <div class="resource-pages" style="padding-bottom: 20px;">
-                        <template x-for="(page, index) in pages">
+                        <template {{ 'x-for="(page, index) in pages"'|safe }}>
                             <div class="resource-page"
                                  :class="moved_page === page.resource_page_id ? 'flash-animation' : ''">
                                 <input type="hidden" :name="page.resource_page_id" x-model="index">

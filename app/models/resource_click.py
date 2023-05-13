@@ -20,3 +20,9 @@ class ResourceClick(db.Model, CrudMixin):
             'fk_resource_id': resource_id,
             'created': pytz_datetime()
         })
+
+    @classmethod
+    def delete_by_resource_id(cls, resource_id: int):
+        return cls.delete(fields={
+            'fk_resource_id': resource_id,
+        })

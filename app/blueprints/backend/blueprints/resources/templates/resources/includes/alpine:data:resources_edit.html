@@ -2,17 +2,16 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('resources_edit', () => ({
                 show_delete: false,
+                show_summary_markup: false,
 
                 resource_id: '{{ resource.resource_id }}',
                 title: '{{ resource.title }}',
                 original_slug: '{{ resource.slug }}',
                 slug: '{{ resource.slug }}',
                 slug_exists: false,
-                summary: '{{ resource.summary|safe }}',
 
                 viewable: {{ resource.viewable|lower }},
                 auto_viewable: {{ resource.auto_viewable|lower }},
-                go_viewable_on: '{{ resource.go_viewable_on }}',
 
                 markup: '-',
                 markdown: '-',
@@ -34,14 +33,6 @@
                     this.get_resource_tags()
                     this.get_all_tags()
                     this.get_pages()
-
-                    let quill = new Quill(this.$refs.quill, {theme: 'snow'})
-
-                    quill.root.innerHTML = this.summary
-
-                    quill.on('text-change', () => {
-                        this.summary = quill.root.innerHTML
-                    })
                 },
                 switch_page_order(page, direction, page_order_form) {
                     this.moved_page = 0

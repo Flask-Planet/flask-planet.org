@@ -28,6 +28,8 @@ class User(db.Model, CrudMixin):
     # Relationships
     rel_resource = relationship("Resource", back_populates="rel_user")
 
+    rel_news = relationship("News", back_populates="rel_user")
+
     def save(self):
         return self.__session__.commit()
 

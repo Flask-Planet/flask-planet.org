@@ -9,10 +9,12 @@ from .. import bp
 @login_check("logged_in", "backend.api_unauth")
 def api_get_all_pages():
     resource_id = request.args.get("id", None)
+    print(resource_id)
     if not resource_id:
         return {"status": "error", "message": "No valid resource_id", "pages": []}
     resource_ = Resource.get_by_id(resource_id)
-    pages = resource_.rel_resource_pages
+    print(resource_)
+    pages = resource_.rel_resource_pages or []
     clean_pages = []
     for page in pages:
         clean_pages.append({

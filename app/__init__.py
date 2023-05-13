@@ -24,16 +24,15 @@ def create_app():
     )
 
     bigapp.init_app(app)
+    db.init_app(app)
     logger.init_app(app)
+    bigapp.import_models(from_folder="models")
 
-    bigapp.import_builtins()
+    with app.app_context():
+        db.create_all()
 
     if os.environ.get("FLASK_PLANET_DEV", None) is not None:
-        bigapp.import_models(from_folder="models")
-        db.init_app(app)
         bigapp.import_blueprints("blueprints")
-        with app.app_context():
-            db.create_all()
     else:
         bigapp.import_blueprint("coming_soon")
 
@@ -42,5 +41,7 @@ def create_app():
     @app.before_request
     def before_request():
         bigapp.init_session()
+
+    bigapp.import_builtins()
 
     return app

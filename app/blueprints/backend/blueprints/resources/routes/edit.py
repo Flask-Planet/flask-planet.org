@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import mistune
 from flask import render_template, abort, request, redirect, url_for
 from flask_bigapp.security import login_check
 
@@ -27,11 +28,15 @@ def edit(resource_id):
         else:
             go_viewable_on = None
 
+        markdown = request.form.get("markdown")
+        markup = mistune.html(markdown).strip()
+
         Resource.update(
             values={
                 "slug": request.form.get("slug"),
                 "title": request.form.get("title"),
-                "summary": request.form.get("summary"),
+                "markup": markup,
+                "markdown": markdown,
                 "viewable": True if request.form.get("viewable") == 'true' else False,
                 "auto_viewable": True if request.form.get("auto_viewable") == 'true' else False,
                 "go_viewable_on": go_viewable_on

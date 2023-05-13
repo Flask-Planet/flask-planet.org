@@ -4,16 +4,7 @@
             title: '',
             slug: '',
             slug_exists: false,
-            summary: '',
-            init() {
-                let quill = new Quill(this.$refs.quill, {theme: 'snow'})
 
-                quill.root.innerHTML = this.summary
-
-                quill.on('text-change', () => {
-                    this.summary = quill.root.innerHTML
-                })
-            },
             slugger() {
                 let slug = this.title
                 slug = slug.toLowerCase()

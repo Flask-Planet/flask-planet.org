@@ -41,6 +41,7 @@ def api_search_news():
             "title": article.title,
             "thumbnail": thumbnail,
             "author": article.author,
+            "clicks": len(article.rel_news_clicks),
             "viewable": article.viewable,
             "release_date": article.release_date.strftime("%Y-%m-%d %H:%M") if article.release_date else '',
             "edit_url": edit_url

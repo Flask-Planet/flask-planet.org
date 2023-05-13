@@ -26,70 +26,71 @@
             </section>
             <section>
                 <div class="box">
-                    <div class="box-col">
-                        <label for="title">Title</label>
-                        <input
-                                id="title"
-                                name="title"
-                                type="text"
-                                required
-                                value="{{ news.title }}"
-                        >
+
+                    <label for="title">Title</label>
+                    <input
+                            id="title"
+                            name="title"
+                            type="text"
+                            required
+                            value="{{ news.title }}"
+                    >
+
+                    <label for="thumbnail">Thumbnail</label>
+                    <input type="file" accept="image/png, image/jpeg" name="thumbnail">
+
+                    <label for="markdown" class="mt-3">Markdown</label>
+                    <textarea
+                            name="markdown"
+                            id="markdown"
+                            placeholder="Paste your markdown here..."
+                            cols="30"
+                            rows="10"
+                            required
+                    >{{ news.markdown }}</textarea>
+
+
+                    <label for="viewable">Viewable</label>
+                    <div class="u-flex u-align-center mb-3">
+                        <div class="tag mt-0"
+                             x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
+                        </div>
+                        <button class="button-red"
+                                @click="viewable = !viewable"
+                                x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
+                                :class="viewable ? 'button-red' : 'button-green'">
+                        </button>
                     </div>
-                    <div class="box-col">
-                        <label for="thumbnail">Thumbnail</label>
-                        <input type="file" accept="image/png, image/jpeg" name="thumbnail">
-                    </div>
-                    <div class="box-col">
-                        <label for="markdown">Markdown</label>
-                        <textarea
-                                name="markdown"
-                                id="markdown"
-                                placeholder="Paste your markdown here..."
-                                cols="30"
-                                rows="10"
-                                required
-                        >{{ news.markdown }}</textarea>
-                    </div>
-                    <div class="box-col">
-                        <label>
-                            <input
-                                    type="checkbox"
-                                    @click="viewable = !viewable"
-                                    :checked="viewable"
-                            > Viewable</label>
-                        <input type="hidden" name="viewable" x-model="viewable">
-                    </div>
-                    <div class="box-col">
-                        <label for="release_date">Release Date</label>
-                        <input
-                                type="datetime-local"
-                                id="release_date"
-                                name="release_date"
-                                value="{{ news.release_date|datetime_local }}"
-                                required
-                        >
-                    </div>
-                    <div class="box-col">
-                        <label for="author">Author</label>
-                        <input
-                                id="author"
-                                name="author"
-                                type="text"
-                                value="{{ news.author }}"
-                                required
-                        >
-                    </div>
-                    <div class="box-col">
-                        <label for="author_link">Author URL</label>
-                        <input
-                                id="author_link"
-                                name="author_link"
-                                type="text"
-                                value="{{ news.author_link }}"
-                                required
-                        >
-                    </div>
+                    <input type="hidden" name="viewable" x-model="viewable">
+
+
+                    <label for="release_date">Release Date</label>
+                    <input
+                            type="datetime-local"
+                            id="release_date"
+                            name="release_date"
+                            value="{{ news.release_date|datetime_local }}"
+                            required
+                    >
+
+                    <label for="author">Author</label>
+                    <input
+                            id="author"
+                            name="author"
+                            type="text"
+                            value="{{ news.author }}"
+                            required
+                    >
+
+
+                    <label for="author_link">Author URL</label>
+                    <input
+                            id="author_link"
+                            name="author_link"
+                            type="text"
+                            value="{{ news.author_link }}"
+                            required
+                    >
 
                 </div>
 
@@ -99,9 +100,14 @@
             <div class="box">
                 <label>Article</label>
 
-                <img src="{{ thumbnail }}" alt="{{ news.title }} thumbnail" width="150px">
+                {% if "no-thumbnail" not in thumbnail %}
+                    <img src="{{ thumbnail }}" alt="{{ news.title }} thumbnail" width="150px">
+                {% endif %}
+
                 <h1>{{ news.title }}</h1>
+
                 {{ news.markup|safe }}
+
             </div>
         </section>
     </div>

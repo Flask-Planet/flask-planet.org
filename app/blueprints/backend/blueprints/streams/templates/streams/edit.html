@@ -1,4 +1,4 @@
-s{% extends 'theme/extends/backend.html' %}
+{% extends 'theme/extends/backend.html' %}
 
 {% block title %}
     Edit Stream
@@ -63,13 +63,13 @@ s{% extends 'theme/extends/backend.html' %}
 
                     <button class="mb-3"
                             type="button"
-                            @click="show_markup = !show_markup"
-                            x-text="show_markup ? 'Hide Markup' : 'Show Markup'"
-                            :class="show_markup ? 'button-red' : 'button-green'">
+                            @click="show_summary_markup = !show_summary_markup"
+                            x-text="show_summary_markup ? 'Hide Markup' : 'Show Markup'"
+                            :class="show_summary_markup ? 'button-red' : 'button-green'">
                     </button>
 
                     <div class="scroll-box u-border mb-3"
-                         x-show="show_markup"
+                         x-show="show_summary_markup"
                          x-cloak
                          style="border-radius: 5px; padding: 5px;">
                         {{ stream.markup|safe }}
