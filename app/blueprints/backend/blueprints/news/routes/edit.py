@@ -22,6 +22,7 @@ def edit(news_id):
         logger.debug(f"Updating news {news_.news_id}")
 
         title = request.form.get("title")
+        slug = request.form.get("slug")
         thumbnail = request.files.get("thumbnail")
         markdown = request.form.get("markdown")
         markup = mistune.html(markdown).strip()
@@ -41,6 +42,7 @@ def edit(news_id):
         News.update(
             values={
                 "title": title,
+                "slug": slug,
                 "markdown": markdown,
                 "markup": markup,
                 "viewable": viewable,

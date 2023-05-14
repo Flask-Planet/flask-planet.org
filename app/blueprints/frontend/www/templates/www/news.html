@@ -1,0 +1,150 @@
+{% extends 'theme/extends/frontend.html' %}
+
+
+{% set pages_block %}
+{% if page > 1 %}
+
+
+    {% set back_url = url_for("frontend.www.news", page=page - 1) %}
+
+
+    <a href="{{ back_url }}"
+       class="button"
+       style="padding-left: 18px; padding-right: 18px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             style="margin-bottom: -4px"
+             stroke-linejoin="round" class="feather feather-arrow-left">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+
+    </a>
+
+{% else %}
+
+    <a href="#" disabled="disabled"
+       class="button"
+       style="padding-left: 18px; padding-right: 18px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             style="margin-bottom: -4px"
+             stroke-linejoin="round" class="feather feather-arrow-left">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+
+    </a>
+
+{% endif %}
+
+<button disabled class="button-clear">
+    page {{ page }} / {{ pages }} pages
+</button>
+
+{% if page != pages and pages != 0 %}
+
+    {% set forw_url = url_for("frontend.www.news", page=page + 1) %}
+
+    <a href="{{ forw_url }}"
+       class="button"
+       style="padding-left: 18px; padding-right: 18px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             style="margin-bottom: -4px"
+             stroke-linejoin="round" class="feather feather-arrow-right">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+
+    </a>
+
+{% else %}
+
+    <a href="#" disabled="disabled"
+       class="button"
+       style="padding-left: 18px; padding-right: 18px;">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+             style="margin-bottom: -4px"
+             stroke-linejoin="round" class="feather feather-arrow-right">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+
+    </a>
+
+{% endif %}
+{% endset %}
+
+
+
+{% block container %}
+
+    <section>
+        <div class="box ms-1 me-1" style="color: whitesmoke">
+
+            <section class="mb-0 mt-0 u-flex u-space-between">
+                <div>
+                    {{ pages_block }}
+                </div>
+            </section>
+        </div>
+    </section>
+
+    {% if news %}
+            <section x-data>
+            {% for article in news %}
+                <article class="box"
+                         style="margin-bottom: 12px;">
+                    <div class="box-group">
+                        <div class="box-col">
+                            <h6 style="margin-bottom: 0">{{ article.title }}</h6>
+                            <p style="margin: 0">
+                                <small>Author:
+                                    {% if article.author_link != None and article.author_link != '' %}
+                                        {{ article.author }}
+                                    {% else %}
+                                        <a rel="noopener noreferrer" href="{{ article.author_link }}">
+                                            {{ article.author }}</a>
+                                    {% endif %}
+                                </small>
+                            </p>
+                            <p>
+                                <small>Published on:
+                                    {{ article.release_date|stream_date }}
+                                </small>
+                            </p>
+                            <a
+                                    style="width: 100px;"
+                                    href="{{ url_for("frontend.www.article", slug=article.slug) }}"
+                            >View</a>
+                        </div>
+                        {% if article.thumbnail != None and article.thumbnail != '' %}
+                            <div class="box-col">
+                                <img src="{{ url_for("news_cdn", news_id=news.news_id, filename=news.thumbnail) }}"
+                                     alt="{{ article.title }} Thumbnail">
+                            </div>
+                        {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    <section>
+        <div class="box ms-1 me-1" style="color: whitesmoke">
+
+            <section class="mb-0 mt-0 u-flex u-space-between">
+                <div>
+                    {{ pages_block }}
+                </div>
+            </section>
+        </div>
+    </section>
+
+{% endblock %}

@@ -15,6 +15,7 @@ from .. import bp
 def add():
     if request.method == "POST":
         title = request.form.get("title")
+        slug = request.form.get("slug")
         thumbnail = request.files.get("thumbnail")
         markdown = request.form.get("markdown")
 
@@ -37,6 +38,7 @@ def add():
             values={
                 "fk_user_id": session.get("user_id", 1),
                 "title": title,
+                "slug": slug,
                 "markdown": markdown,
                 "markup": markup,
                 "viewable": viewable,

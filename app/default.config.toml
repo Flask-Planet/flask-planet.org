@@ -1,8 +1,9 @@
 [flask]
-APP_NAME = "app"
-VERSION = "0.0.1"
-SECRET_KEY = "<CONFIG_SECRET_KEY>"
-DEBUG = true
+APP_NAME = "com-flask-planet"
+BUILD = "1"
+SECRET_KEY = "iWZwwYpexWZQPysbdVJbWKgNYBCJfzuekeiU"
+SESSION_COOKIE_NAME = "uXiSiZLk"
+DEBUG = false
 TESTING = false
 SESSION_TIME = 480
 ERROR_404_HELP = true

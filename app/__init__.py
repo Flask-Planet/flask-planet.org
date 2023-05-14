@@ -27,6 +27,7 @@ def create_app():
     db.init_app(app)
     logger.init_app(app)
     bigapp.import_models(from_folder="models")
+    bigapp.import_builtins()
 
     with app.app_context():
         db.create_all()
@@ -41,7 +42,5 @@ def create_app():
     @app.before_request
     def before_request():
         bigapp.init_session()
-
-    bigapp.import_builtins()
 
     return app

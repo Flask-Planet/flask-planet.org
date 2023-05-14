@@ -12,14 +12,14 @@ from .. import bp
 @bp.post("/api/upload/thumbnail/<news_id>")
 @login_check("logged_in", "backend.api_unauth")
 def api_upload_thumbnail(news_id):
-    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "news" / news_id)
-    upload_location.mkdir(parents=True, exist_ok=True)
-
     news = News.get_by_id(news_id)
 
     if not news_id:
         logger.debug(f"No article found with id: <{news_id}>")
-        return {"status": "error", "message": "No stream found"}
+        return {"status": "error", "message": "No news found"}
+
+    upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "news" / news_id)
+    upload_location.mkdir(parents=True, exist_ok=True)
 
     thumbnail_file = request.files.get("thumbnail_file", None)
 

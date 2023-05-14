@@ -21,7 +21,10 @@
                 <div class="box">
                     <div class="box-row u-space-between">
                         <a class="button" href="{{ url_for('backend.news.index') }}">Cancel</a>
-                        <button type="submit">
+                        <button
+                                type="submit"
+                                x-bind:disabled="slug_exists || slug.length < 1"
+                        >
                             Add News
                         </button>
                     </div>
@@ -35,7 +38,21 @@
                             name="title"
                             type="text"
                             class="u-w100"
+                            x-model="title"
+                            @input.debounce.200ms="slugger(); check_if_slug_exists()"
                             required
+                    >
+
+                    <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
+
+                    <label for="slug">Slug</label>
+                    <input
+                            class="u-w100"
+                            id="slug"
+                            name="slug"
+                            type="text"
+                            x-model="slug"
+                            readonly
                     >
 
                     <label for="thumbnail">Thumbnail</label>

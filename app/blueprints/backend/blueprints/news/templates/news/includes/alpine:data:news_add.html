@@ -2,6 +2,28 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('news_add', () => ({
             viewable: false,
+            title: '',
+            slug: '',
+            slug_exists: false,
+
+            slugger() {
+                let slug = this.title
+                slug = slug.toLowerCase()
+                slug = slug.replace(/[^a-z0-9\s-]/g, '')
+                slug = slug.replace(/[\s-]+/g, '-')
+                slug = slug.replace(/^-+|-+$/g, '')
+                this.slug = slug
+            },
+            check_if_slug_exists() {
+                fetch(`{{ url_for("backend.news.api_check_if_slug_exists") }}?slug=${this.slug}`, {
+                    method: 'GET'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.slug_exists = data['exists']
+                    })
+            },
+
         }))
     })
 </script>

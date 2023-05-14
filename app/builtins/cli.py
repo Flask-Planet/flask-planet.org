@@ -89,11 +89,14 @@ def loader(app: Flask):
         logger.debug(f"Creating news")
         m_news = bigapp.model("News")
         for i in range(1, 25):
+            random_release = random.randrange(-20, 20)
             m_news.add_new_article(
                 fk_user_id=user.user_id,
                 title=f"Test news {i}",
+                slug=f"test-news-{i}",
                 markdown=f"Test news {i}",
                 markup=f"<p>Test news {i}</p>",
                 viewable=True,
+                release_date=pytz_datetime(days_delta=random_release),
                 created=pytz_datetime(),
             )

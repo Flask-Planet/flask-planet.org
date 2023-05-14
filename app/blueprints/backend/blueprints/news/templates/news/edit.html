@@ -26,16 +26,28 @@
             </section>
             <section>
                 <div class="box">
-
                     <label for="title">Title</label>
                     <input
                             id="title"
                             name="title"
                             type="text"
+                            class="u-w100"
+                            x-model="title"
+                            @input.debounce.200ms="slugger(); check_if_slug_exists()"
                             required
-                            value="{{ news.title }}"
                     >
 
+                    <p x-show="slug_exists" class="u-red" x-cloak>Title already exists, choose another Title!</p>
+
+                    <label for="slug">Slug</label>
+                    <input
+                            class="u-w100"
+                            id="slug"
+                            name="slug"
+                            type="text"
+                            x-model="slug"
+                            readonly
+                    >
                     <label for="thumbnail">Thumbnail</label>
                     <input type="file" accept="image/png, image/jpeg" name="thumbnail">
 

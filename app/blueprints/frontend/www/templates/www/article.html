@@ -1,0 +1,20 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block container %}
+    <section>
+        <div class="box box-flex">
+            <div class="box-col">
+                <article>
+                    <h1 class="title">{{ article.title }}</h1>
+                    <p class="author">Written by: {{ article.author }}</p>
+                    <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
+                </article>
+            </div>
+        </div>
+    </section>
+    <section style="margin: 20px auto; color: whitesmoke;">
+        <article style="padding: 10px;">
+            {{ article.markup|safe }}
+        </article>
+    </section>
+{% endblock %}

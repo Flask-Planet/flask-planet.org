@@ -20,7 +20,7 @@
                     <div class="box-row u-space-between">
                         <a class="button" href="{{ url_for('backend.resources.index') }}">Cancel</a>
                         <button
-                                @click="$refs.add_resource.submit()"
+                                type="submit"
                                 x-bind:disabled="slug_exists || slug.length < 1"
                         >
                             Add Resource

@@ -16,8 +16,8 @@ class Resource(db.Model, CrudMixin):
     fk_user_id = schema.Column(types.Integer, schema.ForeignKey("user.user_id"), nullable=False)
 
     # Data
-    slug = schema.Column(types.String(128), nullable=False, unique=True)
-    title = schema.Column(types.String(128), nullable=False)
+    slug = schema.Column(types.String(1024), nullable=False, unique=True)
+    title = schema.Column(types.String(1024), nullable=False)
     markup = schema.Column(types.NVARCHAR, nullable=False)
     markdown = schema.Column(types.NVARCHAR, nullable=False)
 
