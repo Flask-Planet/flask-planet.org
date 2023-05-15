@@ -48,6 +48,7 @@
                             x-model="slug"
                             readonly
                     >
+
                     <label for="thumbnail">Thumbnail</label>
                     <input type="file" accept="image/png, image/jpeg" name="thumbnail">
 
@@ -90,18 +91,16 @@
                             id="author"
                             name="author"
                             type="text"
-                            value="{{ news.author }}"
+                            value="{{ news.author or session.get('username') }}"
                             required
                     >
-
 
                     <label for="author_link">Author URL</label>
                     <input
                             id="author_link"
                             name="author_link"
                             type="text"
-                            value="{{ news.author_link }}"
-                            required
+                            value="{{ news.author_link or author_link_from_user(session.get('user_id')) }}"
                     >
 
                 </div>

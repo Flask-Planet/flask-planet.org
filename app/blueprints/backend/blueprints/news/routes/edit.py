@@ -47,8 +47,8 @@ def edit(news_id):
                 "markup": markup,
                 "viewable": viewable,
                 "release_date": release_date,
-                "author": author,
-                "author_link": author_link
+                "author": author or "",
+                "author_link": author_link or "",
             },
             id_=news_id,
         )
