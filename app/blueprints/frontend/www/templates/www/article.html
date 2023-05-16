@@ -2,13 +2,20 @@
 
 {% block container %}
     <section>
-        <div class="box box-flex">
+        <div class="box box-row u-space-between">
             <div class="box-col">
                 <article>
                     <h1 class="title">{{ article.title }}</h1>
                     <p class="author">Written by: {{ article.author }}</p>
                     <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
                 </article>
+            </div>
+            <div class="box-col">
+                <div class="box-col">
+                    <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
+                         style="height: 160px;"
+                         alt="{{ article.title }} Thumbnail">
+                </div>
             </div>
         </div>
     </section>

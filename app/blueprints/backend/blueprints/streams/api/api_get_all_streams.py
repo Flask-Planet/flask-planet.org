@@ -9,7 +9,7 @@ from .. import bp
 @login_check("logged_in", "backend.api_unauth")
 def api_get_all_streams():
     page = request.args.get("page", 1)
-    streams = Stream.all_newest_first_pages(
+    streams = Stream.all_schedule_first_pages(
         page=int(page),
         per_page=5
     )

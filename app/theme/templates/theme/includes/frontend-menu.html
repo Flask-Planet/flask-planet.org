@@ -12,6 +12,8 @@
            href="{{ url_for('frontend.www.streams') }}">Streams</a>
         <a class="nav-link{% if "resources" in request.url %} nav-link-active{% endif %}"
            href="{{ url_for('frontend.www.resources') }}">Resources</a>
+        <a class="nav-link{% if "news" in request.url %} nav-link-active{% endif %}"
+           href="{{ url_for('frontend.www.news') }}">News</a>
 
     </div>
     <div class="nav-group">

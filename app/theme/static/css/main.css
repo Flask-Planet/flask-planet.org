@@ -788,7 +788,6 @@ section > :is(h1, h2, h3, h4, h5, h6) {
 }
 
 .box-col img {
-    width: 100%;
     height: auto;
     border: 1px solid #30343b;
 }
@@ -936,7 +935,7 @@ thead * th {
 /* typography.css */
 
 .title {
-    font-size: 3.4rem;
+    font-size: 3.6rem;
 }
 
 .summary {

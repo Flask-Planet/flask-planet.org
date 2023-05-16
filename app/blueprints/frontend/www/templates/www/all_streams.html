@@ -5,7 +5,7 @@
 {% if page > 1 %}
 
 
-    {% set back_url = url_for("frontend.www.news", page=page - 1) %}
+    {% set back_url = url_for("frontend.www.all_streams", page=page - 1) %}
 
 
     <a href="{{ back_url }}"
@@ -46,7 +46,7 @@
 
 {% if page != pages and pages != 0 %}
 
-    {% set forw_url = url_for("frontend.www.news", page=page + 1) %}
+    {% set forw_url = url_for("frontend.www.all_streams", page=page + 1) %}
 
     <a href="{{ forw_url }}"
        class="button"
@@ -81,72 +81,46 @@
 {% endif %}
 {% endset %}
 
-
-
 {% block container %}
 
-    <section>
-        <div class="box ms-1 me-1" style="color: whitesmoke">
+    {% if pages > 1 %}
+        <section>
+            <div class="box ms-1 me-1" style="color: whitesmoke">
 
-            <section class="mb-0 mt-0 u-flex u-space-between">
-                <div>
-                    {{ pages_block }}
-                </div>
-            </section>
-        </div>
-    </section>
-
-    {% if news %}
-        <section x-data>
-            {% for article in news %}
-                <article class="box"
-                         style="margin-bottom: 12px;">
-                    <div class="box-row u-space-between">
-                        <div class="box-col">
-                            <h6 style="margin-bottom: 0">{{ article.title }}</h6>
-                            <p style="margin: 0">
-                                <small>Author:
-                                    {% if article.author_link != None and article.author_link != '' %}
-                                        {{ article.author }}
-                                    {% else %}
-                                        <a rel="noopener noreferrer" href="{{ article.author_link }}">
-                                            {{ article.author }}</a>
-                                    {% endif %}
-                                </small>
-                            </p>
-                            <p>
-                                <small>Published on:
-                                    {{ article.release_date|stream_date }}
-                                </small>
-                            </p>
-                            <a
-                                    style="width: 100px;"
-                                    href="{{ url_for("frontend.www.article", slug=article.slug) }}"
-                            >View</a>
-                        </div>
-
-
-                        <div class="box-col">
-                            <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
-                                 style="height: 120px;"
-                                 alt="{{ article.title }} Thumbnail">
-                        </div>
-
+                <section class="mb-0 mt-0 u-flex u-space-between">
+                    <div>
+                        {{ pages_block }}
                     </div>
-                </article>
-            {% endfor %}
+                </section>
+            </div>
         </section>
     {% endif %}
 
     <section>
-        <div class="box ms-1 me-1" style="color: whitesmoke">
-
-            <section class="mb-0 mt-0 u-flex u-space-between">
-                <div>
-                    {{ pages_block }}
-                </div>
-            </section>
-        </div>
+        {% if streams %}
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for stream in streams %}
+                    <tr>
+                        <td>{{ stream.title }}</td>
+                        <td>{{ stream.schedule|stream_date }}</td>
+                        <td>{{ stream.schedule|stream_time }} (GMT)</td>
+                        <td>
+                            <a href="{{ stream.url_link }}" rel="noopener noreferrer">
+                                {{ stream.display_url_link or stream.url_link }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </section>
-
 {% endblock %}

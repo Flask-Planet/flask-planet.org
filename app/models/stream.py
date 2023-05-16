@@ -53,6 +53,11 @@ class Stream(db.Model, CrudMixin):
         return cls.read(all_rows=True, order_by="created", order_desc=True)
 
     @classmethod
+    def all_newest_schedule_first(cls):
+        logger.debug("Getting all streams newest first...")
+        return cls.read(all_rows=True, order_by="schedule", order_desc=True)
+
+    @classmethod
     def newest_upcoming(cls):
         logger.debug("Getting stream newest upcoming...")
         today = datetime.strptime(pytz_datetime_str(mask="%Y-%m-%d"), "%Y-%m-%d")
@@ -61,10 +66,13 @@ class Stream(db.Model, CrudMixin):
         return result
 
     @classmethod
-    def newest_past(cls):
+    def most_recent_streams(cls):
         logger.debug("Getting past streams...")
         today = datetime.strptime(pytz_datetime_str(mask="%Y-%m-%d"), "%Y-%m-%d")
-        query = select(cls).order_by(desc(cls.schedule)).where(cls.schedule < today, cls.viewable).limit(4)  # type: ignore
+        week_ago = datetime.strptime(pytz_datetime_str(mask="%Y-%m-%d", days_delta=-7), "%Y-%m-%d")
+        query = select(cls).order_by(
+            desc(cls.schedule)  # type: ignore
+        ).where(cls.schedule < today, cls.schedule > week_ago, cls.viewable).limit(4)  # type: ignore
         result = cls.__session__.scalars(query).all()
         return result
 
@@ -83,7 +91,7 @@ class Stream(db.Model, CrudMixin):
         return db.paginate(query, page=page, per_page=per_page)
 
     @classmethod
-    def all_newest_first_pages(cls, page: int = 1, per_page: int = 20) -> Pagination:
+    def all_schedule_first_pages(cls, page: int = 1, per_page: int = 20) -> Pagination:
         query = select(cls).order_by(desc(cls.schedule))  # type: ignore
         logger.debug("Getting all streams newest first...")
         return db.paginate(query, page=page, per_page=per_page)
