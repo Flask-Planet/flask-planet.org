@@ -17,6 +17,20 @@
 </head>
 
 <body>
+{% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-flash" x-data x-init="setTimeout(() => {$el.remove()}, 3000)" @mouseover="$el.remove()">
+                <div class="flash-text">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endwith %}
+
 {% include 'theme/includes/frontend-menu.html' %}
 
 {% block global %}

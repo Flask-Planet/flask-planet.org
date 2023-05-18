@@ -6,4 +6,142 @@
             <img src="{{ url_for('theme.static', filename='img/flask-planet-logo.gif') }}" alt="Flask Planet logo"/>
         </div>
     </section>
+
+    {% if streaming_today %}
+        <section>
+
+            <h5 class="slight-header header-italic" style="padding-left: 10px;">Today's Stream</h5>
+            <section x-data>
+                <article class="box">
+                    <div class="box-group box-group-grid-lg-2">
+                        <div class="box-col">
+                            <img class="u-w100"
+                                 src="{{ stream_cdn(streaming_today.stream_id, streaming_today.thumbnail) }}"
+                                 alt="{{ streaming_today.title }} Thumbnail">
+                        </div>
+                        <div class="box-col">
+                            <h6>{{ streaming_today.title }}</h6>
+                            <ul class="box-list">
+                                <li>
+                                    <h1>Date:</h1>
+                                    <p>{{ streaming_today.schedule|stream_date }}</p>
+                                </li>
+                                <li>
+                                    <h1>Time:</h1>
+                                    <p>{{ streaming_today.schedule|stream_time }} (GMT)</p>
+                                </li>
+                                <li>
+                                    <h1>Link:</h1>
+                                    <p>
+                                        <a href="{{ streaming_today.url_link }}" rel="noopener noreferrer">
+                                            {{ streaming_today.display_url_link or streaming_today.url_link }}
+                                        </a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="box-col mt-4">
+                        {{ streaming_today.markup|safe }}
+                    </div>
+                </article>
+            </section>
+
+            <section>
+                <div class="u-flex u-justify-center mt-4 mb-5">
+                    <a href="{{ url_for('frontend.www.streams') }}">
+                        View Streaming Schedule
+                    </a>
+                </div>
+            </section>
+
+        </section>
+    {% endif %}
+
+    <section>
+        <h5 class="slight-header header-italic" style="padding-left: 10px;">Latest News</h5>
+        {% if news %}
+            <section x-data>
+                {% for article in news %}
+                    <article class="box" style="margin-bottom: 12px;">
+                        <div class="box-row u-space-between">
+                            <div class="box-col">
+                                <h6 style="margin-bottom: 0">{{ article.title }}</h6>
+                                <p style="margin: 0">
+                                    <small>Author:
+                                        {% if article.author_link != None and article.author_link != '' %}
+                                            {{ article.author }}
+                                        {% else %}
+                                            <a rel="noopener noreferrer" href="{{ article.author_link }}">
+                                                {{ article.author }}</a>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                                <p>
+                                    <small>Published on:
+                                        {{ article.release_date|stream_date }}
+                                    </small>
+                                </p>
+                                <div class="mb-2">
+                                    <a class="button px-4"
+                                       href="{{ url_for("frontend.www.article", slug=article.slug) }}">
+                                        View
+                                    </a>
+                                </div>
+
+                            </div>
+
+
+                            <div class="box-col">
+                                <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
+                                     style="height: 120px;"
+                                     alt="{{ article.title }} Thumbnail">
+                            </div>
+
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% endif %}
+        <section>
+            <div class="u-flex u-justify-center mt-4 mb-5">
+                <a href="{{ url_for('frontend.www.news') }}">
+                    View All News
+                </a>
+            </div>
+        </section>
+    </section>
+
+    <section>
+        <h5 class="slight-header header-italic" style="padding-left: 10px;">Newly Added Resources</h5>
+        <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
+            {% for resource in resources %}
+                <a href="{{ url_for("frontend.www.resource", slug=resource.slug) }}">
+                    <div class="box box-hover box-flex u-pointer">
+                        <div class="box-col">
+                            <h6>{{ resource.title }}</h6>
+                        </div>
+                        <div class="ms-2 me-2 mb-3">
+                            {% for tag in resource.rel_resource_tag_membership %}
+                                <span class="tag-no-shadow">
+                                {{ tag.rel_resource_tag.tag }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="box-col">
+                            <small style="opacity: 0.2">click to view</small>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <section>
+            <div class="u-flex u-justify-center mt-4 mb-5">
+                <a href="{{ url_for('frontend.www.resources') }}">
+                    View All Resources
+                </a>
+            </div>
+        </section>
+    </section>
+
 {% endblock %}

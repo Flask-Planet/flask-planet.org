@@ -87,7 +87,6 @@
 
     <section>
         <div class="box ms-1 me-1" style="color: whitesmoke">
-
             <section class="mb-0 mt-0 u-flex u-space-between">
                 <div>
                     {{ pages_block }}
@@ -119,10 +118,12 @@
                                     {{ article.release_date|stream_date }}
                                 </small>
                             </p>
-                            <a
-                                    style="width: 100px;"
-                                    href="{{ url_for("frontend.www.article", slug=article.slug) }}"
-                            >View</a>
+                            <div class="mb-2">
+                                <a class="button px-4"
+                                   href="{{ url_for("frontend.www.article", slug=article.slug) }}">
+                                    View
+                                </a>
+                            </div>
                         </div>
 
 

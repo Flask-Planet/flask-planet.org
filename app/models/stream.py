@@ -48,6 +48,19 @@ class Stream(db.Model, CrudMixin):
         return cls.read(id_=resource_id)
 
     @classmethod
+    def streaming_today(cls):
+        query = select(cls).where(
+            cls.schedule > pytz_datetime(days_delta=-1),  # type: ignore
+            cls.schedule < pytz_datetime(days_delta=1)  # type: ignore
+        ).order_by(desc(cls.schedule))  # type: ignore
+        return cls.__session__.scalars(query).first()
+
+    @classmethod
+    def last_stream(cls):
+        query = select(cls).order_by(desc(cls.schedule))  # type: ignore
+        return cls.__session__.scalars(query).first()
+
+    @classmethod
     def all_newest_first(cls):
         logger.debug("Getting all streams newest first...")
         return cls.read(all_rows=True, order_by="created", order_desc=True)

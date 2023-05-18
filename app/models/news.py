@@ -72,6 +72,12 @@ class News(db.Model, CrudMixin):
         return db.paginate(query, page=page, per_page=per_page)
 
     @classmethod
+    def newest_first(cls):
+        query = select(cls).order_by(desc(cls.release_date))  # type: ignore
+        logger.debug("Getting all news viewable_on first...")
+        return cls.__session__.scalars(query).first()
+
+    @classmethod
     def add_new_article(cls, **kwargs):
         logger.debug("Adding new news article...")
         return cls.create(values=kwargs, wash_attributes=True)

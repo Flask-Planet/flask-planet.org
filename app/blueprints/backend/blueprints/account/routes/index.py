@@ -1,7 +1,7 @@
 from flask import render_template, session, request, url_for, redirect, flash
 from flask_bigapp.security import login_check
 
-from app.model_connectors.user import User
+from app.models.user import User
 from .. import bp
 
 
@@ -29,6 +29,7 @@ def index():
             if new_password == confirm_new_password:
                 user.set_new_password(new_password)
 
+        flash("Account updated")
         return redirect(url_for("backend.account.index"))
 
     return render_template(

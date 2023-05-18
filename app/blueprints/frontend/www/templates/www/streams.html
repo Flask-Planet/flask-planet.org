@@ -2,8 +2,8 @@
 
 {% block container %}
     {% if upcoming_streams %}
-        <section>
-            <h1 class="floating-header">Schedule</h1>
+        <section class="mt-5">
+            <h5 class="slight-header header-italic" style="padding-left: 10px;">Scheduled</h5>
             {% for stream in upcoming_streams %}
                 <article class="box" style="margin-bottom: 20px;">
                     <div class="box-group box-group-grid-lg-2">
@@ -41,9 +41,9 @@
         </section>
     {% endif %}
 
-    <section>
+    <section class="mt-5">
         {% if most_recent_streams %}
-            <h1 class="floating-header">Most Recent Stream(s)</h1>
+            <h5 class="slight-header header-italic" style="padding-left: 10px;">Most Recent Stream(s)</h5>
             {% for stream in most_recent_streams %}
                 <article class="box" style="margin-bottom: 20px;">
                     <div class="box-group box-group-grid-lg-2">
@@ -83,9 +83,9 @@
         {% endif %}
     </section>
 
-    <section style="margin: 50px auto;">
-        <div style="display: flex">
-            <a class="button u-w100" href="{{ url_for('frontend.www.all_streams') }}">
+    <section>
+        <div class="u-flex u-justify-center mt-4 mb-5">
+            <a href="{{ url_for('frontend.www.all_streams') }}">
                 View All Streams
             </a>
         </div>
