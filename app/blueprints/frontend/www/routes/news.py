@@ -8,7 +8,7 @@ from .. import bp
 def news():
     news_ = News.all_newest_first_pages(
         page=int(request.args.get("page", 1)),
-        per_page=9,
+        per_page=4,
     )
 
     return render_template(

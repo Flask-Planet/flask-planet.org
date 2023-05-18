@@ -1,10 +1,10 @@
-flask==2.2.3
+flask==2.3.2
 click
 gunicorn
 flask_sqlalchemy==3.0.3
-flask_bigapp==2023.1.8.6
+flask_bigapp==2023.1.9.1
 pytz==2023.3
-SQLAlchemy==2.0.10
+SQLAlchemy==2.0.13
 mistune==2.0.5
-Werkzeug==2.2.3
+Werkzeug==2.3.4
 python-dotenv==1.0.0
