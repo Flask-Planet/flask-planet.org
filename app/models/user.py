@@ -65,8 +65,6 @@ class User(db.Model, CrudMixin):
             cls,
             username,
             password,
-            author,
-            author_link,
     ):
         salt = Auth.generate_salt()
         password = Auth.sha_password(password, salt)
@@ -75,7 +73,5 @@ class User(db.Model, CrudMixin):
             'password': password,
             'salt': salt,
             'private_key': Auth.generate_private_key(salt),
-            'author': author,
-            'author_link': author_link,
             'created': pytz_datetime()
         })

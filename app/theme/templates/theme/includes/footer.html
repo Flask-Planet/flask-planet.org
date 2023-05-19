@@ -1,1 +1,17 @@
-<p>footer</p>
+<section class="color-dull-white mt-6">
+    <div class="box-row u-space-between u-align-end">
+        <div class="box-row u-space-between u-align-center">
+            <p style="margin: 0"><small><a href="https://uilix.com/" target="_blank">UiliX</a> T/A</small></p>
+
+            <img style="width: 60px" src="{{ url_for('theme.static', filename='img/flask-planet.gif') }}"
+             alt="Small Flask-Planet Logo">
+
+            <p style="margin: 0">Flask-Planet.org</p>
+        </div>
+
+        <div>
+            <p style="margin: 0"><a href="{{ url_for('terms_and_conditions') }}">Ts &amp; Cs</a></p>
+            <p><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></p>
+        </div>
+    </div>
+</section>

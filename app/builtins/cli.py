@@ -1,4 +1,5 @@
 import random
+from getpass import getpass
 
 from flask import Flask
 
@@ -7,21 +8,26 @@ from app.globals import pytz_datetime
 
 
 def loader(app: Flask):
-    @app.cli.command("first-run")
+    @app.cli.command("reset-db")
     def re_create_db():
         logger.debug("Dropping and creating database")
         db.drop_all()
         db.create_all()
 
+    @app.cli.command("create-user")
+    def re_create_db():
+        db.create_all()
+
         m_user = bigapp.model("User")
 
-        logger.debug(f"Creating admin user")
+        logger.debug(f"Creating user")
+
+        email_address = input("Enter your email address: ")
+        password = getpass("Enter a password: ")
 
         m_user.add_new_user(
-            "admin",
-            "password",
-            "Admin",
-            "admin.link",
+            email_address,
+            password,
         )
 
     @app.cli.command("example-data")
