@@ -1,15 +1,7 @@
-import os
-import secrets
-
-from dotenv import load_dotenv
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.extensions import bigapp, db, logger
-
-os.environ["CONFIG_SECRET_KEY"] = secrets.token_urlsafe(128)
-
-load_dotenv()
 
 
 def create_app():
@@ -28,16 +20,11 @@ def create_app():
     logger.init_app(app)
     bigapp.import_models(from_folder="models")
     bigapp.import_builtins()
+    bigapp.import_blueprints("blueprints")
+    bigapp.import_theme("theme")
 
     with app.app_context():
         db.create_all()
-
-    if os.environ.get("FLASK_PLANET_DEV", None) is not None:
-        bigapp.import_blueprints("blueprints")
-    else:
-        bigapp.import_blueprint("coming_soon")
-
-    bigapp.import_theme("theme")
 
     @app.before_request
     def before_request():

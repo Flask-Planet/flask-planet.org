@@ -18,6 +18,7 @@ def login():
             session['logged_in'] = True
             session['user_id'] = auth.user_id
             session['username'] = auth.username
+            flash("Logged in successfully!")
             return redirect(url_for("backend.index"))
 
         else:

@@ -1,0 +1,13 @@
+services:
+  web:
+    container_name: flask_planet_org
+    image: cheesecake87/flask-planet.org:b2
+    ports:
+      - "4002:5000"
+    volumes:
+      - flask_planet_db:/flask/app/db
+    environment:
+      - CONFIG_SECRET_KEY = "SET ME TO SOMETHING SECRET"
+
+volumes:
+  flask_planet_db:

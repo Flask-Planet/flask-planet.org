@@ -1,7 +1,7 @@
 [flask]
-APP_NAME = "com-flask-planet"
+APP_NAME = "org-flask-planet"
 BUILD = "1"
-SECRET_KEY = "iWZwwYpexWZQPysbdVJbWKgNYBCJfzuekeiU"
+SECRET_KEY = "<CONFIG_SECRET_KEY>"
 SESSION_COOKIE_NAME = "uXiSiZLk"
 DEBUG = false
 TESTING = false
