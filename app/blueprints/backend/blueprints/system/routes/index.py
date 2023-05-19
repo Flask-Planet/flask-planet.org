@@ -1,5 +1,6 @@
 import mistune
 from flask import render_template, url_for, redirect, request
+from flask_bigapp.security import login_check
 
 from app.globals import HighlightRenderer
 from app.models.system import System
@@ -7,6 +8,7 @@ from .. import bp
 
 
 @bp.route("/", methods=["GET", "POST"])
+@login_check("logged_in", "backend.login")
 def index():
     system = System.get_first()
 
