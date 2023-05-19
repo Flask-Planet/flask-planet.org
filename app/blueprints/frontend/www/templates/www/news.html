@@ -4,9 +4,7 @@
 {% set pages_block %}
 {% if page > 1 %}
 
-
     {% set back_url = url_for("frontend.www.news", page=page - 1) %}
-
 
     <a href="{{ back_url }}"
        class="button"
@@ -119,8 +117,8 @@
                                 </small>
                             </p>
                             <div class="mb-2">
-                                <a class="button px-4"
-                                   href="{{ url_for("frontend.www.article", slug=article.slug) }}">
+                                <a class="button"
+                                   href="{{ url_for("frontend.www.article", slug=article.slug, **url_args) }}">
                                     View
                                 </a>
                             </div>
@@ -147,6 +145,7 @@
                     {{ pages_block }}
                 </div>
             </section>
+
         </div>
     </section>
 

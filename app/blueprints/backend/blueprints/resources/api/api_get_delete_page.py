@@ -10,14 +10,14 @@ from .. import bp
 @bp.get("/api/delete/page/")
 @login_check("logged_in", "backend.api_unauth")
 def api_get_delete_page():
-    resource_page_id = request.args.get("id", None)
+    resource_page_id = int(request.args.get("id", None))
     if not resource_page_id:
         return {"status": "error", "message": "No valid resource_page_id"}
 
     resource_page = ResourcePage.get_by_id(resource_page_id)
 
     upload_location = pathlib.Path(
-        pathlib.Path(current_app.root_path) / "uploads" / "resources" / resource_page.fk_resource_id)
+        pathlib.Path(current_app.root_path) / "uploads" / "resources" / str(resource_page.fk_resource_id))
     file_location = upload_location / resource_page.markdown_safe_filename
     file_location.unlink(missing_ok=True)
 

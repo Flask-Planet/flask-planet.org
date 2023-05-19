@@ -31,10 +31,24 @@ def resources():
 
     tags = ResourceTag.get_all_tags()
 
+    url_args = {}
+    url_page_control = {}
+
+    if "page" in request.args:
+        url_args["page"] = request.args["page"]
+    if "search" in request.args:
+        url_args["search"] = request.args["search"]
+        url_page_control["search"] = request.args["search"]
+    if "tag" in request.args:
+        url_args["tag"] = request.args["tag"]
+        url_page_control["tag"] = request.args["tag"]
+
     return render_template(
         bp.tmpl("resources.html"),
         resources=resources_pages.items,
         page=resources_pages.page,
         pages=resources_pages.pages,
-        tags=tags
+        tags=tags,
+        url_args=url_args,
+        url_page_control=url_page_control,
     )

@@ -1,27 +1,40 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block container %}
-    <section>
-        <div class="box box-row u-space-between">
-            <div class="box-col">
-                <article>
-                    <h1 class="title">{{ article.title }}</h1>
-                    <p class="author">Written by: {{ article.author }}</p>
-                    <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
-                </article>
-            </div>
-            <div class="box-col">
-                <div class="box-col">
-                    <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
-                         style="height: 160px;"
-                         alt="{{ article.title }} Thumbnail">
-                </div>
-            </div>
-        </div>
+    <section class="mt-4">
+        <a href="{{ url_for('frontend.www.news', **url_args) }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-arrow-left">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to All News
+        </a>
     </section>
-    <section style="margin: 20px auto; color: whitesmoke;">
-        <article style="padding: 10px;">
-            {{ article.markup|safe }}
+    <section>
+        <article class="box">
+            <div class="box-row u-space-between">
+                <div class="box-col">
+                    <article>
+                        <h1 class="title">{{ article.title }}</h1>
+                        <p class="author">Written by: {{ article.author }}</p>
+                        <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
+                    </article>
+                </div>
+                <div class="box-col">
+                    <div class="box-col">
+                        <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
+                             style="height: 160px;"
+                             alt="{{ article.title }} Thumbnail">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box-col mt-5">
+                {{ article.markup|safe }}
+            </div>
         </article>
     </section>
 {% endblock %}

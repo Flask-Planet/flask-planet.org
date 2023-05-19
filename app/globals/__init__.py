@@ -1,7 +1,26 @@
 from datetime import datetime
 from datetime import timedelta
 
+import mistune
+from pygments import highlight
+from pygments.formatters import html
+from pygments.lexers import get_lexer_by_name
+from pygments.util import ClassNotFound
 from pytz import timezone
+
+
+class HighlightRenderer(mistune.HTMLRenderer):
+    def block_code(self, code, info=None):
+        if info:
+            if info == "jinja2":
+                info = "jinja"
+            try:
+                lexer = get_lexer_by_name(info, stripall=True)
+            except ClassNotFound:
+                lexer = get_lexer_by_name('text', stripall=True)
+            formatter = html.HtmlFormatter()
+            return highlight(code, lexer, formatter)
+        return '<pre><code>' + mistune.escape(code) + '</code></pre>'
 
 
 def pytz_datetime(ltz: str = "Europe/London", mask: str = "%Y-%m-%d %H:%M:%S.%f", days_delta: int = 0) -> datetime:

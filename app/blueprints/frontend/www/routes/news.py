@@ -11,9 +11,15 @@ def news():
         per_page=4,
     )
 
+    url_args = {}
+
+    if "page" in request.args:
+        url_args["page"] = request.args["page"]
+
     return render_template(
         bp.tmpl("news.html"),
         news=news_,
         page=news_.page,
         pages=news_.pages,
+        url_args=url_args,
     )

@@ -26,6 +26,12 @@ class ResourcePage(db.Model, CrudMixin):
     created = schema.Column(types.DateTime, default=pytz_datetime())
 
     @classmethod
+    def get_by_id(cls, resource_page_id: int):
+        return cls.read(
+            id_=resource_page_id,
+        )
+
+    @classmethod
     def delete_by_og_filename(cls, og_filename: str, fk_resource_id: int):
         cls.delete(
             fields={
@@ -39,7 +45,7 @@ class ResourcePage(db.Model, CrudMixin):
         resource_page = cls.get_by_id(resource_page_id)
 
         upload_location = pathlib.Path(
-            pathlib.Path(current_app.root_path) / "uploads" / "resources" / resource_page.fk_resource_id)
+            pathlib.Path(current_app.root_path) / "uploads" / "resources" / str(resource_page.fk_resource_id))
         file_location = upload_location / resource_page.markdown_safe_filename
         file_location.unlink(missing_ok=True)
 
@@ -80,6 +86,13 @@ class ResourcePage(db.Model, CrudMixin):
     def get_by_og_filename(cls, og_filename: str):
         return cls.read(
             fields={'markdown_og_filename': og_filename},
+            _auto_output=False
+        ).first()
+
+    @classmethod
+    def get_by_safe_filename(cls, safe_filename: str):
+        return cls.read(
+            fields={'markdown_safe_filename': safe_filename},
             _auto_output=False
         ).first()
 

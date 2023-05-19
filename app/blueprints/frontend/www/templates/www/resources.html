@@ -4,17 +4,7 @@
 {% set pages_block %}
 {% if page > 1 %}
 
-    {% if request.args.get('search') and request.args.get('tag') %}
-        {% set back_url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=page - 1) %}
-    {% elif request.args.get('search') %}
-        {% set back_url = url_for("frontend.www.resources", search=request.args.get('search'), page=page - 1) %}
-    {% elif request.args.get('tag') %}
-        {% set back_url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=page - 1) %}
-    {% else %}
-        {% set back_url = url_for("frontend.www.resources", page=page - 1) %}
-    {% endif %}
-
-    <a href="{{ back_url }}"
+    <a href="{{ url_for("frontend.www.resources", page=page - 1, **url_page_control) }}"
        class="button"
        style="padding-left: 18px; padding-right: 18px;">
 
@@ -52,17 +42,7 @@
 
 {% if page != pages and pages != 0 %}
 
-    {% if request.args.get('search') and request.args.get('tag') %}
-        {% set forw_url = url_for("frontend.www.resources", search=request.args.get('search'), tag=request.args.get('tag'), page=page + 1) %}
-    {% elif request.args.get('search') %}
-        {% set forw_url = url_for("frontend.www.resources", search=request.args.get('search'), page=page + 1) %}
-    {% elif request.args.get('tag') %}
-        {% set forw_url = url_for("frontend.www.resources", tag=request.args.get('tag'), page=page + 1) %}
-    {% else %}
-        {% set forw_url = url_for("frontend.www.resources", page=page + 1) %}
-    {% endif %}
-
-    <a href="{{ forw_url }}"
+    <a href="{{ url_for("frontend.www.resources", page=page + 1, **url_page_control) }}"
        class="button"
        style="padding-left: 18px; padding-right: 18px;">
 
@@ -183,7 +163,8 @@
     <section>
         <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
             {% for resource in resources %}
-                <a href="{{ url_for("frontend.www.resource", slug=resource.slug) }}">
+                <a href="{{ url_for("frontend.www.resource", slug=resource.slug, **url_args) }}">
+
                     <div class="box box-hover box-flex u-pointer">
                         <div class="box-col">
                             <h6>{{ resource.title }}</h6>

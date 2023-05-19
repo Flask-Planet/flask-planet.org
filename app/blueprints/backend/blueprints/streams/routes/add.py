@@ -2,7 +2,7 @@ import mistune
 from flask import render_template, request, session, url_for, redirect
 from flask_bigapp.security import login_check
 
-from app.globals import pytz_datetime
+from app.globals import pytz_datetime, HighlightRenderer
 from app.models.stream import Stream
 from .. import bp
 
@@ -12,9 +12,10 @@ from .. import bp
 def add():
     if request.method == "POST":
         title = request.form.get("title")
-        markdown = request.form.get("markdown")
 
-        markup = mistune.html(markdown).strip()
+        markdown = request.form.get("markdown", '')
+        markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+        markup = markdown_processor(markdown)
 
         stream = Stream.add_new_stream(
             fk_user_id=session.get("user_id", 1),

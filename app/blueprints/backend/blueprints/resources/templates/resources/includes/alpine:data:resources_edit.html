@@ -12,6 +12,7 @@
 
                 viewable: {{ resource.viewable|lower }},
                 auto_viewable: {{ resource.auto_viewable|lower }},
+                go_viewable_on: '{{ resource.go_viewable_on|datetime or '' }}',
 
                 markup: '-',
                 markdown: '-',
@@ -143,7 +144,6 @@
                         .then(data => {
                             this.selected_files = data['files']
                         }).then(() => {
-                        hljs.highlightAll()
                         this.selected_files = ['No files selected...']
                         this.get_pages()
                     });

@@ -710,6 +710,57 @@ input[type='checkbox'], input[type='radio'] {
     margin-left: 3rem;
 }
 
+
+.mx-1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.mx-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.mx-3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.mx-4 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.my-0 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.my-1 {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.my-2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.my-3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.my-4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.my-5 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
 .px-0 {
     padding-left: 0;
     padding-right: 0;
@@ -734,6 +785,8 @@ input[type='checkbox'], input[type='radio'] {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
+
+
 
 /* structure.css */
 
@@ -1035,7 +1088,6 @@ pre {
 pre > code {
     border-radius: 0;
     display: block;
-    padding: 1rem 1.5rem;
     white-space: pre
 }
 
@@ -1110,10 +1162,13 @@ thead * th {
     color: rgba(225, 225, 225, 0.6) !important;
 }
 
+pre {
+    padding: 15px;
+}
+
 code, pre {
     background-color: #151921;
     color: #a9a9a9;
-    margin: 2px;
 }
 
 code {
@@ -1194,6 +1249,18 @@ h6 {
 
 .flash-animation {
     animation: flashing 1s forwards;
+}
+
+.u-text-center {
+    text-align: center;
+}
+
+.u-text-left {
+    text-align: left;
+}
+
+.u-text-right {
+    text-align: right;
 }
 
 .u-flex {

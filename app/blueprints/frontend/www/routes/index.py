@@ -15,8 +15,6 @@ def index():
 
     streaming_today = Stream.last_stream()
 
-    print(streaming_today)
-
     resources_ = Resource.all_newest_first_pages(
         page=1,
         per_page=3,

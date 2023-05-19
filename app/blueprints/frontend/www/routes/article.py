@@ -1,8 +1,7 @@
-from flask import render_template, abort
+from flask import render_template, abort, request
 
 from app.models.news import News
 from app.models.news_click import NewsClick
-
 from .. import bp
 
 
@@ -14,4 +13,9 @@ def article(slug):
 
     NewsClick.add_news_click(article_.news_id)
 
-    return render_template(bp.tmpl("article.html"), article=article_)
+    url_args = {}
+
+    if "page" in request.args:
+        url_args["page"] = request.args["page"]
+
+    return render_template(bp.tmpl("article.html"), article=article_, url_args=url_args)

@@ -1,10 +1,11 @@
 from datetime import datetime
 
 import mistune
-from flask import render_template, abort, request, redirect, url_for
+from flask import render_template, abort, request, redirect, url_for, flash
 from flask_bigapp.security import login_check
 
 from app import logger
+from app.globals import HighlightRenderer
 from app.models.resource import Resource
 from app.models.resource_tag_membership import ResourceTagMembership
 from .. import bp
@@ -29,7 +30,8 @@ def edit(resource_id):
             go_viewable_on = None
 
         markdown = request.form.get("markdown")
-        markup = mistune.html(markdown).strip()
+        markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+        markup = markdown_processor(markdown)
 
         Resource.update(
             values={
@@ -68,6 +70,7 @@ def edit(resource_id):
                 logger.debug(f"Adding tags for resource {resource_id}")
                 ResourceTagMembership.process_tag_list(resource_id, tags_list)
 
-        return redirect(url_for("backend.resources.index"))
+        flash("Resource updated!")
+        return redirect(url_for("backend.resources.edit", resource_id=resource_id))
 
     return render_template(bp.tmpl("edit.html"), resource=resource_)

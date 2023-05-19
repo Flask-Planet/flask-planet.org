@@ -1,6 +1,4 @@
 <script defer type="application/javascript">
-    hljs.initHighlightingOnLoad();
-
     document.addEventListener('alpine:init', () => {
         Alpine.data('resources', () => ({
             page: 1,
@@ -36,7 +34,7 @@
                 this.search_active = false
 
                 if (this.title_search === '') {
-                    this.get_resources(this.page)
+                    this.get_resources()
                     return
                 } else if (this.title_search.length < 1) {
                     return

@@ -7,6 +7,7 @@ from flask_bigapp.security import login_check
 from werkzeug.utils import secure_filename
 
 from app.extensions import logger
+from app.globals import HighlightRenderer
 from app.models.news import News
 from .. import bp
 
@@ -24,8 +25,11 @@ def edit(news_id):
         title = request.form.get("title")
         slug = request.form.get("slug")
         thumbnail = request.files.get("thumbnail")
-        markdown = request.form.get("markdown")
-        markup = mistune.html(markdown).strip()
+
+        markdown = request.form.get("markdown", '')
+        markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+        markup = markdown_processor(markdown)
+
         viewable = True if request.form.get("viewable") == 'true' else False
 
         if request.form.get("release_date") != "":

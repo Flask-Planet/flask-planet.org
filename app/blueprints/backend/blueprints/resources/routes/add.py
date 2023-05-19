@@ -2,7 +2,7 @@ import mistune
 from flask import render_template, request, redirect, url_for, session
 from flask_bigapp.security import login_check
 
-from app.globals import pytz_datetime
+from app.globals import pytz_datetime, HighlightRenderer
 from app.models.resource import Resource
 from .. import bp
 
@@ -13,15 +13,17 @@ def add():
     if request.method == "POST":
         title = request.form.get("title")
         slug = request.form.get("slug")
-        markdown = request.form.get("markdown")
 
-        markup = mistune.html(markdown).strip()
+        markdown = request.form.get("markdown", '')
+        markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+        markup = markdown_processor(markdown)
 
         resource = Resource.add_new_resource(
             fk_user_id=session.get("user_id", 1),
             title=title,
             slug=slug,
-            summary=markup,
+            markup=markup,
+            markdown=markdown,
             created=pytz_datetime()
         )
 

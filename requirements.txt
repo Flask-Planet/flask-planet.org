@@ -8,3 +8,4 @@ SQLAlchemy==2.0.13
 mistune==2.0.5
 Werkzeug==2.3.4
 python-dotenv==1.0.0
+Pygments~=2.15.1

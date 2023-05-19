@@ -6,7 +6,7 @@ from flask_bigapp.security import login_check
 from werkzeug.utils import secure_filename
 
 from app import logger
-from app.globals import pytz_datetime
+from app.globals import pytz_datetime, HighlightRenderer
 from app.models.resource import Resource
 from app.models.resource_page import ResourcePage
 from .. import bp
@@ -39,7 +39,8 @@ def api_add_pages_to(resource_id):
         if save_location.suffix == ".md":
             file.save(save_location)
             markdown = save_location.read_text()
-            markup = mistune.html(markdown).strip()
+            markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+            markup = markdown_processor(markdown)
             ResourcePage.create(
                 values={
                     "fk_resource_id": resource_.resource_id,

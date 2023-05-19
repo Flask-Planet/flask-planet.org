@@ -5,6 +5,7 @@ from flask import render_template, abort, request, url_for, redirect
 from flask_bigapp.security import login_check
 
 from app.extensions import logger
+from app.globals import HighlightRenderer
 from app.models.stream import Stream
 from .. import bp
 
@@ -35,12 +36,14 @@ def edit(stream_id):
         else:
             schedule = None
 
-        markup = mistune.html(request.form.get("markdown") or '').strip()
+        markdown = request.form.get("markdown", '')
+        markdown_processor = mistune.create_markdown(renderer=HighlightRenderer())
+        markup = markdown_processor(markdown)
 
         Stream.update(
             values={
                 "title": request.form.get("title"),
-                "markdown": request.form.get("markdown"),
+                "markdown": markdown,
                 "markup": markup,
                 "schedule": schedule,
                 "url_link": request.form.get("url_link"),

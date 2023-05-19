@@ -1,4 +1,4 @@
-from flask import abort, render_template
+from flask import abort, render_template, request
 
 from app.models.resource import Resource
 from app.models.resource_click import ResourceClick
@@ -14,7 +14,16 @@ def resource(slug):
 
     ResourceClick.add_resource_click(resource_.resource_id)
 
-    return render_template(bp.tmpl("resource.html"), resource=resource_)
+    url_args = {}
+
+    if "page" in request.args:
+        url_args["page"] = request.args["page"]
+    if "search" in request.args:
+        url_args["search"] = request.args["search"]
+    if "tag" in request.args:
+        url_args["tag"] = request.args["tag"]
+
+    return render_template(bp.tmpl("resource.html"), resource=resource_, url_args=url_args)
 
 
 @bp.route("/resources/<slug>/<filename>", methods=["GET"])
@@ -25,4 +34,14 @@ def resource_page(slug, filename):
         return abort(404)
     ResourceClick.add_resource_click(resource_.resource_id)
 
-    return render_template(bp.tmpl("resource.html"), resource=resource_, page=page, filename=filename)
+    url_args = {}
+
+    if "page" in request.args:
+        url_args["page"] = request.args["page"]
+    if "search" in request.args:
+        url_args["search"] = request.args["search"]
+    if "tag" in request.args:
+        url_args["tag"] = request.args["tag"]
+
+    return render_template(bp.tmpl("resource.html"), resource=resource_, page=page, filename=filename,
+                           url_args=url_args)
