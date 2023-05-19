@@ -1,0 +1,19 @@
+{% extends 'theme/extends/frontend.html' %}
+
+{% block title %}
+    Terms and Conditions
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block endpage_js %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="box">
+            {{ system.terms_and_conditions_markup|safe }}
+        </div>
+    </section>
+{% endblock %}

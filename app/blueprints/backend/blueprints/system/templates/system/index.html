@@ -1,0 +1,57 @@
+{% extends 'theme/extends/backend.html' %}
+
+{% block title %}
+    System
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block endpage_js %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="box">
+            <form method="post">
+                <label for="terms_and_conditions_markdown">Terms and Conditions (Markdown)</label>
+                <textarea
+                        name="terms_and_conditions_markdown"
+                        id="terms_and_conditions_markdown"
+                        placeholder="Paste your markdown here..."
+                        cols="30"
+                        rows="10"
+                        required
+                >{{ system.terms_and_conditions_markdown }}</textarea>
+
+                <label for="privacy_policy_markdown">Privacy Policy (Markdown)</label>
+                <textarea
+                        name="privacy_policy_markdown"
+                        id="privacy_policy_markdown"
+                        placeholder="Paste your markdown here..."
+                        cols="30"
+                        rows="10"
+                        required
+                >{{ system.privacy_policy_markdown }}</textarea>
+
+
+                <button class="button">Save</button>
+            </form>
+        </div>
+    </section>
+    <section x-data="{show_tc: false, show_pp: false}">
+        <div class="box">
+            <button type="button" class="button" @click="show_tc = ! show_tc; show_pp = false">Show Terms and
+                Conditions
+            </button>
+            <button type="button" class="button" @click="show_pp = ! show_pp; show_tc = false">Show Privacy Policy
+            </button>
+        </div>
+        <div class="box" x-cloak x-show="show_tc">
+            {{ system.terms_and_conditions_markup|safe }}
+        </div>
+        <div class="box" x-cloak x-show="show_pp">
+            {{ system.privacy_policy_markup|safe }}
+        </div>
+    </section>
+{% endblock %}

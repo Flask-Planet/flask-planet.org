@@ -88,6 +88,23 @@
                         {{ resource.markup|safe }}
                     </div>
 
+                    <label for="author">Author</label>
+                    <input
+                            id="author"
+                            name="author"
+                            type="text"
+                            value="{{ resource.author or session.get('username') }}"
+                            required
+                    >
+
+                    <label for="author_link">Author URL</label>
+                    <input
+                            id="author_link"
+                            name="author_link"
+                            type="text"
+                            value="{{ resource.author_link or author_link_from_user(session.get('user_id')) }}"
+                    >
+
                     <label for="viewable">Viewable</label>
                     <div class="u-flex u-align-center mb-3">
 
@@ -104,15 +121,14 @@
                         <input type="hidden" x-model="viewable" name="viewable" value="">
 
                     </div>
-                    <div class="u-flex u-align-center mb-3">
 
-                        <label class="mb-0">Go viewable after:
-                            <input type="date"
-                                   name="go_viewable_on"
-                                   class="mb-0"
-                                   x-model="go_viewable_on">
-                        </label>
-                        <input type="hidden" x-model="go_viewable_on" name="go_viewable_on" value="">
+
+                    <label for="go_viewable_on">Automatically set to Viewable on</label>
+                    <div class="u-flex u-align-center mb-3">
+                        <input type="date"
+                               name="go_viewable_on"
+                               class="mb-0"
+                               x-model="go_viewable_on">
 
                         <button class="button-red ms-2"
                                 type="button"
