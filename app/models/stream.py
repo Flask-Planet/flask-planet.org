@@ -90,11 +90,11 @@ class Stream(db.Model, CrudMixin):
         if backend:
             query = select(cls).order_by(
                 desc(cls.schedule)  # type: ignore
-            ).where(cls.schedule < today, cls.schedule > week_ago).limit(4)  # type: ignore
+            ).where(cls.schedule < today).limit(4)  # type: ignore
         else:
             query = select(cls).order_by(
                 desc(cls.schedule)  # type: ignore
-            ).where(cls.schedule < today, cls.schedule > week_ago, cls.viewable).limit(4)  # type: ignore
+            ).where(cls.schedule < today, cls.viewable).limit(4)  # type: ignore
 
         return cls.__session__.scalars(query).all()
 

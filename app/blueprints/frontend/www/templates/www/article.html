@@ -24,7 +24,7 @@
                 </div>
                 <div class="box-col">
                     <div class="box-col">
-                        <img src="{{ news_cdn(article.news_id, article.thumbnail) }}"
+                        <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail) }}"
                              style="height: 160px;"
                              alt="{{ article.title }} Thumbnail">
                     </div>
