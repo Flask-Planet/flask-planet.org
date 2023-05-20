@@ -1,5 +1,8 @@
 {% extends 'theme/extends/frontend.html' %}
 
+{% block title %}
+    Flask Related News - Page {{ page }}
+{% endblock %}
 
 {% set pages_block %}
 {% if page > 1 %}
@@ -139,6 +142,12 @@
                 </article>
             {% endfor %}
         </section>
+    {% else %}
+
+        <div class="hero u-text-center color-dull-white">
+            <p>No news yet! Come back later...</p>
+        </div>
+
     {% endif %}
 
 {% endblock %}

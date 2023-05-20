@@ -1,5 +1,9 @@
 {% extends 'theme/extends/frontend.html' %}
 
+{% block title %}
+    News - {{ article.title }}
+{% endblock %}
+
 {% block container %}
     <section class="mt-4">
         <a href="{{ url_for('frontend.www.news', **url_args) }}">

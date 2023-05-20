@@ -1,7 +1,11 @@
 {% extends 'theme/extends/frontend.html' %}
 
+{% block title %}
+    Everything Flask
+{% endblock %}
+
 {% block global %}
-    <section>
+    <section class="u-text-center color-dull-white">
         <div class="hero">
             <img src="{{ url_for('theme.static', filename='img/flask-planet-logo.gif') }}" alt="Flask Planet logo"/>
         </div>
@@ -115,36 +119,38 @@
         </section>
     </section>
 
-    <section>
-        <h5 class="slight-header header-italic" style="padding-left: 10px;">Newly Added Resources</h5>
-        <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
-            {% for resource in resources %}
-                <a href="{{ url_for("frontend.www.resource", slug=resource.slug) }}">
-                    <div class="box box-hover box-flex u-pointer">
-                        <div class="box-col">
-                            <h6>{{ resource.title }}</h6>
-                        </div>
-                        <div class="ms-2 me-2 mb-3">
-                            {% for tag in resource.rel_resource_tag_membership %}
-                                <span class="tag-no-shadow">
+    {% if resources.total %}
+        <section>
+            <h5 class="slight-header header-italic" style="padding-left: 10px;">Newly Added Resources</h5>
+            <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
+                {% for resource in resources %}
+                    <a href="{{ url_for("frontend.www.resource", slug=resource.slug) }}">
+                        <div class="box box-hover box-flex u-pointer">
+                            <div class="box-col">
+                                <h6>{{ resource.title }}</h6>
+                            </div>
+                            <div class="ms-2 me-2 mb-3">
+                                {% for tag in resource.rel_resource_tag_membership %}
+                                    <span class="tag-no-shadow">
                                 {{ tag.rel_resource_tag.tag }}
                                 </span>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
+                            <div class="box-col">
+                                <small style="opacity: 0.2">click to view</small>
+                            </div>
                         </div>
-                        <div class="box-col">
-                            <small style="opacity: 0.2">click to view</small>
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-        <section>
-            <div class="u-flex u-justify-center mt-4 mb-5">
-                <a href="{{ url_for('frontend.www.resources') }}">
-                    View All Resources
-                </a>
+                    </a>
+                {% endfor %}
             </div>
+            <section>
+                <div class="u-flex u-justify-center mt-4 mb-5">
+                    <a href="{{ url_for('frontend.www.resources') }}">
+                        View All Resources
+                    </a>
+                </div>
+            </section>
         </section>
-    </section>
+    {% endif %}
 
 {% endblock %}

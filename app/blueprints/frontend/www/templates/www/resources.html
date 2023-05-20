@@ -1,5 +1,8 @@
 {% extends 'theme/extends/frontend.html' %}
 
+{% block title %}
+    Flask Resources - Page {{ page }}
+{% endblock %}
 
 {% set pages_block %}
 {% if page > 1 %}
@@ -160,28 +163,34 @@
         </section>
     {% endif %}
 
-    <section>
-        <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
-            {% for resource in resources %}
-                <a href="{{ url_for("frontend.www.resource", slug=resource.slug, **url_args) }}">
+    {% if resources %}
+        <section>
+            <div class="box-group box-group-align-center box-group-grid-lg-3 mt-4">
+                {% for resource in resources %}
+                    <a href="{{ url_for("frontend.www.resource", slug=resource.slug, **url_args) }}">
 
-                    <div class="box box-hover box-flex u-pointer">
-                        <div class="box-col">
-                            <h6>{{ resource.title }}</h6>
-                        </div>
-                        <div class="ms-2 me-2 mb-3">
-                            {% for tag in resource.rel_resource_tag_membership %}
-                                <span class="tag-no-shadow">
+                        <div class="box box-hover box-flex u-pointer">
+                            <div class="box-col">
+                                <h6>{{ resource.title }}</h6>
+                            </div>
+                            <div class="ms-2 me-2 mb-3">
+                                {% for tag in resource.rel_resource_tag_membership %}
+                                    <span class="tag-no-shadow">
                                 {{ tag.rel_resource_tag.tag }}
                                 </span>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
+                            <div class="box-col">
+                                <small style="opacity: 0.2">click to view</small>
+                            </div>
                         </div>
-                        <div class="box-col">
-                            <small style="opacity: 0.2">click to view</small>
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    {% else %}
+        <div class="hero u-text-center color-dull-white">
+            <p>No resources yet! Come back later...</p>
         </div>
-    </section>
+    {% endif %}
 {% endblock %}
