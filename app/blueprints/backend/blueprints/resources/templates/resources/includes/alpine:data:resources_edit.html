@@ -62,8 +62,7 @@
                 slugger() {
                     let slug = this.title
                     slug = slug.toLowerCase()
-                    slug = slug.replace(/[^a-z0-9\s-]/g, '')
-                    slug = slug.replace(/[\s-]+/g, '-')
+                    slug = slug.replace(/[^a-zA-Z0-9]+/g, '-')
                     slug = slug.replace(/^-+|-+$/g, '')
                     this.slug = slug
                 },
