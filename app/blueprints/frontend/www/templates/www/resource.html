@@ -27,7 +27,11 @@
             <div class="box-col">
                 <article>
                     <h1 class="title">{{ resource.title }}</h1>
-                    <p class="author">Written by: {{ resource.author }}</p>
+                    {% if resource.author_link %}
+                        <p class="author">Author: <a href="{{ resource.author_link }}" target="_blank"> {{ resource.author }}</a></p>
+                    {% else %}
+                        <p class="author">Author: {{ resource.author }}</p>
+                    {% endif %}
                     <div class="mb-3" style="padding-bottom: 20px;">
                         {% for tag in resource.rel_resource_tag_membership %}
                             <span class="tag-no-shadow">

@@ -83,15 +83,17 @@
 
 {% block container %}
 
-    <section>
-        <div class="box ms-1 me-1" style="color: whitesmoke">
-            <section class="mb-0 mt-0 u-flex u-space-between">
-                <div>
-                    {{ pages_block }}
-                </div>
-            </section>
-        </div>
-    </section>
+    {% if pages > 1 %}
+        <section>
+            <div class="box ms-1 me-1" style="color: whitesmoke">
+                <section class="mb-0 mt-0 u-flex u-space-between">
+                    <div>
+                        {{ pages_block }}
+                    </div>
+                </section>
+            </div>
+        </section>
+    {% endif %}
 
     {% if news %}
         <section x-data>
@@ -138,17 +140,5 @@
             {% endfor %}
         </section>
     {% endif %}
-
-    <section>
-        <div class="box ms-1 me-1" style="color: whitesmoke">
-
-            <section class="mb-0 mt-0 u-flex u-space-between">
-                <div>
-                    {{ pages_block }}
-                </div>
-            </section>
-
-        </div>
-    </section>
 
 {% endblock %}
