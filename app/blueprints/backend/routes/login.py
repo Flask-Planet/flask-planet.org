@@ -1,4 +1,6 @@
-from flask import render_template, request, session, url_for, redirect, flash
+import os
+
+from flask import render_template, request, session, url_for, redirect, flash, abort
 from flask_bigapp.security import login_check
 
 from app.models.user import User
@@ -8,6 +10,11 @@ from .. import bp
 @bp.route("/login", methods=["GET", "POST"])
 @login_check("logged_in", "backend.index", redirect_on_value=True)
 def login():
+    if os.environ.get("ALLOWED_IPS"):
+        ips = os.environ.get("ALLOWED_IPS").split(",")
+        if request.remote_addr not in ips:
+            return abort(403)
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
