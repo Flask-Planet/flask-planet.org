@@ -1,4 +1,5 @@
 import logging
+import os
 
 from flask import Flask
 
@@ -26,7 +27,7 @@ class Logger:
         self.logger.propagate = False
         ch = logging.StreamHandler()
 
-        if app.config.get("FLASK_DEBUG"):
+        if os.environ.get("FLASK_DEBUG"):
             self.logger.setLevel(logging.DEBUG)
             ch.setLevel(logging.DEBUG)
 

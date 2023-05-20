@@ -3,6 +3,7 @@ import os
 from flask import render_template, request, session, url_for, redirect, flash, abort
 from flask_bigapp.security import login_check
 
+from app.extensions import logger
 from app.models.user import User
 from .. import bp
 
@@ -12,7 +13,9 @@ from .. import bp
 def login():
     if os.environ.get("ALLOWED_IPS"):
         ips = os.environ.get("ALLOWED_IPS").split(",")
+        logger.debug(f"Checking allowed IPs: {ips}")
         if request.remote_addr not in ips:
+            logger.debug(f"Refusing access to: {request.remote_addr}")
             return abort(403)
 
     if request.method == "POST":
