@@ -39,8 +39,10 @@ def loader(app):
 
     @app.route("/cdn/streams/<stream_id>/<filename>")
     def stream_cdn(stream_id, filename):
-        return send_from_directory(directory=stream_thumbnail_path, path=pathlib.Path(stream_id / filename))
+        full_path = stream_thumbnail_path / str(stream_id)
+        return send_from_directory(directory=full_path, path=filename)
 
     @app.route("/cdn/news/<news_id>/<filename>")
     def news_cdn(news_id, filename: str):
-        return send_from_directory(directory=news_thumbnail_path / news_id, path=filename)
+        full_path = news_thumbnail_path / str(news_id)
+        return send_from_directory(directory=full_path, path=filename)

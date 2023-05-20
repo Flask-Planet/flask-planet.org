@@ -41,9 +41,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="box-col mt-4">
-                        {{ streaming_today.markup|safe }}
-                    </div>
+                    {% if stream.markup %}
+                        <div class="box-col mt-4">
+                            {{ streaming_today.markup|safe }}
+                        </div>
+                    {% endif %}
                 </article>
             </section>
 

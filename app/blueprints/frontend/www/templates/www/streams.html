@@ -33,9 +33,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="box-col mt-4">
-                        {{ stream.markup|safe }}
-                    </div>
+                    {% if stream.markup %}
+                        <div class="box-col mt-4">
+                            {{ stream.markup|safe }}
+                        </div>
+                    {% endif %}
                 </article>
             {% endfor %}
         </section>
@@ -75,9 +77,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="box-col mt-4">
-                        {{ stream.markup|safe }}
-                    </div>
+                    {% if stream.markup %}
+                        <div class="box-col mt-4">
+                            {{ stream.markup|safe }}
+                        </div>
+                    {% endif %}
                 </article>
             {% endfor %}
         {% endif %}
