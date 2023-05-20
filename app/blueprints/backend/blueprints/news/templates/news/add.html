@@ -74,6 +74,7 @@
                              x-text="viewable ? 'Currently Viewable' : 'Currently Hidden'">
                         </div>
                         <button class="button-red"
+                                type="button"
                                 @click="viewable = !viewable"
                                 x-text="viewable ? 'Make Hidden' : 'Make Viewable'"
                                 :class="viewable ? 'button-red' : 'button-green'">

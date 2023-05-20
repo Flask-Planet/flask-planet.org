@@ -120,6 +120,7 @@
                                    value="{{ stream.go_viewable_on|datetime }}">
                         </label>
                         <button class="button-red ms-2"
+                                type="button"
                                 :disabled="!go_viewable_on"
                                 @click="auto_viewable = !auto_viewable"
                                 x-text="auto_viewable ? 'Stop auto viewable' : 'Set auto viewable'"
