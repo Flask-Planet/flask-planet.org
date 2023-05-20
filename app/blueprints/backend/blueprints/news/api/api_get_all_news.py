@@ -11,7 +11,8 @@ def api_get_all_news():
     page = request.args.get("page", 1)
     news = News.all_newest_first_pages(
         page=int(page),
-        per_page=5
+        per_page=5,
+        backend=True,
     )
     clean_articles = []
     for article in news:

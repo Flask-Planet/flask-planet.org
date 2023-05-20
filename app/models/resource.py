@@ -64,8 +64,13 @@ class Resource(db.Model, CrudMixin):
         return cls.read(id_=resource_id)
 
     @classmethod
-    def get_by_slug(cls, slug):
-        return cls.read(fields={'slug': slug}, _auto_output=False).first()
+    def get_by_slug(cls, slug, backend: bool = False):
+        if backend:
+            query = select(cls).where(cls.slug == slug)
+        else:
+            query = select(cls).where(cls.viewable, cls.slug == slug)  # type: ignore
+
+        return cls.__session__.execute(query).scalars().first()
 
     @classmethod
     def get_tags_by_id(cls, resource_id):
@@ -96,14 +101,35 @@ class Resource(db.Model, CrudMixin):
         return cls.read(all_rows=True, order_by="created", order_desc=True)
 
     @classmethod
-    def all_newest_first_pages(cls, page: int = 1, per_page: int = 20, tag: str = None) -> Pagination:
+    def all_newest_first_pages(
+            cls,
+            page: int = 1,
+            per_page: int = 20,
+            tag: str = None,
+            backend: bool = False
+    ) -> Pagination:
+
         if tag:
-            query = select(cls).order_by(desc(cls.created)).where(cls.rel_resource_tag_membership.any(  # type: ignore
-                ResourceTagMembership.fk_resource_tag_id == ResourceTag.get_by_tag(tag).resource_tag_id
-            ))
+            if backend:
+                query = select(cls).order_by(desc(cls.created)).where(
+                    cls.rel_resource_tag_membership.any(  # type: ignore
+                        ResourceTagMembership.fk_resource_tag_id == ResourceTag.get_by_tag(tag).resource_tag_id
+                    ))
+            else:
+                query = select(cls).order_by(desc(cls.created)).where(
+                    cls.viewable,
+                    cls.rel_resource_tag_membership.any(  # type: ignore
+                        ResourceTagMembership.fk_resource_tag_id == ResourceTag.get_by_tag(tag).resource_tag_id
+                    ))
+
             logger.debug(f"Getting all resources newest first with tag {tag}...")
             return db.paginate(query, page=page, per_page=per_page)
-        query = select(cls).order_by(desc(cls.created))  # type: ignore
+
+        if backend:
+            query = select(cls).order_by(desc(cls.created))
+        else:
+            query = select(cls).where(cls.viewable).order_by(desc(cls.created))
+
         logger.debug("Getting all resources newest first...")
         return db.paginate(query, page=page, per_page=per_page)
 

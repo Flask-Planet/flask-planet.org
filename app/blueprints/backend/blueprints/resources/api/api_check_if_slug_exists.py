@@ -9,7 +9,7 @@ from .. import bp
 @login_check("logged_in", "backend.api_unauth")
 def api_check_if_slug_exists():
     slug = request.args.get("slug", None)
-    resource_ = Resource.get_by_slug(slug)
+    resource_ = Resource.get_by_slug(slug, backend=True)
     if resource_:
         return {"exists": True}
     return {"exists": False}

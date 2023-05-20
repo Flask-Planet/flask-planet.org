@@ -9,6 +9,10 @@ from .. import bp
 @bp.route("/download/markdown/<slug>/<safe_filename>", methods=["GET"])
 def download_markdown(slug, safe_filename):
     resource = Resource.get_by_slug(slug)
+
+    if not resource:
+        return abort(404)
+
     upload_location = pathlib.Path(
         pathlib.Path(current_app.root_path) / "uploads" / "resources" / str(resource.resource_id)
     )

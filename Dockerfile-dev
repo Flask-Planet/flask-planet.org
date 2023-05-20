@@ -1,0 +1,14 @@
+FROM python:3.11-alpine
+WORKDIR /flask
+RUN apk update && apk upgrade
+# TIMEZONE
+RUN apk add --no-cache tzdata
+ENV TZ=Europe/London
+# SET CONFIG_SECRET_KEY in ENV
+# See here for timezones:
+# https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+COPY app app
+COPY requirements.txt requirements.txt
+RUN python3 -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+CMD ["/flask/venv/bin/flask", "--app", "/flask/app", "run", "--host=0.0.0.0", "--port=5000", "--debug"]

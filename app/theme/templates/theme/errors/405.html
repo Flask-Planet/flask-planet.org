@@ -1,13 +1,21 @@
-<!doctype html>
-<html lang="en">
+{% extends 'theme/extends/frontend.html' %}
 
-<head>
-    <title>405 Method Not Allowed</title>
-</head>
+{% block title %}
+    405 Method Not Allowed
+{% endblock %}
 
-<body>
-<p>Should of GET when you POST, or POST when you GET</p>
-<p>location of this file: app/structures/default_theme/errors/405.html</p>
-<p>Being rendered from: app/flask/routes/errors.py</p>
-</body>
-</html>
+{% block head %}
+{% endblock %}
+
+{% block endpage_js %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="hero color-white">
+            <h1>405</h1>
+            <h3>Method Not Allowed</h3>
+            <p>You GETed instead of POSTed, or POSTed instead of GETed.</p>
+        </div>
+    </section>
+{% endblock %}

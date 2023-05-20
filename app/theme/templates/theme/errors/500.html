@@ -1,13 +1,21 @@
-<!doctype html>
-<html lang="en">
+{% extends 'theme/extends/frontend.html' %}
 
-<head>
-    <title>500 Server Error!</title>
-</head>
+{% block title %}
+    500 Server Error!
+{% endblock %}
 
-<body>
-<p>There has been a server error!</p>
-<p>location of this file: app/structures/default_theme/errors/500.html</p>
-<p>Being rendered from: app/flask/routes/errors.py</p>
-</body>
-</html>
+{% block head %}
+{% endblock %}
+
+{% block endpage_js %}
+{% endblock %}
+
+{% block container %}
+    <section>
+        <div class="hero color-white">
+            <h1>500</h1>
+            <h3>Server Error!</h3>
+            <p>It's not you, it's us.</p>
+        </div>
+    </section>
+{% endblock %}

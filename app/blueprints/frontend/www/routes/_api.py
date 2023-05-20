@@ -2,7 +2,7 @@ from flask import request, url_for
 
 from app import logger
 from app.models.resource import Resource
-from .. import bp
+from app.blueprints.frontend.www import bp
 
 
 @bp.get("/api/get/all/resources")

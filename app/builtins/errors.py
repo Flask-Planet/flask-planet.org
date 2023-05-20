@@ -46,3 +46,7 @@ def loader(app: Flask):
         return render_template(
             render,
         ), 500
+
+    # @app.route("/errors/<int:code>")
+    # def system_error(code):
+    #     return abort(code)

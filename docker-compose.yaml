@@ -7,7 +7,7 @@ services:
     volumes:
       - flask_planet_db:/flask/app/db
     environment:
-      - CONFIG_SECRET_KEY = "SET ME TO SOMETHING SECRET"
+      - CONFIG_SECRET_KEY="SET ME TO SOMETHING SECRET"
 
 volumes:
   flask_planet_db:

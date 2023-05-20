@@ -7,7 +7,7 @@ from .. import bp
 
 @bp.route("/news/article/<slug>", methods=["GET"])
 def article(slug):
-    article_ = News.get_by_slug(slug)
+    article_ = News.get_by_slug(slug, backend=True)
     if not article_:
         return abort(404)
 

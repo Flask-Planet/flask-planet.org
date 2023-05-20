@@ -13,7 +13,7 @@ def index():
         per_page=1,
     )
 
-    streaming_today = Stream.last_stream()
+    streaming_today = Stream.streaming_today()
 
     resources_ = Resource.all_newest_first_pages(
         page=1,

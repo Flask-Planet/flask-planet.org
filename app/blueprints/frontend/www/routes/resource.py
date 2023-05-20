@@ -29,9 +29,10 @@ def resource(slug):
 @bp.route("/resources/<slug>/<filename>", methods=["GET"])
 def resource_page(slug, filename):
     resource_ = Resource.get_by_slug(slug)
-    page = ResourcePage.get_by_og_filename(filename)
     if not resource_:
         return abort(404)
+
+    page = ResourcePage.get_by_og_filename(filename)
     ResourceClick.add_resource_click(resource_.resource_id)
 
     url_args = {}

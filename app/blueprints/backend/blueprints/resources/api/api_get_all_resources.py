@@ -11,7 +11,8 @@ def api_get_all_resources():
     page = request.args.get("page", 1)
     resources = Resource.all_newest_first_pages(
         page=int(page),
-        per_page=10
+        per_page=10,
+        backend=True
     )
     clean_resources = []
     for resource in resources:

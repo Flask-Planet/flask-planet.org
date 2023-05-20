@@ -48,8 +48,13 @@ class News(db.Model, CrudMixin):
         return cls.read(id_=news_id)
 
     @classmethod
-    def get_by_slug(cls, slug):
-        return cls.read(fields={'slug': slug}, _auto_output=False).first()
+    def get_by_slug(cls, slug, backend: bool = False):
+        if backend:
+            query = select(cls).where(cls.slug == slug)  # type: ignore
+        else:
+            query = select(cls).where(cls.viewable, cls.slug == slug)  # type: ignore
+
+        return cls.__session__.scalars(query).first()
 
     @classmethod
     def all_newest_first(cls):
@@ -66,8 +71,13 @@ class News(db.Model, CrudMixin):
         return db.paginate(query, page=page, per_page=per_page)
 
     @classmethod
-    def all_newest_first_pages(cls, page: int = 1, per_page: int = 20) -> Pagination:
-        query = select(cls).order_by(desc(cls.release_date))  # type: ignore
+    def all_newest_first_pages(cls, page: int = 1, per_page: int = 20, backend: bool = False) -> Pagination:
+
+        if backend:
+            query = select(cls).order_by(desc(cls.release_date))  # type: ignore
+        else:
+            query = select(cls).order_by(desc(cls.release_date)).where(cls.viewable)  # type: ignore
+
         logger.debug("Getting all news viewable_on first...")
         return db.paginate(query, page=page, per_page=per_page)
 

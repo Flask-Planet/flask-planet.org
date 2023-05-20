@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    container_name: flask_planet_org_dev
+    ports:
+      - "5050:5000"
+    volumes:
+      - ./app:/flask/app
+    environment:
+      - CONFIG_SECRET_KEY="DEVELOPMENT-KEY"

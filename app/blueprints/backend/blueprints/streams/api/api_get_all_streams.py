@@ -11,7 +11,8 @@ def api_get_all_streams():
     page = request.args.get("page", 1)
     streams = Stream.all_schedule_first_pages(
         page=int(page),
-        per_page=5
+        per_page=5,
+        backend=True,
     )
     clean_streams = []
     for stream in streams:
