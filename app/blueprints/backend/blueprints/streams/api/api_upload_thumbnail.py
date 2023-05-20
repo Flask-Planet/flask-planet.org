@@ -38,5 +38,5 @@ def api_upload_thumbnail(stream_id):
     return {
         "status": "success",
         "message": "Thumbnail uploaded successfully",
-        "thumbnail": url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail)
+        "thumbnail": url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail or 'none')
     }

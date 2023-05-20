@@ -18,15 +18,24 @@
                 <div class="box-col">
                     <article>
                         <h1 class="title">{{ article.title }}</h1>
-                        <p class="author">Written by: {{ article.author }}</p>
+                        {% if article.author_link %}
+                            <p class="author">Written by: <a href="{{ article.author_link }}" target="_blank">
+                                {{ article.author }}</a></p>
+
+                        {% else %}
+                            <p class="author">Written by: {{ article.author }}</p>
+
+                        {% endif %}
                         <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
                     </article>
                 </div>
                 <div class="box-col">
                     <div class="box-col">
-                        <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail) }}"
-                             style="height: 160px;"
-                             alt="{{ article.title }} Thumbnail">
+                        {% if article.thumbnail %}
+                            <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none') }}"
+                                 style="height: 120px;"
+                                 alt="{{ article.title }} Thumbnail">
+                        {% endif %}
                     </div>
                 </div>
 

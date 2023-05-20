@@ -38,5 +38,5 @@ def api_upload_thumbnail(news_id):
     return {
         "status": "success",
         "message": "Thumbnail uploaded successfully",
-        "thumbnail": url_for("news_cdn", news_id=news.news_id, filename=news.thumbnail)
+        "thumbnail": url_for("news_cdn", news_id=news.news_id, filename=news.thumbnail or 'none')
     }

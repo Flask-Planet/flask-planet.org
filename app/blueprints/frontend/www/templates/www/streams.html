@@ -8,7 +8,8 @@
                 <article class="box" style="margin-bottom: 20px;">
                     <div class="box-group box-group-grid-lg-2">
                         <div class="box-col">
-                            <img class="u-w100" src="{{ url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail)}}"
+                            <img class="u-w100"
+                                 src="{{ url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail or 'none') }}"
                                  alt="{{ stream.title }} Thumbnail">
                         </div>
                         <div class="box-col">
@@ -51,7 +52,7 @@
                     <div class="box-group box-group-grid-lg-2">
                         <div class="box-col">
                             <img class="u-w100"
-                                 src="{{ url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail)}}"
+                                 src="{{ url_for("stream_cdn", stream_id=stream.stream_id, filename=stream.thumbnail or 'none') }}"
                                  alt="{{ stream.title }} Thumbnail">
                         </div>
                         <div class="box-col">
