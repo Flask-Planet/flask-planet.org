@@ -7,7 +7,9 @@ services:
     volumes:
       - flask_planet_db:/flask/app/db
     environment:
-      - CONFIG_SECRET_KEY="SET ME TO SOMETHING SECRET"
+      - CONFIG_SECRET_KEY=SET_ME_TO_SECRET
+#     UNCOMMENT BELOW TO IP LOCK THE ADMIN LOGIN
+#      - ALLOWED_IPS=127.0.0.1,127.0.0.2
 
 volumes:
   flask_planet_db:
