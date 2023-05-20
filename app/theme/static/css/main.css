@@ -800,7 +800,6 @@ input[type='checkbox'], input[type='radio'] {
 }
 
 
-
 /* structure.css */
 
 section {
@@ -1096,6 +1095,10 @@ pre {
     border-left: 0.3rem solid #9b4dca;
     overflow-y: hidden;
     margin-bottom: 1rem !important;
+}
+
+pre > img {
+    width: 100%;
 }
 
 pre > code {

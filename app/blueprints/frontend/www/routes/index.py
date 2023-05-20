@@ -10,7 +10,7 @@ from .. import bp
 def index():
     news_ = News.all_newest_first_pages(
         page=1,
-        per_page=1,
+        per_page=3,
     )
 
     streaming_today = Stream.streaming_today()
