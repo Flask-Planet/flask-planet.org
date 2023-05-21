@@ -15,7 +15,7 @@
 {% set summery_button_class = 'class="button me-1 ms-1 button-active"' if not page else 'class="button me-1 ms-1"' %}
 
 {% block global %}
-    <section class="mt-4">
+    <section>
         <a href="{{ url_for('frontend.www.resources', **url_args) }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -72,11 +72,11 @@
                         Download {{ filename }}
                     </a>
                 </div>
-                <article class="markup_display mt-3 px-4">
+                <article class="box-display mt-3 px-4">
                     {{ page.markup | safe }}
                 </article>
             {% else %}
-                <article class="markup_display mt-3 px-4">
+                <article class="box-display mt-3 px-4">
                     {{ resource.markup|safe }}
                 </article>
             {% endif %}

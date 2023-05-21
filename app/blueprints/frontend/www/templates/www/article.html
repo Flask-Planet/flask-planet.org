@@ -6,7 +6,7 @@
 
 {% block container %}
     <section class="mt-4">
-        <a href="{{ url_for('frontend.www.news', **url_args) }}">
+        <a href="{{ url_for('frontend.www.news', **url_args) }}" class="px-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                  class="feather feather-arrow-left">
@@ -46,7 +46,10 @@
             </div>
 
             <div class="box-col mt-5">
-                {{ article.markup|safe }}
+                <article class="box-display">
+                    {{ article.markup|safe }}
+                </article>
+
             </div>
         </article>
     </section>

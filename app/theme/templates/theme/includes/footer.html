@@ -1,5 +1,5 @@
-<section class="color-dull-white mt-6">
-    <div class="box-row u-space-between u-align-end">
+<section class="color-dull-white mt-6 desktop">
+    <div class="u-flex u-space-between u-align-end u-w100 px-4">
         <div class="box-row u-space-between u-align-center">
             <p style="margin: 0"><small><a href="https://uilix.com/" target="_blank">UiliX</a> T/A</small></p>
 
@@ -14,4 +14,20 @@
             <p><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></p>
         </div>
     </div>
+</section>
+
+<section class="u-flex-col u-justify-center color-dull-white mt-6 px-4 mobile">
+        <div class="u-flex u-justify-center u-align-center">
+            <p style="margin: 0"><small><a href="https://uilix.com/" target="_blank">UiliX</a> T/A</small></p>
+
+            <img style="width: 60px" src="{{ url_for('theme.static', filename='img/flask-planet.gif') }}"
+             alt="Small Flask-Planet Logo">
+
+            <p style="margin: 0">Flask-Planet.org</p>
+        </div>
+
+        <div class="u-text-center mt-4">
+            <p style="margin: 0"><a href="{{ url_for('terms_and_conditions') }}">Ts &amp; Cs</a></p>
+            <p><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></p>
+        </div>
 </section>

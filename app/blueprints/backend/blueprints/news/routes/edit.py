@@ -58,12 +58,14 @@ def edit(news_id):
         )
 
         if thumbnail:
-            upload_location = pathlib.Path(pathlib.Path(current_app.root_path) / "uploads" / "news" / news_.news_id)
+            upload_location = pathlib.Path(
+                pathlib.Path(current_app.root_path) / "uploads" / "news" / str(news_.news_id))
             upload_location.mkdir(parents=True, exist_ok=True)
 
-            old_file = upload_location / news_.thumbnail
-            if old_file.exists():
-                old_file.unlink()
+            if news_.thumbnail:
+                old_file = upload_location / str(news_.thumbnail)
+                if old_file.exists():
+                    old_file.unlink()
 
             safe_filename = secure_filename(thumbnail.filename)
             save_location = upload_location / safe_filename

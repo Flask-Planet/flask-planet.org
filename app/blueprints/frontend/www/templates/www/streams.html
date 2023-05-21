@@ -6,7 +6,7 @@
 
 {% block container %}
     {% if upcoming_streams %}
-        <section class="mt-5">
+        <section>
             <h5 class="slight-header header-italic" style="padding-left: 10px;">Scheduled</h5>
             {% for stream in upcoming_streams %}
                 <article class="box" style="margin-bottom: 20px;">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     {% if stream.markup %}
-                        <div class="box-col mt-4">
+                        <div class="box-col mt-4 box-display">
                             {{ stream.markup|safe }}
                         </div>
                     {% endif %}
@@ -48,7 +48,7 @@
         </section>
     {% endif %}
 
-    <section class="mt-5">
+    <section>
         {% if most_recent_streams %}
             <h5 class="slight-header header-italic" style="padding-left: 10px;">Most Recent Stream(s)</h5>
             {% for stream in most_recent_streams %}

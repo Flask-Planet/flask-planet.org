@@ -430,10 +430,6 @@ input[type='checkbox'], input[type='radio'] {
 
 /* markdown_style.css */
 
-.markup_display {
-
-}
-
 .markup_display > table {
     width: 100%;
     margin-bottom: 2rem !important;
@@ -547,6 +543,7 @@ input[type='checkbox'], input[type='radio'] {
 .nav {
     width: 100%;
     max-width: 64rem;
+    height: 3rem;
     margin: 0 auto;
     background-color: #0e1117;
     color: #a9a9a9;
@@ -555,6 +552,31 @@ input[type='checkbox'], input[type='radio'] {
     justify-content: space-between;
     border: 1px solid #30343b;
     box-shadow: 2px 2px 10px #000000;
+}
+
+.nav-menu {
+    width: 100%;
+    min-height: 3rem;
+    margin: 0 auto;
+    background-color: #0e1117;
+    color: #a9a9a9;
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid #30343b;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 10px #000000;
+}
+
+.nav-mobile-button {
+    padding-top: 4px;
+    padding-bottom: 2px;
+    margin-right: 5px;
+    border: 1px solid #30343b;
+}
+
+.nav-mobile-button-active {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .nav-fixed {
@@ -566,18 +588,28 @@ input[type='checkbox'], input[type='radio'] {
 }
 
 .nav-spacer {
-    height: 2.4rem;
+    height: 3.4rem;
 }
 
-@media (min-width: 64rem) {
-    .nav {
-
-    }
+.nav-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 3rem;
 }
 
 .nav-group {
     display: flex;
     align-items: center;
+}
+
+.nav-group-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+    padding-bottom: 1rem;
 }
 
 .nav-logo {
@@ -1097,39 +1129,18 @@ pre {
     margin-bottom: 1rem !important;
 }
 
-pre > img {
+.box-display * img {
+    padding: 2px;
+    display: block;
     width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
 }
 
 pre > code {
     border-radius: 0;
     display: block;
     white-space: pre
-}
-
-
-@media (min-width: 64rem) {
-    .box {
-        margin: 0;
-    }
-
-    .box-group {
-        grid-column-gap: 1.6rem;
-        grid-row-gap: 1.6rem;
-    }
-
-    .box-group-grid-lg-2 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .box-group-grid-lg-3 {
-        grid-template-columns: repeat(auto-fit, 31%);
-        justify-content: center;
-    }
-
-    .box-group-grid-lg-4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
 }
 
 
@@ -1166,7 +1177,7 @@ thead * th {
 /* typography.css */
 
 .title {
-    font-size: 3.6rem;
+    font-size: 3.6em;
 }
 
 .summary {
@@ -1295,6 +1306,11 @@ h6 {
     display: flex;
 }
 
+.u-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .u-align-center {
     display: flex;
     align-items: center;
@@ -1379,3 +1395,45 @@ h6 {
     margin: 0 !important;
 }
 
+.mobile {
+    display: block;
+}
+
+.desktop {
+    display: none;
+}
+
+@media (min-width: 38rem) {
+    .mobile {
+        display: none;
+    }
+
+    .desktop {
+        display: flex;
+    }
+}
+
+@media (min-width: 64rem) {
+
+    .box {
+        margin: 0;
+    }
+
+    .box-group {
+        grid-column-gap: 1.6rem;
+        grid-row-gap: 1.6rem;
+    }
+
+    .box-group-grid-lg-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .box-group-grid-lg-3 {
+        grid-template-columns: repeat(auto-fit, 31%);
+        justify-content: center;
+    }
+
+    .box-group-grid-lg-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
