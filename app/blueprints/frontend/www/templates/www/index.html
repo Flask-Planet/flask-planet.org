@@ -100,7 +100,7 @@
                             {% if article.thumbnail %}
                                 <div class="box-col">
                                     <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none') }}"
-                                         style="height: 120px;"
+                                         style="max-width: 300px;"
                                          alt="{{ article.title }} Thumbnail">
                                 </div>
                             {% endif %}

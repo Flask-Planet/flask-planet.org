@@ -938,7 +938,6 @@ section > :is(h1, h2, h3, h4, h5, h6) {
     gap: 10px;
     padding: 5px;
     justify-content: center;
-    word-break: break-all;
 }
 
 .box-col > :is(h1, h2, h3, h4, h5, h6, p) {
@@ -1289,6 +1288,10 @@ h6 {
 
 .u-text-center {
     text-align: center;
+}
+
+.u-break-word {
+    word-break: break-word;
 }
 
 .u-text-left {

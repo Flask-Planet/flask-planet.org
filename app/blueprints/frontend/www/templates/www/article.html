@@ -18,7 +18,8 @@
     </section>
     <section>
         <article class="box">
-            <div class="box-row u-space-between">
+
+            <div class="box-row-react u-space-between">
                 <div class="box-col">
                     <article>
                         <h1 class="title">{{ article.title }}</h1>
@@ -33,16 +34,13 @@
                         <p class="author" style="margin: 0">Published on: {{ article.release_date|stream_date }}</p>
                     </article>
                 </div>
-                <div class="box-col">
+                {% if article.thumbnail %}
                     <div class="box-col">
-                        {% if article.thumbnail %}
-                            <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none') }}"
-                                 style="height: 120px;"
-                                 alt="{{ article.title }} Thumbnail">
-                        {% endif %}
+                        <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none') }}"
+                             style="max-width: 400px;"
+                             alt="{{ article.title }} Thumbnail">
                     </div>
-                </div>
-
+                {% endif %}
             </div>
 
             <div class="box-col mt-5">
