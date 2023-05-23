@@ -256,7 +256,7 @@ input[type='submit'].button-clear[disabled]:hover {
 
 .hero {
     text-align: center;
-    padding: 80px;
+    padding: 20px 5px;
 }
 
 .hero img {
@@ -925,12 +925,20 @@ section > :is(h1, h2, h3, h4, h5, h6) {
     justify-content: space-evenly;
 }
 
+.box-row-react {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: start;
+}
+
 .box-col {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 5px;
     justify-content: center;
+    word-break: break-all;
 }
 
 .box-col > :is(h1, h2, h3, h4, h5, h6, p) {
@@ -939,6 +947,7 @@ section > :is(h1, h2, h3, h4, h5, h6) {
 }
 
 .box-col img {
+    width: 100%;
     height: auto;
     border: 1px solid #30343b;
 }
@@ -1403,6 +1412,11 @@ h6 {
     display: none;
 }
 
+.box-row-react {
+    flex-direction: column-reverse;
+}
+
+
 @media (min-width: 38rem) {
     .mobile {
         display: none;
@@ -1410,6 +1424,10 @@ h6 {
 
     .desktop {
         display: flex;
+    }
+
+    .box-row-react {
+        flex-direction: row;
     }
 }
 

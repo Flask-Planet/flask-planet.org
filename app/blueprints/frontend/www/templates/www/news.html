@@ -11,7 +11,7 @@
 
     <a href="{{ back_url }}"
        class="button"
-       style="padding-left: 18px; padding-right: 18px;">
+       style="padding-left: 10px; padding-right: 10px;">
 
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -27,7 +27,7 @@
 
     <a href="#" disabled="disabled"
        class="button"
-       style="padding-left: 18px; padding-right: 18px;">
+       style="padding-left: 10px; padding-right: 10px;">
 
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -42,7 +42,7 @@
 {% endif %}
 
 <button disabled class="button-clear">
-    page {{ page }} / {{ pages }} pages
+    {{ page }}/{{ pages }}
 </button>
 
 {% if page != pages and pages != 0 %}
@@ -51,7 +51,7 @@
 
     <a href="{{ forw_url }}"
        class="button"
-       style="padding-left: 18px; padding-right: 18px;">
+       style="padding-left: 10px; padding-right: 10px;">
 
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -67,7 +67,7 @@
 
     <a href="#" disabled="disabled"
        class="button"
-       style="padding-left: 18px; padding-right: 18px;">
+       style="padding-left: 10px; padding-right: 10px;">
 
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -89,7 +89,7 @@
     {% if pages > 1 %}
         <section>
             <div class="box ms-1 me-1" style="color: whitesmoke">
-                <section class="mb-0 mt-0 u-flex u-space-between">
+                <section class="mb-0 mt-0 u-flex u-push-end">
                     <div>
                         {{ pages_block }}
                     </div>
@@ -103,7 +103,7 @@
             {% for article in news %}
                 <article class="box"
                          style="margin-bottom: 12px;">
-                    <div class="box-row u-space-between">
+                    <div class="box-row-react u-space-between">
                         <div class="box-col">
                             <h6 style="margin-bottom: 0">{{ article.title }}</h6>
                             <p style="margin: 0">
@@ -129,15 +129,13 @@
                             </div>
                         </div>
 
-
-                        <div class="box-col">
-                            {% if article.thumbnail %}
+                        {% if article.thumbnail %}
+                            <div class="box-col">
                                 <img src="{{ url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none') }}"
                                      style="height: 120px;"
                                      alt="{{ article.title }} Thumbnail">
-                            {% endif %}
-                        </div>
-
+                            </div>
+                        {% endif %}
                     </div>
                 </article>
             {% endfor %}

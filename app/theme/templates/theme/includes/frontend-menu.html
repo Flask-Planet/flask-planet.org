@@ -55,7 +55,7 @@
     </div>
 </nav>
 
-<nav class="nav-menu nav-fixed mobile" x-data="{show_menu: false}">
+<nav class="nav-menu nav-fixed mobile" x-data="{show_menu: false}" @click.outside="show_menu = false">
 
     <div class="nav-mobile">
 
