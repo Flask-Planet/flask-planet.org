@@ -22,11 +22,11 @@ def loader(app: Flask):
 
         logger.debug(f"Creating user")
 
-        email_address = input("Enter your email address: ")
+        username = input("Enter a username: ")
         password = getpass("Enter a password: ")
 
         m_user.add_new_user(
-            email_address,
+            username,
             password,
         )
 
