@@ -21,7 +21,7 @@
                 }
             },
             get_news() {
-                fetch(`{{ url_for("backend.news.api_get_all_news") }}?page=${this.page}`, {
+                fetch(`{{ url_for("backend.news_and_articles.api_get_all_news") }}?page=${this.page}`, {
                     method: 'GET',
                 })
                     .then(response => response.json())
@@ -42,7 +42,7 @@
                 }
                 let form_data = new FormData()
                 form_data.append('search', this.title_search)
-                fetch(`{{ url_for("backend.news.api_search_news") }}?page=${this.page}`, {
+                fetch(`{{ url_for("backend.news_and_articles.api_search_news") }}?page=${this.page}`, {
                     method: 'POST',
                     body: form_data
                 })

@@ -1,31 +1,25 @@
 {% extends 'theme/extends/backend.html' %}
 
 {% block title %}
-    Add News
+    Edit News
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('theme.static', filename='css/quill.snow.css') }}">
-    <script defer src="{{ url_for('theme.static', filename='js/quilljs.js') }}"></script>
 {% endblock %}
 
 {% block endpage_js %}
-    {%- include 'news/includes/alpine:data:news_add.html' %}
+    {% include 'news_and_articles/includes/alpine:data:news_edit.html' %}
 {% endblock %}
 
-
 {% block container %}
-    <div x-data="news_add">
+    <div x-data="news_edit">
         <form name="add_news" x-ref="add_news" method="post" enctype="multipart/form-data">
             <section>
                 <div class="box">
                     <div class="box-row u-space-between">
-                        <a class="button" href="{{ url_for('backend.news.index') }}">Cancel</a>
-                        <button
-                                type="submit"
-                                x-bind:disabled="slug_exists || slug.length < 1"
-                        >
-                            Add News
+                        <a class="button" href="{{ url_for('backend.news_and_articles.index') }}">Cancel</a>
+                        <button type="submit">
+                            Update News / Article
                         </button>
                     </div>
                 </div>
@@ -66,7 +60,8 @@
                             cols="30"
                             rows="10"
                             required
-                    ></textarea>
+                    >{{ news.markdown }}</textarea>
+
 
                     <label for="viewable">Viewable</label>
                     <div class="u-flex u-align-center mb-3">
@@ -82,11 +77,14 @@
                     </div>
                     <input type="hidden" name="viewable" x-model="viewable">
 
+
                     <label for="release_date">Release Date</label>
                     <input
                             type="datetime-local"
                             id="release_date"
                             name="release_date"
+                            value="{{ news.release_date|datetime_local }}"
+                            required
                     >
 
                     <label for="author">Author</label>
@@ -94,6 +92,8 @@
                             id="author"
                             name="author"
                             type="text"
+                            value="{{ news.author or session.get('username') }}"
+                            required
                     >
 
                     <label for="author_link">Author URL</label>
@@ -101,10 +101,51 @@
                             id="author_link"
                             name="author_link"
                             type="text"
+                            value="{{ news.author_link or author_link_from_user(session.get('user_id')) }}"
                     >
 
                 </div>
+
             </section>
         </form>
+        <section>
+
+            <article class="box">
+
+                <div class="box-row-react u-space-between">
+                    <div class="box-col">
+                        <article>
+                            <h1 class="title">{{ news.title }}</h1>
+                            {% if news.author_link %}
+                                <p class="author">Written by: <a href="{{ news.author_link }}" target="_blank">
+                                    {{ news.author }}</a></p>
+
+                            {% else %}
+                                <p class="author">Author: {{ news.author }}</p>
+
+                            {% endif %}
+                            <p class="author" style="margin: 0">Published on: {{ news.release_date|stream_date }}</p>
+                        </article>
+                    </div>
+                    {% if news.thumbnail %}
+                        <div class="box-col">
+                            <img src="{{ url_for("news_cdn", news_id=news.news_id, filename=news.thumbnail or 'none') }}"
+                                 style="max-width: 400px;"
+                                 alt="{{ news.title }} Thumbnail">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="box-col mt-5">
+                    <article class="box-display">
+                        {{ news.markup|safe }}
+                    </article>
+
+                </div>
+            </article>
+
+        </section>
     </div>
 {% endblock %}
+
+

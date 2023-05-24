@@ -4,8 +4,8 @@ from app.models.news import News
 from .. import bp
 
 
-@bp.route("/news", methods=["GET"])
-def news():
+@bp.route("/news-and-articles", methods=["GET"])
+def news_and_articles():
     news_ = News.all_newest_first_pages(
         page=int(request.args.get("page", 1)),
         per_page=4,
@@ -17,7 +17,7 @@ def news():
         url_args["page"] = request.args["page"]
 
     return render_template(
-        bp.tmpl("news.html"),
+        bp.tmpl("news_and_articles.html"),
         news=news_,
         page=news_.page,
         pages=news_.pages,

@@ -16,7 +16,7 @@ def api_get_all_news():
     )
     clean_articles = []
     for article in news:
-        edit_url = url_for('backend.news.edit', news_id=article.news_id)
+        edit_url = url_for('backend.news_and_articles.edit', news_id=article.news_id)
 
         if article.thumbnail:
             thumbnail = url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail)

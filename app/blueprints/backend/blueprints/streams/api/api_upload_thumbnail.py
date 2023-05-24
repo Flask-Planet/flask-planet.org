@@ -32,7 +32,9 @@ def api_upload_thumbnail(stream_id):
         return {"status": "error", "message": "No thumbnail file found"}
 
     safe_filename = secure_filename(thumbnail_file.filename)
-    thumbnail_file.save(upload_location / safe_filename)
+    save_location = upload_location / safe_filename
+    rename_file = upload_location / f"{stream.stream_id}-{stream.slug}-thumbnail{save_location.suffix}"
+    thumbnail_file.save(rename_file)
     stream.update_thumbnail(safe_filename)
 
     return {

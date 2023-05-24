@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block endpage_js %}
-    {%- include 'news/includes/alpine:data:news_index.html' %}
+    {%- include 'news_and_articles/includes/alpine:data:news_index.html' %}
 {% endblock %}
 
 {% block container %}
@@ -65,7 +65,7 @@
                         </span>
 
                     </form>
-                    <a class="button" href="{{ url_for('backend.news.add') }}">Add News</a>
+                    <a class="button" href="{{ url_for('backend.news_and_articles.add') }}">Add News / Article</a>
                 </div>
             </div>
         </section>

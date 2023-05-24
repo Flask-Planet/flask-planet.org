@@ -65,7 +65,7 @@
     {% endif %}
 
     <section>
-        <h5 class="slight-header header-italic" style="padding-left: 10px;">Latest News</h5>
+        <h5 class="slight-header header-italic" style="padding-left: 10px;">Latest News &amp; Articles</h5>
         {% if news %}
             <section x-data>
                 {% for article in news %}
@@ -90,7 +90,7 @@
                                 </p>
                                 <div class="mb-2">
                                     <a class="button"
-                                       href="{{ url_for("frontend.www.article", slug=article.slug) }}">
+                                       href="{{ url_for("frontend.www.news_article", slug=article.slug) }}">
                                         View
                                     </a>
                                 </div>
@@ -112,8 +112,8 @@
         {% endif %}
         <section>
             <div class="u-flex u-justify-center mt-4 mb-5">
-                <a href="{{ url_for('frontend.www.news') }}">
-                    View All News
+                <a href="{{ url_for('frontend.www.news_and_articles') }}">
+                    View All News &amp; Articles
                 </a>
             </div>
         </section>

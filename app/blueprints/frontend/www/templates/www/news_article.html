@@ -4,16 +4,26 @@
     News - {{ article.title }}
 {% endblock %}
 
+{% block head %}
+    {{ og_tags(
+            title=article.title,
+            description="Read the latest news and articles from the Flask-Planet team.",
+            url=url_for('frontend.www.news_article', slug=slug, _external=True),
+            image=url_for("news_cdn", news_id=article.news_id, filename=article.thumbnail or 'none', _external=True),
+            type_="article"
+    ) }}
+{% endblock %}
+
 {% block container %}
     <section class="mt-4">
-        <a href="{{ url_for('frontend.www.news', **url_args) }}" class="px-2">
+        <a href="{{ url_for('frontend.www.news_and_articles', **url_args) }}" class="px-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                  class="feather feather-arrow-left">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            Back to All News
+            Back to All News &amp; Articles
         </a>
     </section>
     <section>

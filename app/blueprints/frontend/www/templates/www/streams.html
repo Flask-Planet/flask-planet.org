@@ -1,7 +1,17 @@
 {% extends 'theme/extends/frontend.html' %}
 
 {% block title %}
-    Scheduled and Latest Streams
+    Scheduled and Latest Flask-Planet Streams
+{% endblock %}
+
+{% block head %}
+    {{ og_tags(
+            title='Scheduled and Latest Flask-Planet Streams',
+            description="Scheduled and Latest Flask-Planet Streams",
+            url=url_for('frontend.www.streams', _external=True),
+            image=url_for("theme.static", filename='img/flask-planet-logo.gif', _external=True),
+            type_="website"
+    ) }}
 {% endblock %}
 
 {% block container %}

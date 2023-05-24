@@ -1,7 +1,7 @@
 enabled = "yes"
 
 [settings]
-url_prefix = "/news"
+url_prefix = "/news-and-articles"
 subdomain = ""
 url_defaults = {}
 static_folder = "static"

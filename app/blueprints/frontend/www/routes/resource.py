@@ -23,7 +23,7 @@ def resource(slug):
     if "tag" in request.args:
         url_args["tag"] = request.args["tag"]
 
-    return render_template(bp.tmpl("resource.html"), resource=resource_, url_args=url_args)
+    return render_template(bp.tmpl("resource.html"), resource=resource_, url_args=url_args, slug=slug)
 
 
 @bp.route("/resources/<slug>/<filename>", methods=["GET"])
@@ -45,4 +45,4 @@ def resource_page(slug, filename):
         url_args["tag"] = request.args["tag"]
 
     return render_template(bp.tmpl("resource.html"), resource=resource_, page=page, filename=filename,
-                           url_args=url_args)
+                           url_args=url_args, slug=slug)

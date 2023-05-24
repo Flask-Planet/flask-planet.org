@@ -4,6 +4,18 @@
     Flask Resources - Page {{ page }}
 {% endblock %}
 
+
+{% block head %}
+    {{ og_tags(
+            title='Flask Resources - Page ' + page|string,
+            description="A curated list of awesome Flask related resources, cheatsheets and tips.",
+            url=url_for('frontend.www.resources', page=page, _external=True),
+            image=url_for("theme.static", filename='img/flask-planet-logo.gif', _external=True),
+            type_="website"
+    ) }}
+{% endblock %}
+
+
 {% set pages_block %}
 {% if page > 1 %}
 
